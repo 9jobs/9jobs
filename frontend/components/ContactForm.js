@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Send } from "lucide-react";
-import { fadeUp, hoverLift } from "../utils/animations";
+import { FadeIn, FadeUp, ScaleIn, Stagger, StaggerItem, MotionButton } from "./Motion";
 
 const emptyForm = {
   firstName: "",
@@ -30,10 +29,8 @@ export default function ContactForm({ initialMessage = "" }) {
     setLoading(true);
     setStatus({ type: "", message: "" });
 
-    const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
-
     try {
-      const response = await fetch(`${apiBase}/contact`, {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -51,7 +48,7 @@ export default function ContactForm({ initialMessage = "" }) {
 
       setStatus({
         type: "success",
-        message: data.success || "Message sent successfully.",
+        message: "Thank you! Your message has been sent successfully. We will get back to you shortly.",
       });
       setFormData(emptyForm);
     } catch {
@@ -65,19 +62,16 @@ export default function ContactForm({ initialMessage = "" }) {
   }
 
   return (
-    <motion.form className="form-card card" onSubmit={handleSubmit} {...fadeUp} {...hoverLift}>
-      <motion.div
+    <Stagger as="form" className="form-card card" onSubmit={handleSubmit}>
+      <ScaleIn
         className="card-media"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=900')",
+            "url('/profession/success.png')",
         }}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
       />
-      <div className="form-grid">
+      
+      <StaggerItem className="form-grid">
         <label className="field">
           <span>First name</span>
           <input
@@ -95,9 +89,9 @@ export default function ContactForm({ initialMessage = "" }) {
             onChange={(event) => updateField("lastName", event.target.value)}
           />
         </label>
-      </div>
+      </StaggerItem>
 
-      <label className="field">
+      <StaggerItem className="field">
         <span>Email address</span>
         <input
           required
@@ -105,9 +99,9 @@ export default function ContactForm({ initialMessage = "" }) {
           value={formData.email}
           onChange={(event) => updateField("email", event.target.value)}
         />
-      </label>
+      </StaggerItem>
 
-      <label className="field">
+      <StaggerItem className="field">
         <span>Phone number</span>
         <input
           required
@@ -115,31 +109,31 @@ export default function ContactForm({ initialMessage = "" }) {
           value={formData.phone}
           onChange={(event) => updateField("phone", event.target.value)}
         />
-      </label>
+      </StaggerItem>
 
-      <label className="field">
+      <StaggerItem className="field">
         <span>Message</span>
         <textarea
           required
           value={formData.message}
           onChange={(event) => updateField("message", event.target.value)}
         />
-      </label>
+      </StaggerItem>
 
       {status.message && (
-        <div className={`status-message ${status.type}`}>{status.message}</div>
+        <FadeIn className={`status-message ${status.type}`}>{status.message}</FadeIn>
       )}
 
-      <motion.button
-        className="btn btn-dark"
-        type="submit"
-        disabled={loading}
-        whileHover={{ y: -3, scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-      >
-        {loading ? "Sending" : "Send message"} <Send size={17} />
-      </motion.button>
-    </motion.form>
+      <StaggerItem>
+        <MotionButton
+          className="btn btn-dark"
+          type="submit"
+          disabled={loading}
+          style={{ width: '100%' }}
+        >
+          {loading ? "Sending" : "Send message"} <Send size={17} />
+        </MotionButton>
+      </StaggerItem>
+    </Stagger>
   );
 }

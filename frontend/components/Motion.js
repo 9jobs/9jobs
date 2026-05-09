@@ -4,6 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   fadeIn,
   fadeUp,
+  fadeDown,
+  fadeLeft,
+  fadeRight,
+  scaleIn,
+  slideInLeft,
+  slideInRight,
   hoverLift,
   hoverScale,
   popup,
@@ -19,16 +25,9 @@ const motionTags = {
   p: motion.p,
   section: motion.section,
   span: motion.span,
-};
-
-const fadeUpVariant = {
-  initial: fadeUp.initial,
-  whileInView: fadeUp.whileInView,
-};
-
-const staggerVariants = {
-  initial: staggerContainer.initial,
-  whileInView: staggerContainer.whileInView,
+  button: motion.button,
+  form: motion.form,
+  aside: motion.aside,
 };
 
 function MotionElement({ as = "div", animation, children, ...props }) {
@@ -48,9 +47,50 @@ export function FadeUp({ as = "div", children, ...props }) {
   );
 }
 
+export function FadeDown({ as = "div", children, ...props }) {
+  return (
+    <MotionElement as={as} animation={fadeDown} {...props}>
+      {children}
+    </MotionElement>
+  );
+}
+
 export function FadeIn({ as = "div", children, ...props }) {
   return (
     <MotionElement as={as} animation={fadeIn} {...props}>
+      {children}
+    </MotionElement>
+  );
+}
+
+export function FadeLeft({ as = "div", children, ...props }) {
+  return (
+    <MotionElement as={as} animation={fadeLeft} {...props}>
+      {children}
+    </MotionElement>
+  );
+}
+
+export function FadeRight({ as = "div", children, ...props }) {
+  return (
+    <MotionElement as={as} animation={fadeRight} {...props}>
+      {children}
+    </MotionElement>
+  );
+}
+
+export function ScaleIn({ as = "div", children, ...props }) {
+  return (
+    <MotionElement as={as} animation={scaleIn} {...props}>
+      {children}
+    </MotionElement>
+  );
+}
+
+export function SlideIn({ as = "div", direction = "left", children, ...props }) {
+  const animation = direction === "left" ? slideInLeft : slideInRight;
+  return (
+    <MotionElement as={as} animation={animation} {...props}>
       {children}
     </MotionElement>
   );
@@ -68,7 +108,7 @@ export function Stagger({ as = "div", children, ...props }) {
   const Component = motionTags[as] || motion.div;
   return (
     <Component
-      variants={staggerVariants}
+      variants={staggerContainer.variants}
       initial="initial"
       whileInView="whileInView"
       viewport={staggerContainer.viewport}
@@ -83,9 +123,9 @@ export function StaggerItem({ as = "div", children, hover = false, ...props }) {
   const Component = motionTags[as] || motion.div;
   return (
     <Component
-      variants={fadeUpVariant}
+      variants={fadeUp.variants}
       transition={fadeUp.transition}
-      {...(hover ? hoverLift : {})}
+      {...(hover === "lift" ? hoverLift : hover === "scale" ? hoverScale : {})}
       {...props}
     >
       {children}

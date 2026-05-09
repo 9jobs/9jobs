@@ -1761,3 +1761,32 @@ h6 {
     font-size: 1.1rem;
   }
 }
+
+/* Form Status Messages */
+.status-message {
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 24px;
+  line-height: 1.5;
+  animation: slide-up 0.4s ease-out;
+}
+
+.status-message.success {
+  background: #f8ffdb;
+  color: #000;
+  border: 1px solid #d9ff00;
+}
+
+.status-message.error {
+  background: #fff0f0;
+  color: #d00;
+  border: 1px solid #ffcccc;
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

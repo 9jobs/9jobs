@@ -37,7 +37,7 @@ export default async function ContactPage({ searchParams }) {
               className="card-media"
               style={{
                 backgroundImage:
-                  "url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=900')",
+                  "url('/profession/meeting.png')",
               }}
             />
             <p className="label">Contact information</p>
@@ -53,11 +53,11 @@ export default async function ContactPage({ searchParams }) {
               <a href="tel:+61422552002">
                 <Phone size={20} /> +61 422 552 002
               </a>
-              <a href="mailto:contact@9jobs.co">
-                <Mail size={20} /> contact@9jobs.co
+              <a href="mailto:9jobsapplicationservice@gmail.com">
+                <Mail size={20} /> 9jobsapplicationservice@gmail.com
               </a>
               <span>
-                <MapPin size={20} /> Australia / Global
+                <MapPin size={20} /> Melbourne, Australia
               </span>
             </div>
 
