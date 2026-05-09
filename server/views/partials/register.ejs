@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>9 Jobs Application Service - Register</title>
+  <link rel="icon" type="image/png" href="/img/logo-9.jpeg">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <style>
+    :root{
+      --card-max: 400px;
+      --radius: 18px;
+      --bg1: #0b1417;
+      --bg2: #070f12;
+      --card: rgba(22, 30, 34, .92);
+      --stroke: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.92);
+
+      --field: rgba(255,255,255,.10);
+      --field-stroke: rgba(255,255,255,.10);
+      --field-text: rgba(255,255,255,.92);
+      --field-placeholder: rgba(255,255,255,.35);
+
+      --accent: #00f5a0;
+      --accent2: #00d6ff;
+      --link: #5fe3ff;
+
+      --shadow: 0 22px 60px rgba(0,0,0,.55);
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      min-height:100vh;
+      margin:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1100px 700px at 30% 10%, rgba(0,245,160,.10), transparent 55%),
+        radial-gradient(900px 650px at 80% 70%, rgba(0,214,255,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: var(--text);
+    }
+
+    /* Card */
+    .card{
+      width:100%;
+      max-width: var(--card-max);
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      padding: 22px 20px 18px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      animation: pop .5s ease both;
+    }
+
+    /* top neon line */
+    .card::before{
+      content:"";
+      position:absolute;
+      left:0; right:0; top:0;
+      height:4px;
+      background: linear-gradient(90deg, #00ff7b, #b8ff00);
+      box-shadow: 0 0 12px rgba(0,255,123,.45);
+    }
+
+    @keyframes pop{
+      from{ opacity:0; transform: translateY(10px) scale(.98); }
+      to{ opacity:1; transform: translateY(0) scale(1); }
+    }
+
+    .avatar{
+      width:84px;
+      height:84px;
+      border-radius:999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+      margin: 8px auto 10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      box-shadow: 0 16px 40px rgba(0,0,0,.45);
+    }
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+
+    .title{
+      text-align:center;
+      font-weight:800;
+      letter-spacing:.3px;
+      margin: 6px 0 16px;
+      font-size: 22px;
+    }
+
+    .label{
+      display:block;
+      color: rgba(255,255,255,.68);
+      font-size: 12px;
+      margin: 10px 0 6px;
+      letter-spacing:.2px;
+    }
+
+    .field{
+      width:100%;
+      background: var(--field);
+      border: 1px solid var(--field-stroke);
+      border-radius: 10px;
+      padding: 11px 12px;
+      color: var(--field-text);
+      outline: none;
+      font-size: 14px;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .field::placeholder{ color: var(--field-placeholder); }
+    .field:focus{
+      border-color: rgba(0,245,160,.55);
+      box-shadow: 0 0 0 4px rgba(0,245,160,.12);
+    }
+
+    .pw-wrap{ position:relative; }
+    .pw-eye{
+      position:absolute;
+      right:10px;
+      top:50%;
+      transform: translateY(-50%);
+      width:34px;
+      height:34px;
+      border-radius: 9px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      color: rgba(255,255,255,.70);
+      cursor:pointer;
+      user-select:none;
+      transition: background .2s ease, color .2s ease;
+    }
+    .pw-eye:hover{
+      background: rgba(0,0,0,.28);
+      color: rgba(255,255,255,.90);
+    }
+
+    /* Terms row */
+    .terms-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      margin: 12px 0 12px;
+    }
+    .agree{
+      display:flex;
+      gap:8px;
+      color: rgba(255,255,255,.65);
+      font-size: 12px;
+      line-height: 1.35;
+      user-select:none;
+      flex: 1;
+    }
+    .agree input{
+      margin-top: 3px;
+      width:14px; height:14px;
+      accent-color: var(--accent);
+      flex: 0 0 auto;
+    }
+    .terms-link{
+      font-size: 12px;
+      color: var(--link);
+      text-decoration:none;
+      font-weight:700;
+      white-space:nowrap;
+      margin-top: 1px;
+    }
+    .terms-link:hover{ text-decoration:underline; }
+
+    .hint{
+      color: rgba(255,255,255,.52);
+      font-size: 12px;
+      margin: 10px 0 6px;
+      line-height: 1.45;
+      text-align: justify;
+    }
+
+    /* ✅ Google + Register unified bar (balanced) */
+    .auth-bar{
+      display:flex;
+      align-items:center;
+      width:100%;
+      margin-top: 6px;
+      height:40px;
+      border-radius: 12px;
+      overflow:hidden;
+      box-shadow: 0 14px 30px rgba(0,0,0,.28);
+    }
+
+    .google-login{
+      width:56px;
+      min-width:56px;
+      height:100%;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      border-right: 1px solid rgba(0,0,0,.08);
+    }
+
+    .google-icon{
+      width:22px;
+      height:22px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .google-icon svg{ display:block; }
+
+    .btn{
+      width:100%;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-weight:800;
+      letter-spacing:.3px;
+      cursor:pointer;
+      color:#062018;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      box-shadow: 0 16px 36px rgba(0,245,160,.12);
+      transition: filter .2s ease, box-shadow .2s ease;
+    }
+    .btn:hover{
+      filter: brightness(1.05);
+      box-shadow: 0 22px 44px rgba(0,245,160,.16);
+    }
+
+    .btn-register{
+      flex:1;
+      height:100%;
+      border:none;
+      border-radius:0;
+      padding:0 8px;
+      font-size:14px;
+      letter-spacing:.15px;
+      box-shadow:none;
+    }
+
+    .footer{
+      text-align:center;
+      margin-top: 14px;
+      font-size: 12px;
+      color: rgba(255,255,255,.58);
+    }
+    .footer a{
+      color: var(--link);
+      font-weight:700;
+      text-decoration:none;
+    }
+    .footer a:hover{ text-decoration:underline; }
+
+    .error{
+      margin: 0 0 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(255, 60, 60, .10);
+      border: 1px solid rgba(255, 60, 60, .22);
+      color: rgba(255,255,255,.92);
+      font-size: 12px;
+    }
+
+    @media (max-width: 420px){
+      .card{ padding: 20px 16px 16px; }
+      .title{ font-size: 20px; }
+      .field{ padding: 11px 12px; }
+      .auth-bar{ height: 40px; border-radius: 11px; }
+      .google-login{ width: 54px; min-width:54px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <div class="avatar">
+      <img src="img/about/avt2.png" alt="Logo">
+    </div>
+
+    <div class="title">Register</div>
+
+    <% if (typeof error !== "undefined" && error) { %>
+      <div class="error"><%= error %></div>
+    <% } %>
+
+    <form action="/register" method="POST">
+
+      <label class="label" for="username">Username</label>
+      <input class="field" id="username" name="username" type="text" placeholder="Enter username" required>
+
+      <label class="label" for="email">Email</label>
+      <input class="field" id="email" name="email" type="email" placeholder="Enter email" required>
+
+      <label class="label" for="password" style="margin-top:12px;">Password</label>
+      <div class="pw-wrap">
+        <input class="field" id="password" name="password" type="password" placeholder="Create password" required style="padding-right:48px;">
+        <div class="pw-eye" id="togglePwd" title="Show/Hide">
+          <i class="bi bi-eye-slash" id="eyeIcon"></i>
+        </div>
+      </div>
+
+      <div class="hint">
+        We will use the personal information collected on this form to create your account, which will allow you to apply using the same credentials.
+      </div>
+
+      <div class="terms-row">
+        <label class="agree">
+          <input type="checkbox" id="agree" name="agree" required>
+          <span>I agree</span>
+        </label>
+
+        <a class="terms-link" href="/terms-policy">Terms &amp; Policy</a>
+      </div>
+
+      <!-- ✅ Google icon left + Register right -->
+      <div class="auth-bar">
+        <a href="/auth/google" class="google-login" title="Continue with Google">
+          <span class="google-icon">
+            <!-- Google official SVG -->
+            <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.06 1.54 7.46 2.83l5.45-5.45C33.58 3.64 29.19 1.5 24 1.5 14.73 1.5 6.91 6.97 3.69 14.84l6.36 4.94C11.6 13.04 17.34 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.5 24c0-1.54-.14-3.02-.39-4.44H24v8.41h12.7c-.55 2.97-2.22 5.49-4.7 7.18l7.22 5.61C43.36 36.92 46.5 30.96 46.5 24z"/>
+              <path fill="#FBBC05" d="M10.05 28.78c-.46-1.38-.72-2.85-.72-4.28 0-1.44.26-2.9.72-4.28l-6.36-4.94C2.44 18.1 1.5 20.97 1.5 24c0 3.03.94 5.9 2.19 8.72l6.36-4.94z"/>
+              <path fill="#34A853" d="M24 46.5c5.19 0 9.58-1.72 12.77-4.74l-7.22-5.61c-2.01 1.35-4.59 2.15-7.55 2.15-6.66 0-12.4-3.54-15.95-8.28l-6.36 4.94C6.91 41.03 14.73 46.5 24 46.5z"/>
+            </svg>
+          </span>
+        </a>
+
+        <button class="btn btn-register" type="submit">Register</button>
+      </div>
+
+      <div class="footer">
+        Already have an account? <a href="/login">Sign In</a>
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    const toggle = document.getElementById("togglePwd");
+    const pwd = document.getElementById("password");
+    const icon = document.getElementById("eyeIcon");
+
+    toggle.addEventListener("click", () => {
+      const isPass = pwd.type === "password";
+      pwd.type = isPass ? "text" : "password";
+      icon.classList.toggle("bi-eye", isPass);
+      icon.classList.toggle("bi-eye-slash", !isPass);
+    });
+  </script>
+
+</body>
+</html>
