@@ -1,6 +1,7 @@
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ScrollAnimations from "../components/ScrollAnimations";
 
 export const metadata = {
   title: "9Jobs | Smarter Job Applying",
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         {children}
         <Footer />
+        <ScrollAnimations />
       </body>
     </html>
   );
