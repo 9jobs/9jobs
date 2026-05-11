@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Send } from "lucide-react";
-import { FadeIn, FadeUp, ScaleIn, Stagger, StaggerItem, MotionButton } from "./Motion";
+import { FadeIn, FadeUp, ScaleIn, Stagger, StaggerItem, MotionButton, Popup } from "./Motion";
 
 const emptyForm = {
   firstName: "",
@@ -62,76 +62,86 @@ export default function ContactForm({ initialMessage = "" }) {
   }
 
   return (
-    <Stagger as="form" className="form-card card" onSubmit={handleSubmit}>
+    <Stagger as="form" className="form-card card" onSubmit={handleSubmit} style={{ height: '100%' }}>
       <ScaleIn
         className="card-media"
         style={{
           backgroundImage:
-            "url('/profession/success.png')",
+            "url('https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=900')",
         }}
       />
       
-      <StaggerItem className="form-grid">
-        <label className="field">
+      <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+        <StaggerItem className="field">
           <span>First name</span>
           <input
             required
             type="text"
+            placeholder="e.g. John"
             value={formData.firstName}
             onChange={(event) => updateField("firstName", event.target.value)}
           />
-        </label>
-        <label className="field">
+        </StaggerItem>
+        <StaggerItem className="field">
           <span>Last name</span>
           <input
             type="text"
+            placeholder="e.g. Doe"
             value={formData.lastName}
             onChange={(event) => updateField("lastName", event.target.value)}
           />
-        </label>
-      </StaggerItem>
+        </StaggerItem>
+      </div>
 
-      <StaggerItem className="field">
+      <StaggerItem className="field" style={{ marginTop: '20px' }}>
         <span>Email address</span>
         <input
           required
           type="email"
+          placeholder="john@example.com"
           value={formData.email}
           onChange={(event) => updateField("email", event.target.value)}
         />
       </StaggerItem>
 
-      <StaggerItem className="field">
+      <StaggerItem className="field" style={{ marginTop: '20px' }}>
         <span>Phone number</span>
         <input
           required
           type="tel"
+          placeholder="+61 ..."
           value={formData.phone}
           onChange={(event) => updateField("phone", event.target.value)}
         />
       </StaggerItem>
 
-      <StaggerItem className="field">
+      <StaggerItem className="field" style={{ marginTop: '20px' }}>
         <span>Message</span>
         <textarea
           required
+          placeholder="How can we help?"
+          style={{ minHeight: '120px' }}
           value={formData.message}
           onChange={(event) => updateField("message", event.target.value)}
         />
       </StaggerItem>
 
       {status.message && (
-        <FadeIn className={`status-message ${status.type}`}>{status.message}</FadeIn>
+        <Popup className={`status-message ${status.type}`} style={{ marginTop: '20px' }}>
+          {status.message}
+        </Popup>
       )}
 
-      <StaggerItem>
+      <StaggerItem style={{ marginTop: '32px' }}>
         <MotionButton
           className="btn btn-dark"
           type="submit"
           disabled={loading}
-          style={{ width: '100%' }}
+          style={{ width: '100%', justifyContent: 'center', height: '56px' }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
         >
-          {loading ? "Sending" : "Send message"} <Send size={17} />
+          {loading ? "Sending..." : "Send message"} <Send size={17} style={{ marginLeft: '10px' }} />
         </MotionButton>
       </StaggerItem>
     </Stagger>

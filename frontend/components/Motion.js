@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
   fadeIn,
   fadeUp,
@@ -8,13 +8,23 @@ import {
   fadeLeft,
   fadeRight,
   scaleIn,
+  zoomIn,
   slideInLeft,
   slideInRight,
+  slideUp,
   hoverLift,
+  hoverLiftSoft,
   hoverScale,
+  hoverScaleSoft,
+  hoverGlow,
   popup,
   staggerContainer,
+  staggerContainerFast,
+  floatY,
+  floatYSlow,
 } from "../utils/animations";
+
+// ─── Tag map ────────────────────────────────────────────────────────────────
 
 const motionTags = {
   article: motion.article,
@@ -28,6 +38,11 @@ const motionTags = {
   button: motion.button,
   form: motion.form,
   aside: motion.aside,
+  li: motion.li,
+  ul: motion.ul,
+  nav: motion.nav,
+  header: motion.header,
+  footer: motion.footer,
 };
 
 function MotionElement({ as = "div", animation, children, ...props }) {
@@ -39,79 +54,153 @@ function MotionElement({ as = "div", animation, children, ...props }) {
   );
 }
 
-export function FadeUp({ as = "div", children, ...props }) {
+// ─── Fade variants ──────────────────────────────────────────────────────────
+
+export function FadeUp({ as = "div", children, delay = 0, ...props }) {
+  const anim = delay
+    ? { ...fadeUp, transition: { ...fadeUp.transition, delay } }
+    : fadeUp;
   return (
-    <MotionElement as={as} animation={fadeUp} {...props}>
+    <MotionElement as={as} animation={anim} {...props}>
       {children}
     </MotionElement>
   );
 }
 
-export function FadeDown({ as = "div", children, ...props }) {
+export function FadeDown({ as = "div", children, delay = 0, ...props }) {
+  const anim = delay
+    ? { ...fadeDown, transition: { ...fadeDown.transition, delay } }
+    : fadeDown;
   return (
-    <MotionElement as={as} animation={fadeDown} {...props}>
+    <MotionElement as={as} animation={anim} {...props}>
       {children}
     </MotionElement>
   );
 }
 
-export function FadeIn({ as = "div", children, ...props }) {
+export function FadeIn({ as = "div", children, delay = 0, ...props }) {
+  const anim = delay
+    ? { ...fadeIn, transition: { ...fadeIn.transition, delay } }
+    : fadeIn;
   return (
-    <MotionElement as={as} animation={fadeIn} {...props}>
+    <MotionElement as={as} animation={anim} {...props}>
       {children}
     </MotionElement>
   );
 }
 
-export function FadeLeft({ as = "div", children, ...props }) {
+export function FadeLeft({ as = "div", children, delay = 0, ...props }) {
+  const anim = delay
+    ? { ...fadeLeft, transition: { ...fadeLeft.transition, delay } }
+    : fadeLeft;
   return (
-    <MotionElement as={as} animation={fadeLeft} {...props}>
+    <MotionElement as={as} animation={anim} {...props}>
       {children}
     </MotionElement>
   );
 }
 
-export function FadeRight({ as = "div", children, ...props }) {
+export function FadeRight({ as = "div", children, delay = 0, ...props }) {
+  const anim = delay
+    ? { ...fadeRight, transition: { ...fadeRight.transition, delay } }
+    : fadeRight;
   return (
-    <MotionElement as={as} animation={fadeRight} {...props}>
+    <MotionElement as={as} animation={anim} {...props}>
       {children}
     </MotionElement>
   );
 }
 
-export function ScaleIn({ as = "div", children, ...props }) {
+// ─── Scale / zoom ───────────────────────────────────────────────────────────
+
+export function ScaleIn({ as = "div", children, delay = 0, ...props }) {
+  const anim = delay
+    ? { ...scaleIn, transition: { ...scaleIn.transition, delay } }
+    : scaleIn;
   return (
-    <MotionElement as={as} animation={scaleIn} {...props}>
+    <MotionElement as={as} animation={anim} {...props}>
       {children}
     </MotionElement>
   );
 }
 
-export function SlideIn({ as = "div", direction = "left", children, ...props }) {
-  const animation = direction === "left" ? slideInLeft : slideInRight;
+export function ZoomIn({ as = "div", children, delay = 0, ...props }) {
+  const anim = delay
+    ? { ...zoomIn, transition: { ...zoomIn.transition, delay } }
+    : zoomIn;
   return (
-    <MotionElement as={as} animation={animation} {...props}>
+    <MotionElement as={as} animation={anim} {...props}>
       {children}
     </MotionElement>
   );
 }
 
-export function Popup({ as = "div", children, hover = false, ...props }) {
+// ─── Slide ──────────────────────────────────────────────────────────────────
+
+export function SlideIn({ as = "div", direction = "left", delay = 0, children, ...props }) {
+  const base = direction === "left" ? slideInLeft : slideInRight;
+  const anim = delay
+    ? { ...base, transition: { ...base.transition, delay } }
+    : base;
   return (
-    <MotionElement as={as} animation={popup} {...(hover ? hoverLift : {})} {...props}>
+    <MotionElement as={as} animation={anim} {...props}>
       {children}
     </MotionElement>
   );
 }
 
-export function Stagger({ as = "div", children, ...props }) {
+export function SlideUp({ as = "div", children, delay = 0, ...props }) {
+  const anim = delay
+    ? { ...slideUp, transition: { ...slideUp.transition, delay } }
+    : slideUp;
+  return (
+    <MotionElement as={as} animation={anim} {...props}>
+      {children}
+    </MotionElement>
+  );
+}
+
+// ─── Pop ────────────────────────────────────────────────────────────────────
+
+export function Popup({ as = "div", children, hover = false, delay = 0, ...props }) {
+  const anim = delay
+    ? { ...popup, transition: { ...popup.transition, delay } }
+    : popup;
+  const hoverProps =
+    hover === "lift" ? hoverLift
+    : hover === "scale" ? hoverScale
+    : hover === true ? hoverLiftSoft
+    : {};
+  return (
+    <MotionElement as={as} animation={anim} {...hoverProps} {...props}>
+      {children}
+    </MotionElement>
+  );
+}
+
+// ─── Floating element ───────────────────────────────────────────────────────
+
+export function Float({ as = "div", slow = false, children, ...props }) {
+  const anim = slow ? floatYSlow : floatY;
   const Component = motionTags[as] || motion.div;
   return (
+    <Component {...anim} {...props}>
+      {children}
+    </Component>
+  );
+}
+
+// ─── Stagger ────────────────────────────────────────────────────────────────
+
+export function Stagger({ as = "div", fast = false, children, ...props }) {
+  const Component = motionTags[as] || motion.div;
+  const container = fast ? staggerContainerFast : staggerContainer;
+  return (
     <Component
-      variants={staggerContainer.variants}
+      variants={container.variants}
       initial="initial"
       whileInView="whileInView"
-      viewport={staggerContainer.viewport}
+      viewport={container.viewport}
       {...props}
     >
       {children}
@@ -121,11 +210,18 @@ export function Stagger({ as = "div", children, ...props }) {
 
 export function StaggerItem({ as = "div", children, hover = false, ...props }) {
   const Component = motionTags[as] || motion.div;
+  const hoverProps =
+    hover === "lift" ? hoverLift
+    : hover === "liftSoft" ? hoverLiftSoft
+    : hover === "scale" ? hoverScale
+    : hover === "scaleSoft" ? hoverScaleSoft
+    : hover === "glow" ? hoverGlow
+    : {};
   return (
     <Component
       variants={fadeUp.variants}
       transition={fadeUp.transition}
-      {...(hover === "lift" ? hoverLift : hover === "scale" ? hoverScale : {})}
+      {...hoverProps}
       {...props}
     >
       {children}
@@ -133,12 +229,31 @@ export function StaggerItem({ as = "div", children, hover = false, ...props }) {
   );
 }
 
-export function MotionButton({ children, ...props }) {
+// ─── Interactive button ─────────────────────────────────────────────────────
+
+export function MotionButton({ children, variant = "scale", ...props }) {
+  const hoverProps =
+    variant === "lift" ? hoverLift
+    : variant === "glow" ? hoverGlow
+    : hoverScale;
   return (
-    <motion.button {...hoverScale} {...props}>
+    <motion.button {...hoverProps} {...props}>
       {children}
     </motion.button>
   );
 }
 
-export { AnimatePresence, motion };
+export function MotionLink({ as: Tag = motion.a, children, variant = "lift", ...props }) {
+  const hoverProps =
+    variant === "scale" ? hoverScaleSoft
+    : hoverLiftSoft;
+  return (
+    <Tag {...hoverProps} {...props}>
+      {children}
+    </Tag>
+  );
+}
+
+// ─── Re-exports ─────────────────────────────────────────────────────────────
+
+export { AnimatePresence, motion, useScroll, useTransform };

@@ -1,32 +1,10 @@
 import Link from "next/link";
-import { FadeIn, FadeUp, Popup, Stagger, StaggerItem } from "../../components/Motion";
 import { ArrowRight, BookOpen, BookUser, Briefcase, FileText } from "lucide-react";
 
 const posts = [
-  {
-    icon: FileText,
-    title: "Resume tips that make your experience easier to scan",
-    text: "A practical guide to structure, language, and the details that make a resume feel ready.",
-    tag: "Resume",
-    image:
-      "url('https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=900')",
-  },
-  {
-    icon: Briefcase,
-    title: "How to choose roles that match your actual direction",
-    text: "Sharper targeting saves time and keeps applications aligned with the work you want.",
-    tag: "Job search",
-    image:
-      "url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=900')",
-  },
-  {
-    icon: BookUser,
-    title: "LinkedIn profile improvements recruiters notice quickly",
-    text: "Turn your headline, summary, and project details into a cleaner professional signal.",
-    tag: "LinkedIn",
-    image:
-      "url('https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80&w=900')",
-  },
+  ["Resume tips that make your experience easier to scan", "A practical guide to structure, language, and the details that make a resume feel ready.", "Resume", FileText],
+  ["How to choose roles that match your actual direction", "Sharper targeting saves time and keeps applications aligned with the work you want.", "Job search", Briefcase],
+  ["LinkedIn profile improvements recruiters notice quickly", "Turn your headline, summary, and project details into a cleaner professional signal.", "LinkedIn", BookUser],
 ];
 
 export const metadata = {
@@ -36,60 +14,38 @@ export const metadata = {
 
 export default function BlogPage() {
   return (
-    <main className="site-main">
-      <section className="page-hero">
-        <div className="container">
-          <FadeUp as="span" className="eyebrow">
-            <span className="eyebrow-mark">Blog</span>
-            Career notes that stay practical
-          </FadeUp>
-          <FadeUp as="h1" className="page-title" style={{ marginTop: 24 }}>
-            Small improvements that make applications <span className="heading-mark">stronger.</span>
-          </FadeUp>
-          <FadeIn as="p" className="lead">
-            Clean advice for resumes, LinkedIn, interviews, targeting, and the
-            habits that keep a job search moving.
-          </FadeIn>
+    <main className="site-main fj-page">
+      <section className="fj-page-hero">
+        <div className="fj-container">
+          <span className="fj-announcement"><span>Blog</span> Career notes that stay practical</span>
+          <h1>Small improvements that make applications stronger.</h1>
+          <p>Clean advice for resumes, LinkedIn, interviews, targeting, and the habits that keep a job search moving.</p>
         </div>
       </section>
 
-      <section className="section section-tight">
-        <Stagger className="container-wide story-grid">
-          {posts.map((post) => {
-            const Icon = post.icon;
-            return (
-              <StaggerItem as="article" hover className="article-card card split-card" key={post.title}>
-                <FadeIn className="photo-tile" style={{ minHeight: 220, backgroundImage: post.image }} />
-                <span className="icon-chip">
-                  <Icon size={22} />
-                </span>
-                <span className="eyebrow-mark" style={{ width: "fit-content" }}>
-                  {post.tag}
-                </span>
-                <h3>{post.title}</h3>
-                <p>{post.text}</p>
-                <Link className="btn btn-light" href="/contact">
-                  Read with 9Jobs <ArrowRight size={17} />
-                </Link>
-              </StaggerItem>
-            );
-          })}
-        </Stagger>
+      <section className="fj-section fj-section--tight">
+        <div className="fj-container fj-card-grid fj-card-grid--three">
+          {posts.map(([title, text, tag, Icon]) => (
+            <article className="fj-blog-card" key={title}>
+              <div className="fj-icon-chip"><Icon size={22} /></div>
+              <span className="fj-badge">{tag}</span>
+              <h2>{title}</h2>
+              <p>{text}</p>
+              <Link href="/contact">Read with 9Jobs <ArrowRight size={16} /></Link>
+            </article>
+          ))}
+        </div>
       </section>
 
-      <section className="section section-tight">
-        <Popup className="container soft-panel home-panel">
+      <section className="fj-section fj-section--tight">
+        <div className="fj-container fj-final-cta">
           <BookOpen size={28} />
-          <FadeUp as="h2" className="section-title" style={{ margin: "18px auto" }}>
-            Want help applying the <span className="heading-mark">advice?</span>
-          </FadeUp>
-          <FadeIn as="p" className="lead" style={{ maxWidth: 620, margin: "0 auto 28px" }}>
-            Send your goals to 9Jobs and we will help shape a practical next step.
-          </FadeIn>
-          <Link className="btn btn-dark" href="/contact">
+          <h2>Want help applying the advice?</h2>
+          <p>Send your goals to 9Jobs and we will help shape a practical next step.</p>
+          <Link className="fj-button fj-button--dark" href="/contact">
             Contact us
           </Link>
-        </Popup>
+        </div>
       </section>
     </main>
   );

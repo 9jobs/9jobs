@@ -4,19 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 
 const links = [
-  { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/feature", label: "Features" },
+  { href: "/feature", label: "Feature" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
+  { href: "/blog", label: "Blog" },
 ];
 
 function isActive(pathname, href) {
-  if (href === "/") return pathname === "/";
   if (href === "/feature") return pathname === "/feature" || pathname === "/features";
   return pathname === href;
 }
@@ -27,21 +25,24 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 18);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <header className={`site-nav${scrolled ? " is-scrolled" : ""}`}>
-      <div className="nav-inner">
-        <Link className="brand" href="/" aria-label="9Jobs home">
-          <span className="brand-mark">9</span>
+    <header className={`site-nav fj-nav${scrolled ? " is-scrolled" : ""}`}>
+      <div className="nav-inner fj-nav-inner">
+        <Link className="brand fj-brand" href="/" aria-label="9Jobs home">
+          <span className="fj-brand-mark" aria-hidden="true">
+            <span />
+            <span />
+          </span>
           <span>9Jobs</span>
         </Link>
 
-        <nav className="nav-links" aria-label="Primary navigation">
+        <nav className="nav-links fj-nav-links" aria-label="Primary navigation">
           {links.map((link) => (
             <Link
               key={link.href}
@@ -53,38 +54,36 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <div className="nav-actions">
-          <Link href="/login" className="btn btn-light">
-            Sign in
+        <div className="nav-actions fj-nav-actions">
+          <Link href="/register" className="fj-button fj-button--ghost">
+            Try for free
           </Link>
-          <Link href="/contact?intent=demo" className="btn btn-dark">
-            Schedule demo
+          <Link href="/contact?intent=demo" className="fj-button fj-button--dark">
+            Get a demo <ArrowRight size={17} />
           </Link>
         </div>
 
         <motion.button
-          className="mobile-menu-button"
+          className="mobile-menu-button fj-menu-button"
           type="button"
           aria-label={isOpen ? "Close navigation" : "Open navigation"}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((value) => !value)}
-          whileHover={{ y: -2, scale: 1.02 }}
-          whileTap={{ scale: 0.96 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
+          whileTap={{ scale: 0.94 }}
         >
-          {isOpen ? <X size={20} /> : <Menu size={20} />}
+          {isOpen ? <X size={21} /> : <Menu size={21} />}
         </motion.button>
       </div>
 
       <AnimatePresence>
         {isOpen && (
           <motion.nav
-            className="mobile-drawer"
+            className="mobile-drawer fj-mobile-drawer"
             aria-label="Mobile navigation"
-            initial={{ opacity: 0, y: -12, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -12, scale: 0.98 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.22 }}
           >
             {links.map((link) => (
               <Link
@@ -96,11 +95,11 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link href="/login" onClick={() => setIsOpen(false)}>
-              Sign in
+            <Link className="fj-button fj-button--ghost" href="/register" onClick={() => setIsOpen(false)}>
+              Try for free
             </Link>
-            <Link href="/contact?intent=demo" onClick={() => setIsOpen(false)}>
-              Schedule demo
+            <Link className="fj-button fj-button--dark" href="/contact?intent=demo" onClick={() => setIsOpen(false)}>
+              Get a demo <ArrowRight size={17} />
             </Link>
           </motion.nav>
         )}

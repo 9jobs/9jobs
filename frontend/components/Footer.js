@@ -1,5 +1,6 @@
+"use client";
+
 import Link from "next/link";
-import { FadeIn, FadeUp, Stagger, StaggerItem } from "./Motion";
 import { ArrowRight } from "lucide-react";
 
 const footerGroups = [
@@ -7,71 +8,73 @@ const footerGroups = [
     title: "Product",
     links: [
       { href: "/", label: "Homepage" },
-      { href: "/feature", label: "Features" },
+      { href: "/feature", label: "Solutions" },
+      { href: "/feature", label: "Feature" },
       { href: "/pricing", label: "Pricing" },
-      { href: "/contact?intent=demo", label: "Demo" },
+      { href: "/blog", label: "Newsletter" },
     ],
   },
   {
     title: "Company",
     links: [
       { href: "/about", label: "About" },
-      { href: "/blog", label: "Blog" },
-      { href: "/contact", label: "Contact" },
+      { href: "/contact", label: "Careers" },
+      { href: "/contact", label: "Contact us" },
+      { href: "/contact", label: "Privacy" },
       { href: "/login", label: "Log in" },
     ],
   },
   {
     title: "Resources",
     links: [
-      { href: "/blog", label: "Career tips" },
-      { href: "/feature", label: "Resume support" },
-      { href: "/feature", label: "LinkedIn support" },
-      { href: "/contact", label: "Help desk" },
+      { href: "/blog", label: "Start here" },
+      { href: "/blog", label: "Tutorials" },
+      { href: "/blog", label: "Blog" },
+      { href: "/blog", label: "Article" },
     ],
   },
 ];
 
 export default function Footer() {
   return (
-    <footer className="site-footer">
-      <div className="container-wide">
-        <Stagger className="footer-grid">
-          <StaggerItem>
-            <Link className="brand" href="/">
-              <span className="brand-mark">9</span>
+    <footer className="site-footer fj-footer">
+      <div className="fj-container">
+        <div className="fj-footer-grid">
+          <div className="fj-footer-brand">
+            <Link className="brand fj-brand" href="/">
+              <span className="fj-brand-mark" aria-hidden="true">
+                <span />
+                <span />
+              </span>
               <span>9Jobs</span>
             </Link>
-            <FadeIn as="p">
-              Join candidates and teams using 9Jobs to apply smarter, polish
-              profiles, and move faster through the hiring journey.
-            </FadeIn>
-            <div className="newsletter">
+            <p>Join the 40,000+ businesses in Australia using 9Jobs, today.</p>
+            <form className="fj-newsletter">
               <input aria-label="Email address" type="email" placeholder="Email address" />
-              <button className="btn btn-lime" type="button">
+              <button className="fj-button fj-button--lime" type="button">
                 Get updated <ArrowRight size={16} />
               </button>
-            </div>
-          </StaggerItem>
+            </form>
+          </div>
 
           {footerGroups.map((group) => (
-            <StaggerItem key={group.title}>
-              <h4>{group.title}</h4>
-              <div className="footer-links">
+            <div className="fj-footer-column" key={group.title}>
+              <h3>{group.title}</h3>
+              <div className="fj-footer-links">
                 {group.links.map((link) => (
-                  <Link key={`${group.title}-${link.label}`} href={link.href}>
+                  <Link href={link.href} key={`${group.title}-${link.label}`}>
                     {link.label}
                   </Link>
                 ))}
               </div>
-            </StaggerItem>
+            </div>
           ))}
-        </Stagger>
+        </div>
 
-        <FadeUp className="footer-bottom">
-          <span>© 2026 9Jobs. All rights reserved.</span>
+        <div className="footer-bottom fj-footer-bottom">
+          <span>&copy; 2026 9Jobs, made by Om</span>
           <span>Australia / Global career support</span>
-        </FadeUp>
+        </div>
       </div>
     </footer>
   );
