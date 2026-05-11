@@ -1,5 +1,6 @@
 {
   "name": "frontend",
+  "//": "trigger redeploy",
   "version": "0.1.0",
   "private": true,
   "scripts": {
