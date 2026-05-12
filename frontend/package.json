@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "node scripts/ensure-vercel-manifest.cjs",
     "start": "next start",
     "lint": "eslint"
   },

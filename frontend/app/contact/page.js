@@ -31,13 +31,14 @@ export default async function ContactPage({ searchParams }) {
 
             <div className="fj-contact-list">
               <a href="tel:+61422552002"><Phone size={20} /> +61 422 552 002</a>
+              <a href="tel:+61422279428"><Phone size={20} /> Business: +61 422 279 428</a>
               <a href="mailto:9jobsapplicationservice@gmail.com"><Mail size={20} /> 9jobsapplicationservice@gmail.com</a>
               <span><MapPin size={20} /> Melbourne, Australia</span>
             </div>
 
             <div className="fj-contact-hours">
               <strong>Business hours</strong>
-              <p>Monday to Friday, 9:00 AM to 6:00 PM.</p>
+              <p>Monday to Saturday, 8:00 AM to 6:00 PM.</p>
             </div>
           </aside>
 

@@ -1,6 +1,13 @@
+.git
+.vercel
 node_modules
 frontend/node_modules
 frontend/.next
 frontend/.next-build
-.git
+frontend/.qa
+frontend/.chrome-profile-*
+frontend/dev-server*.log
 .env
+*.bak
+Thumbs.db
+npm-debug.log*
