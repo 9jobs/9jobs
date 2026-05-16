@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { CalendlyLink } from "./CalendlyWidget";
 
 export default function Hero() {
   return (
@@ -23,9 +24,9 @@ export default function Hero() {
           <Link className="btn btn-light" href="/pricing">
             1 day trial
           </Link>
-          <Link className="btn btn-dark" href="/contact?intent=demo">
+          <CalendlyLink className="btn btn-dark">
             Schedule a demo
-          </Link>
+          </CalendlyLink>
         </div>
         <div className="dashboard-shell">
           <Image

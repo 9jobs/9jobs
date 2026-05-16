@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
+import { CalendlyLink } from "../../components/CalendlyWidget";
+import PricingCheckoutButton from "../../components/PricingCheckoutButton";
 
 const plans = [
   {
@@ -56,9 +57,16 @@ export default function PricingPage() {
                   <span key={item}><Check size={17} /> {item}</span>
                 ))}
               </div>
-              <Link className={plan.dark ? "fj-button fj-button--lime" : "fj-button fj-button--ghost"} href="/contact?intent=demo">
-                Get started <ArrowRight size={17} />
-              </Link>
+              
+              <div className="fj-pricing-actions" style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
+                <PricingCheckoutButton 
+                  plan={plan} 
+                  className={plan.dark ? "fj-button fj-button--lime" : "fj-button"}
+                />
+                <CalendlyLink className="fj-button fj-button--ghost">
+                  Book a call <ArrowRight size={17} />
+                </CalendlyLink>
+              </div>
             </article>
           ))}
         </div>
@@ -69,9 +77,9 @@ export default function PricingPage() {
           <Sparkles size={28} />
           <span>Need a custom setup</span>
           <h2>Book a short demo and we will map the right <span className="heading-mark">flow.</span></h2>
-          <Link className="fj-button fj-button--dark" href="/contact?intent=demo">
+          <CalendlyLink className="fj-button fj-button--dark">
             Schedule a demo
-          </Link>
+          </CalendlyLink>
         </div>
       </section>
     </main>

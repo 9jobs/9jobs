@@ -8,6 +8,7 @@ let MongoStore = require("connect-mongo");
 MongoStore = MongoStore.default || MongoStore; //  FIX
 const authRoutes = require("./routes/auth");
 const googleAuthRoutes = require("./routes/googleAuth");
+const stripeRoutes = require("./routes/stripe");
 
 const passport = require("passport");
 require("./middleware/googlePassport"); // 
@@ -82,6 +83,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", googleAuthRoutes);
+app.use("/", stripeRoutes);
 
 
 //  public pages (agar chahiye toh)

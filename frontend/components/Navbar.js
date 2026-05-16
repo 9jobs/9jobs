@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Menu, X } from "lucide-react";
+import { CalendlyLink } from "./CalendlyWidget";
 
 const links = [
   { href: "/about", label: "About" },
@@ -58,9 +59,9 @@ export default function Navbar() {
           <Link href="/pricing" className="fj-button fj-button--ghost">
             1 day trial
           </Link>
-          <Link href="/contact?intent=demo" className="fj-button fj-button--dark">
+          <CalendlyLink className="fj-button fj-button--dark">
             Get a demo <ArrowRight size={17} />
-          </Link>
+          </CalendlyLink>
         </div>
 
         <motion.button
@@ -98,9 +99,9 @@ export default function Navbar() {
             <Link className="fj-button fj-button--ghost" href="/pricing" onClick={() => setIsOpen(false)}>
               1 day trial
             </Link>
-            <Link className="fj-button fj-button--dark" href="/contact?intent=demo" onClick={() => setIsOpen(false)}>
+            <CalendlyLink className="fj-button fj-button--dark" onClick={() => setIsOpen(false)}>
               Get a demo <ArrowRight size={17} />
-            </Link>
+            </CalendlyLink>
           </motion.nav>
         )}
       </AnimatePresence>

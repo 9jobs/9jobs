@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { CalendlyLink } from "../../components/CalendlyWidget";
 import {
   ArrowRight,
   BriefcaseBusiness,
@@ -134,9 +134,9 @@ export default function About() {
         <div className="fj-container fj-final-cta">
           <Sparkles size={28} />
           <h2>Shape the future of job applying with <span className="heading-mark">9Jobs.</span></h2>
-          <Link className="fj-button fj-button--dark" href="/contact?intent=demo">
+          <CalendlyLink className="fj-button fj-button--dark">
             Get started <ArrowRight size={17} />
-          </Link>
+          </CalendlyLink>
         </div>
       </section>
     </main>

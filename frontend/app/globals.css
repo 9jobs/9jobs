@@ -2330,7 +2330,10 @@ section.hero.hero-split,
 
 .fj-nav-inner {
   width: min(100%, 1380px);
-  min-height: 72px;
+  min-height: 62px;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto minmax(260px, 1fr);
+  gap: 16px;
 }
 
 .fj-brand {
@@ -2373,7 +2376,16 @@ section.hero.hero-split,
 
 .fj-nav-links,
 .fj-nav-actions {
-  gap: 46px;
+  gap: 30px;
+}
+
+.fj-nav-links {
+  justify-self: center;
+}
+
+.fj-nav-actions {
+  justify-self: end;
+  gap: 14px;
 }
 
 .fj-nav-links a {
@@ -3724,7 +3736,7 @@ section.hero.hero-split,
   color: var(--fj-ink);
   font-size: 0.9rem;
   font-weight: 800;
-  text-transform: lowercase;
+  text-transform: uppercase;
 }
 
 .fj-footer-links {
@@ -3747,12 +3759,18 @@ section.hero.hero-split,
 }
 
 .fj-footer-bottom {
+  justify-content: center;
+  text-align: center;
   border-top-color: var(--fj-line);
   color: var(--fj-muted);
   font-family: var(--fj-font);
 }
 
 @media (max-width: 1180px) {
+  .fj-nav-inner {
+    grid-template-columns: 1fr auto;
+  }
+
   .fj-nav .fj-nav-links,
   .fj-nav .fj-nav-actions {
     display: none;
@@ -3760,6 +3778,7 @@ section.hero.hero-split,
 
   .fj-menu-button {
     display: inline-flex;
+    justify-self: end;
   }
 
   .fj-dashboard {

@@ -2,6 +2,7 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ScrollAnimations from "../components/ScrollAnimations";
+import { CalendlyLoader } from "../components/CalendlyWidget";
 
 export const metadata = {
   title: "9Jobs | Smarter Job Applying",
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
         {children}
         <Footer />
         <ScrollAnimations />
+        <CalendlyLoader />
       </body>
     </html>
   );

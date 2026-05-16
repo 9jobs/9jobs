@@ -114,8 +114,7 @@ export default function Footer() {
         </div>
 
         <div className="footer-bottom fj-footer-bottom">
-          <span>&copy; 2026 9Jobs, made by Om</span>
-          <span>Australia / Global career support</span>
+          <span>&copy; 2026 9Jobs website. All rights reserved.</span>
         </div>
       </div>
     </footer>

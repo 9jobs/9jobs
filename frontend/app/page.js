@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Testimonials from "../components/Testimonials";
+import { CalendlyLink } from "../components/CalendlyWidget";
 import {
   ArrowRight,
   Bell,
@@ -175,7 +176,7 @@ export default function Home() {
           <p>A job applying platform that works the better than you do. For you!</p>
           <div className="fj-actions">
             <Link className="fj-button fj-button--ghost" href="/pricing">1 day trial</Link>
-            <Link className="fj-button fj-button--dark" href="/contact?intent=demo">Get a demo</Link>
+            <CalendlyLink className="fj-button fj-button--dark">Get a demo</CalendlyLink>
           </div>
         </div>
 
@@ -197,9 +198,9 @@ export default function Home() {
         <div className="fj-container">
           <div className="fj-section-head fj-section-head--split">
             <h2>Everything you need, all in one <span className="heading-mark">place</span></h2>
-            <Link className="fj-button fj-button--dark" href="/contact?intent=demo">
+            <CalendlyLink className="fj-button fj-button--dark">
               Get a demo <ArrowRight size={17} />
-            </Link>
+            </CalendlyLink>
           </div>
           <div className="fj-card-grid fj-card-grid--three">
             {featureCards.map((item) => {
@@ -222,7 +223,7 @@ export default function Home() {
           <div className="fj-activity-card">
             <div className="fj-activity-top">
               <span className="fj-brand-mark fj-brand-mark--small" aria-hidden="true"><span /><span /></span>
-              <Link className="fj-button fj-button--dark" href="/contact?intent=demo">Generate report</Link>
+              <CalendlyLink className="fj-button fj-button--dark">Generate report</CalendlyLink>
             </div>
             {[
               ["Alex Marshall", "processed a payroll"],
@@ -322,7 +323,7 @@ export default function Home() {
           <div className="fj-copy-block">
             <h2>Make actionable decisions <span className="heading-mark">simpler</span></h2>
             <p>Focus on what matters. Let us handle the busywork while you build better relationships.</p>
-            <Link className="fj-button fj-button--dark" href="/contact?intent=demo">Get a demo</Link>
+            <CalendlyLink className="fj-button fj-button--dark">Get a demo</CalendlyLink>
           </div>
         </div>
       </section>
@@ -365,9 +366,9 @@ export default function Home() {
             <span className="fj-label">FAQs</span>
             <h2>Questions before you start with <span className="heading-mark">9Jobs.</span></h2>
             <p>Clear answers for candidates who want a more organized, Australia-ready job search.</p>
-            <Link className="fj-button fj-button--dark" href="/contact?intent=demo">
+            <CalendlyLink className="fj-button fj-button--dark">
               Talk to us <ArrowRight size={17} />
-            </Link>
+            </CalendlyLink>
           </div>
 
           <div className="fj-faq-list">
@@ -390,7 +391,7 @@ export default function Home() {
           <h2>Start for free <span className="heading-mark">today.</span></h2>
           <div className="fj-actions">
             <Link className="fj-button fj-button--ghost" href="/pricing">1 day trial</Link>
-            <Link className="fj-button fj-button--dark" href="/contact?intent=demo">Schedule a demo</Link>
+            <CalendlyLink className="fj-button fj-button--dark">Schedule a demo</CalendlyLink>
           </div>
         </div>
       </section>

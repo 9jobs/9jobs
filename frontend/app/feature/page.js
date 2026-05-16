@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { CalendlyLink } from "../../components/CalendlyWidget";
 import {
   ArrowRight,
   Bot,
@@ -102,9 +102,9 @@ export default function FeaturePage() {
       <section className="fj-section fj-section--tight">
         <div className="fj-container fj-final-cta">
           <h2>Get a clean 9Jobs <span className="heading-mark">walkthrough.</span></h2>
-          <Link className="fj-button fj-button--dark" href="/contact?intent=demo">
+          <CalendlyLink className="fj-button fj-button--dark">
             Schedule a demo <ArrowRight size={17} />
-          </Link>
+          </CalendlyLink>
         </div>
       </section>
     </main>
