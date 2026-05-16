@@ -64,7 +64,7 @@ export default function PricingPage() {
                   className={plan.dark ? "fj-button fj-button--lime" : "fj-button"}
                 />
                 <CalendlyLink className="fj-button fj-button--ghost">
-                  Book a call <ArrowRight size={17} />
+                  Get a schedule <ArrowRight size={17} />
                 </CalendlyLink>
               </div>
             </article>

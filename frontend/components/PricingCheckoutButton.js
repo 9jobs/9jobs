@@ -40,7 +40,7 @@ export default function PricingCheckoutButton({ plan, className }) {
 
   return (
     <button onClick={handleCheckout} className={className}>
-      Buy Now <CreditCard size={17} style={{ marginLeft: '8px' }} />
+      Pay Now <CreditCard size={17} style={{ marginLeft: '8px' }} />
     </button>
   );
 }
