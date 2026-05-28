@@ -34,20 +34,20 @@ const resumePlans = [
     dark: true
   },
   {
-    name: "Resume + LinkedIn Optimisation",
+    name: "Resume + LinkedIn + SEEK Optimisation",
     badge: "Most Popular",
     price: "$89",
     period: "one-time",
-    description: "Complete professional branding to boost your visibility and career opportunities.",
+    description: "Complete professional branding to boost your Resume, LinkedIn, and SEEK profile visibility.",
     items: [
       "Everything in Resume Makeover",
       "LinkedIn profile optimization",
-      "LinkedIn headline & About section rewrite",
+      "SEEK profile optimization",
+      "Headline & About section rewrite",
       "Experience & skills enhancement",
-      "Keyword optimization for LinkedIn & ATS",
-      "Custom banner & profile improvements",
-      "Job-search tips & profile visibility guide",
-      "PDF resume + LinkedIn profile delivery"
+      "ATS & search keyword targeting",
+      "Profile visibility improvements",
+      "PDF delivery + profile guides"
     ],
     initial: { opacity: 0, x: 90, rotate: 2, skewY: -2.5, scale: 1.05 },
     animate: { opacity: 1, x: 0, rotate: 2, skewY: -2.5, scale: 1.05 },

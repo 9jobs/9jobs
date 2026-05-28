@@ -4190,7 +4190,7 @@ section.hero.hero-split,
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 580px;
+  min-height: 540px;
   border-radius: 36px;
   box-shadow: 0 4px 30px rgba(3, 31, 42, 0.02);
   transform: skewY(-2.5deg);
