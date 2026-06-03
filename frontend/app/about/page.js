@@ -36,6 +36,9 @@ export const metadata = {
   title: "About | 9Jobs",
   description:
     "Learn how 9Jobs helps IT and non-IT candidates find better opportunities with resume, LinkedIn, application, and follow-up support.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function About() {

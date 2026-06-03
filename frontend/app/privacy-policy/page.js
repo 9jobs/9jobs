@@ -5,6 +5,9 @@ import styles from "./page.module.css";
 export const metadata = {
   title: "Privacy Policy | 9Jobs",
   description: "Learn about how 9Jobs Application Services collects, uses, and protects your information.",
+  alternates: {
+    canonical: "/privacy-policy",
+  },
 };
 
 export default function PrivacyPolicy() {

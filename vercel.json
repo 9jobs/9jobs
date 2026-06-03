@@ -1,6 +1,19 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "frontend/.next",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.9jobs.co"
+        }
+      ],
+      "destination": "https://9jobs.co/:path*",
+      "permanent": true
+    }
+  ],
   "functions": {
     "api/index.js": {
       "includeFiles": "server/views/**"

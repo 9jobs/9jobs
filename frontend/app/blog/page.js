@@ -10,6 +10,9 @@ const posts = [
 export const metadata = {
   title: "Blog | 9Jobs",
   description: "Career tips from 9Jobs for resumes, LinkedIn profiles, interviews, and smarter applications.",
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 export default function BlogPage() {

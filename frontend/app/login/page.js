@@ -3,6 +3,9 @@ import AuthPanel from "../../components/AuthPanel";
 export const metadata = {
   title: "Login | 9Jobs",
   description: "Sign in to 9Jobs.",
+  alternates: {
+    canonical: "/login",
+  },
 };
 
 export default function LoginPage() {

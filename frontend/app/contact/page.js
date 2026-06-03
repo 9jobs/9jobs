@@ -4,6 +4,9 @@ import { Mail, MapPin, Phone, Sparkles } from "lucide-react";
 export const metadata = {
   title: "Contact | 9Jobs",
   description: "Contact 9Jobs for demos, resume support, LinkedIn optimization, and job application help.",
+  alternates: {
+    canonical: "/contact",
+  },
 };
 
 export default async function ContactPage({ searchParams }) {

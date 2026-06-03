@@ -32,6 +32,9 @@ const plans = [
 export const metadata = {
   title: "Pricing | 9Jobs",
   description: "Choose a 9Jobs plan for resume, LinkedIn, application, and team support.",
+  alternates: {
+    canonical: "/pricing",
+  },
 };
 
 export default function PricingPage() {

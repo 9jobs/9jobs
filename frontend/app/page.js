@@ -27,6 +27,12 @@ import {
 
 const trustedBrands = ["bluebird", "Galaxy", "berry", "Chameleon", "SHIP4450"];
 
+export const metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
+
 const candidates = [
   ["David Wilson", "Founder & CEO", "$200,000", "Pending", "DW"],
   ["Jessica Hayes", "Co-founder & CFO", "$200,000", "Pending", "JH"],

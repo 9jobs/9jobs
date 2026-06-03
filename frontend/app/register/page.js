@@ -3,6 +3,9 @@ import AuthPanel from "../../components/AuthPanel";
 export const metadata = {
   title: "Register | 9Jobs",
   description: "Create a 9Jobs account placeholder.",
+  alternates: {
+    canonical: "/register",
+  },
 };
 
 export default function RegisterPage() {
