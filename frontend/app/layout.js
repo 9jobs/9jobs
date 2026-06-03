@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import ScrollAnimations from "../components/ScrollAnimations";
 import { CalendlyLoader } from "../components/CalendlyWidget";
 import WhatsAppButton from "../components/WhatsAppButton";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata = {
   metadataBase: new URL("https://9jobs.co"),
@@ -28,6 +29,9 @@ export default function RootLayout({ children }) {
         <CalendlyLoader />
         <WhatsAppButton />
       </body>
+      {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+      )}
     </html>
   );
 }
