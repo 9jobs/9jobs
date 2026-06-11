@@ -16,9 +16,9 @@ export function getContentForPage(citySlug, pageSlug = null) {
   let strategyGuide = "";
   if (!pageSlug) {
     strategyGuide = `Achieving long-term career success in ${city.name} requires a multi-layered approach to your job search. A successful search is built on three main pillars: an ATS-compliant resume, a fully optimized LinkedIn profile, and a highly visible SEEK profile. Recruiters in ${city.name} receive hundreds of applications for every advertised vacancy on major job boards. To manage this volume, they search internal databases and platforms like SEEK and LinkedIn using complex boolean queries. If your digital footprint does not contain the precise combination of local keywords and industry certifications, your profile remains invisible. Additionally, passing the human screening phase requires a resume layout that is clean, chronological, and focuses on accomplishments rather than basic duties. Our team at 9Jobs specializes in creating this professional alignment. We rewrite your CV from scratch, ensure your LinkedIn profile matches your document exactly, and guide you through the local interview methods so you can apply with confidence. Furthermore, we help you understand the local networking landscape, identifying key industry groups and associations in ${city.name} where you can build professional relationships and uncover opportunities that are never advertised publicly. By aligning your application materials with local hiring conventions and optimizing your search workflow, we help you reduce your job hunt duration and secure a role that matches your skills and salary expectations.`;
-  } else if (pageSlug === "get-jobs") {
+  } else if (pageSlug === "get-jobs" || pageSlug === "get-jobs-vic") {
     strategyGuide = `If you want to know how to get jobs in ${city.name}, you must understand that the 'hidden job market' accounts for a significant portion of local hires. Many professional opportunities are filled through headhunting, internal transfers, or specialized recruitment agencies before they are ever published online. To tap into this network in ${city.state}, you need a proactive sourcing strategy. This includes connecting with top local recruitment specialists who focus on your industry, optimizing your LinkedIn settings to 'Open to Work' for specific hiring regions, and building a resume that passes the automated filters used by large agencies. When applying to roles in ${city.name}, ensure your contact information, target location, and working rights or visa status are explicitly clear. Many recruiters filter out candidates whose locations appear to be overseas or interstate. Outsourcing your application process to a service like 9Jobs allows you to maintain a consistent daily application volume, ensuring you are among the first applicants for every newly posted position. Our team helps you identify the leading recruitment agencies in ${city.name}, teaches you how to follow up effectively after submitting applications, and helps you optimize your online presence so that headhunters can discover you. By taking a proactive, systematic approach to the local market, you can navigate the recruitment landscape with ease and secure interviews for high-paying roles.`;
-  } else if (pageSlug === "jobs") {
+  } else if (pageSlug === "jobs" || pageSlug === "jobs-melbourne" || pageSlug === "jobs-perth" || pageSlug === "jobs-in-perth" || pageSlug === "jobs-in-perth-wa") {
     strategyGuide = `Looking for jobs in ${city.name} requires a structured campaign that targets the most active hiring platforms. In Australia, SEEK remains the primary job search channel, followed by LinkedIn and Jora. However, simply uploading your resume and clicking 'Quick Apply' is rarely successful. To secure callbacks in ${city.name}, your profile must be optimized to match the job descriptions. This means analyzing the advertisements for target keywords and integrating them naturally into your CV and profiles. Furthermore, employers in ${city.name} look for candidates who show clear value through metrics—such as budgets managed, team sizes led, or revenue growth generated. Rather than listing tasks, your application should highlight outcomes. 9Jobs helps you navigate this by providing daily job sourcing and tailored applications, placing your optimized resume directly in front of active hiring managers in ${city.name} and ensuring you secure consistent mock interview practice. We analyze local employment trends, identify which companies are currently expanding their teams in ${city.name}, and target our sourcing efforts to match these high-growth sectors. This targeted approach ensures that your applications are highly relevant, greatly increasing your chances of securing callbacks and landing your ideal position in the local market.`;
   } else if (pageSlug === "resume" || pageSlug === "resume-writer" || pageSlug === "resume-help") {
     strategyGuide = `A professional resume in ${city.name} is the single most important document in your job search toolkit. Australian resume writing conventions differ significantly from those in other global regions. A standard CV in ${city.state} should be between 2 and 3 pages, written in reverse-chronological order, and must exclude personal details like age, marital status, or a profile picture. More importantly, it must be formatted to pass Applicant Tracking Systems (ATS) like Workday, Taleo, and SuccessFactors. These systems parse your resume, stripping away styling to index your skills and work history. If your resume uses multi-column layouts, graphics, tables, or non-standard fonts, the scanner may scramble your details, leading to an automatic rejection. 9Jobs' resume writers specialize in building clean, single-column documents that parse perfectly, utilizing strong action verbs and metrics-focused accomplishments to prove your expertise to ${city.name} hiring teams. We work with you to extract your key achievements, translate your professional history into Australian English, and format your document to match the exact standards expected by local recruiters. Our writers understand the specific keyword densities and formatting rules that pass automated screens, ensuring that your resume gets read by actual decision-makers and leads to interview invitations.`;
@@ -59,22 +59,33 @@ export function getContentForPage(citySlug, pageSlug = null) {
   // Breadcrumb structure
   const breadcrumbs = [
     { name: "Home", url: "/" },
-    { name: "Australian Jobs", url: "/melbourne" }, // Fallback to first city
-    { name: `${city.name} Jobs`, url: `/${citySlug}` }
+    { name: "Australian Jobs", url: "/jobs/melbourne" }, // Fallback to first city
+    { name: `${city.name} Jobs`, url: `/jobs/${citySlug}` }
   ];
   if (pageSlug) {
+    let url = `/jobs/${citySlug}/${pageSlug}`;
     breadcrumbs.push({
       name: config.keyword,
-      url: `/${citySlug}/${pageSlug}`
+      url: url
     });
   }
 
-  // Cross links to other cities
-  const otherCities = Object.keys(cities)
-    .filter(slug => slug !== citySlug)
-    .map(slug => ({
-      name: cities[slug].name,
-      href: `/${slug}`
+  // Cross links to other cities (Related Locations)
+  const allLocations = [
+    { city: "melbourne", name: "Jobs in Melbourne", href: "/jobs/melbourne" },
+    { city: "sydney", name: "Jobs in Sydney NSW", href: "/jobs/sydney" },
+    { city: "brisbane", name: "Jobs in Brisbane QLD", href: "/jobs/brisbane" },
+    { city: "perth", name: "Jobs in Perth WA", href: "/jobs/perth" },
+    { city: "adelaide", name: "Jobs in Adelaide SA", href: "/jobs/adelaide" },
+    { city: "geelong", name: "Jobs in Geelong VIC", href: "/jobs/geelong" },
+    { city: "vic", name: "Jobs in Victoria VIC", href: "/jobs/vic" }
+  ];
+
+  const otherCities = allLocations
+    .filter(loc => loc.city !== citySlug)
+    .map(loc => ({
+      name: loc.name,
+      href: loc.href
     }));
 
   // Extra Market Analysis (approx 150 words)

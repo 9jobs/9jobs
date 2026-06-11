@@ -82,7 +82,7 @@ export default function HowToGetJobPage() {
           <h1>How to Get a Job in Australia: The Definitive <span className="heading-mark">Guide</span></h1>
           <p>Navigating the local job search landscape, passing recruiter screens, and securing employment offers.</p>
           <div style={{ marginTop: "16px", fontSize: "0.9rem", color: "var(--muted)" }}>
-            Published: June 3, 2026 • 8 min read
+            Published: June 3, 2026 â€¢ 8 min read
           </div>
         </div>
       </section>
@@ -91,7 +91,7 @@ export default function HowToGetJobPage() {
         <div className="fj-container" style={{ maxWidth: "800px", margin: "0 auto", color: "var(--muted)", lineHeight: "1.8", display: "flex", flexDirection: "column", gap: "24px" }}>
           <h2>Introduction: The Reality of the Australian Job Search</h2>
           <p>
-            Relocating or transitioning to a new role in Australia is an exciting career milestone. However, many candidates approach the local market with global strategies that do not align with local employer expectations. The recruitment market in Sydney, Melbourne, Brisbane, and other capital cities is characterized by structured processes, high digital filtering, and specific cultural preferences.
+            Relocating or transitioning to a new role in Australia is an exciting career milestone. However, many candidates approach the local market with global strategies that do not align with local employer expectations. The recruitment market in <Link href="/jobs/sydney">Sydney</Link>, <Link href="/jobs/melbourne">Melbourne</Link>, <Link href="/jobs/brisbane">Brisbane</Link>, <Link href="/jobs/perth">Perth</Link>, and <Link href="/jobs/adelaide">Adelaide</Link> is characterized by structured processes, high digital filtering, and specific cultural preferences.
           </p>
           <p>
             Whether you are a local professional looking for your next challenge or an international candidate planning a relocation, understanding these rules is the difference between sending hundreds of ignored applications and receiving consistent interview calls. This guide outlines the key steps to navigate the hiring process successfully.
@@ -110,13 +110,13 @@ export default function HowToGetJobPage() {
             Applicant Tracking Systems (ATS) are widely used by mid-to-large companies in Australia to screen resumes. These tools scan files for specific keywords, education history, and job titles. If your resume contains complex elements like columns, text boxes, tables, icons, or headers, the parsing software will scramble the text, automatically classifying your profile as incomplete or unqualified.
           </p>
           <p>
-            To pass these filters, your resume must follow clean formatting rules: a single-column layout, standard fonts, and reverse-chronological order. It must also avoid personal details like photos, dates of birth, or marital status due to anti-discrimination laws. For a complete guide on writing an optimized, localized resume, check our [Resume Writing Services Australia](/resume-writing-services-australia) guide.
+            To pass these filters, your resume must follow clean formatting rules: a single-column layout, standard fonts, and reverse-chronological order. It must also avoid personal details like photos, dates of birth, or marital status due to anti-discrimination laws. For a complete guide on writing an optimized, localized resume, check our [Resume Writing Services Australia](/services/resume-writing) guide.
           </p>
 
           <div style={{ background: "var(--surface)", border: "1px solid var(--line)", padding: "24px", borderRadius: "8px", margin: "24px 0" }}>
             <h3 style={{ marginTop: 0 }}>Optimize Your Resume Today</h3>
             <p>Get a professionally written, ATS-friendly resume tailored specifically for the Australian job market by our experts.</p>
-            <Link href="/resume-writing-services-australia" className="fj-button fj-button--dark">
+            <Link href="/services/resume-writing" className="fj-button fj-button--dark">
               Learn about Resume Services <ArrowRight size={16} />
             </Link>
           </div>
@@ -126,7 +126,7 @@ export default function HowToGetJobPage() {
             In Australia, SEEK is the dominant job board. Recruiters use it to post ads and search the database for talent. If you do not have an optimized SEEK profile, you are missing out on a massive portion of the job market.
           </p>
           <p>
-            Ensure your SEEK profile summary is complete, lists your target role titles, specifies your location, and targets appropriate salary ranges. Set your profile visibility to 'Standard' so local recruiters can discover your profile when sourcing candidates. Read our [SEEK Profile Optimization](/seek-profile-optimization) tips to learn how to configure your settings to attract search inquiries.
+            Ensure your SEEK profile summary is complete, lists your target role titles, specifies your location, and targets appropriate salary ranges. Set your profile visibility to 'Standard' so local recruiters can discover your profile when sourcing candidates. Read our [SEEK Profile Optimization](/services/seek-profile-optimization) tips to learn how to configure your settings to attract search inquiries.
           </p>
 
           <h2>Step 4: Align Your LinkedIn Profile with Local Sourcing Keywords</h2>
@@ -134,7 +134,7 @@ export default function HowToGetJobPage() {
             Recruiters use LinkedIn Recruiter to source candidates before posting job advertisements. If your LinkedIn headline only lists your current title rather than your core skills and target role titles, you will remain invisible in search queries.
           </p>
           <p>
-            Your headline must incorporate target terms (e.g. &quot;Full Stack Developer | React, Node.js | Sydney&quot;). Your 'About' section should serve as a compelling introduction that details your expertise and location status. Read our [LinkedIn Profile Optimization](/linkedin-optimization-australia) guide to learn how to stand out to local talent acquisition teams.
+            Your headline must incorporate target terms (e.g. &quot;Full Stack Developer | React, Node.js | Sydney&quot;). Your 'About' section should serve as a compelling introduction that details your expertise and location status. Read our [LinkedIn Profile Optimization](/services/linkedin-optimization) guide to learn how to stand out to local talent acquisition teams.
           </p>
 
           <h2>Step 5: Maintain Daily Application Consistency</h2>
@@ -142,7 +142,7 @@ export default function HowToGetJobPage() {
             Securing a job requires active, consistent application workflows. Many vacancies are filled quickly, often within a week of listing. Checking job boards once a week means you apply after recruiters have already compiled their interview shortlists.
           </p>
           <p>
-            Checking job search platforms daily, reviewing requirements, tailoring applications, and submitting covers letters takes hours of daily work. 9Jobs offers a professional [Job Application Service](/job-application-services-australia) where our team actively researches and submits applications on your behalf daily, ensuring you never miss an opportunity.
+            Checking job search platforms daily, reviewing requirements, tailoring applications, and submitting covers letters takes hours of daily work. 9Jobs offers a professional [Job Application Service](/services/job-application-automation) where our team actively researches and submits applications on your behalf daily, ensuring you never miss an opportunity.
           </p>
 
           <h2>Step 6: Master the Local Interview Process</h2>
@@ -150,7 +150,7 @@ export default function HowToGetJobPage() {
             Once your applications start converting, you will receive phone screening calls. Sourcing teams use these 10-15 minute conversations to confirm your working rights, salary benchmarks, and communication skills. Be ready to explain your background in a structured manner.
           </p>
           <p>
-            Australian hiring managers rely heavily on behavioral interviews. They want to hear real examples of how you resolved problems in past roles using the STAR method (Situation, Task, Action, Result). For mock interview practice, salary negotiation, and local communication coaching, check our [Interview Support Australia](/interview-support-australia) program.
+            Australian hiring managers rely heavily on behavioral interviews. They want to hear real examples of how you resolved problems in past roles using the STAR method (Situation, Task, Action, Result). For mock interview practice, salary negotiation, and local communication coaching, check our [Interview Support Australia](/services/interview-coaching) program.
           </p>
         </div>
       </section>
@@ -194,7 +194,19 @@ export default function HowToGetJobPage() {
                 <article className="fj-city-card" key={`${city.slug}-${idx}`}>
                   <h3>{city.name} Jobs</h3>
                   <p>{city.description}</p>
-                  <Link href={`/${city.slug}`} style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}>
+                  <Link
+                    href={
+                      city.slug === "melbourne" ? "/jobs/melbourne" :
+                      city.slug === "sydney" ? "/jobs/sydney" :
+                      city.slug === "brisbane" ? "/jobs/brisbane" :
+                      city.slug === "perth" ? "/jobs/perth" :
+                      city.slug === "adelaide" ? "/jobs/adelaide" :
+                      city.slug === "geelong" ? "/jobs/geelong" :
+                      city.slug === "vic" ? "/jobs/vic" :
+                      `/${city.slug}`
+                    }
+                    style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}
+                  >
                     See more <ArrowRight size={16} />
                   </Link>
                 </article>

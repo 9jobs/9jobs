@@ -9,8 +9,8 @@ const footerGroups = [
     title: "Product",
     links: [
       { href: "/", label: "Homepage" },
-      { href: "/feature", label: "Solutions" },
-      { href: "/feature", label: "Feature" },
+      { href: "/features", label: "Solutions" },
+      { href: "/features", label: "Features" },
       { href: "/pricing", label: "Pricing" },
       { href: "/blog", label: "Newsletter" },
     ],
@@ -18,11 +18,11 @@ const footerGroups = [
   {
     title: "Services",
     links: [
-      { href: "/resume-writing-services-australia", label: "Resume Writing" },
-      { href: "/linkedin-optimization-australia", label: "LinkedIn Optimization" },
-      { href: "/seek-profile-optimization", label: "SEEK Profile Optimization" },
-      { href: "/job-application-services-australia", label: "Job Application Services" },
-      { href: "/interview-support-australia", label: "Interview Support" },
+      { href: "/services/resume-writing", label: "Resume Writing" },
+      { href: "/services/linkedin-optimization", label: "LinkedIn Optimization" },
+      { href: "/services/seek-profile-optimization", label: "SEEK Profile Optimization" },
+      { href: "/services/job-application-automation", label: "Job Sourcing & Applications" },
+      { href: "/services/interview-coaching", label: "Interview Coaching" },
     ],
   },
   {
@@ -43,15 +43,15 @@ const footerGroups = [
     ],
   },
   {
-    title: "Local Jobs",
+    title: "Popular Locations",
     links: [
-      { href: "/melbourne", label: "Melbourne Jobs" },
-      { href: "/sydney", label: "Sydney Jobs" },
-      { href: "/brisbane", label: "Brisbane Jobs" },
-      { href: "/perth", label: "Perth Jobs" },
-      { href: "/adelaide", label: "Adelaide Jobs" },
-      { href: "/geelong", label: "Geelong Jobs" },
-      { href: "/vic", label: "Victoria Jobs" },
+      { href: "/jobs/melbourne", label: "Jobs in Melbourne" },
+      { href: "/jobs/sydney", label: "Jobs in Sydney" },
+      { href: "/jobs/brisbane", label: "Jobs in Brisbane" },
+      { href: "/jobs/perth", label: "Jobs in Perth" },
+      { href: "/jobs/adelaide", label: "Jobs in Adelaide" },
+      { href: "/jobs/geelong", label: "Jobs in Geelong" },
+      { href: "/jobs/vic", label: "Jobs in Victoria" },
     ],
   },
 ];
@@ -158,8 +158,14 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="footer-bottom fj-footer-bottom">
-          <span>&copy; 2026 9Jobs website. All rights reserved.</span>
+        <div className="footer-bottom fj-footer-bottom" style={{ display: "flex", flexDirection: "column", gap: "10px", borderTop: "1px solid var(--line)", paddingTop: "20px", marginTop: "40px", fontSize: "0.8rem", color: "var(--muted)" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "15px" }}>
+            <span>&copy; 2026 9Jobs. All rights reserved. Registered Australian Business.</span>
+            <span>ABN: 48 652 092 127 | Melbourne Office: Level 12, 120 Collins Street, Melbourne, VIC 3000</span>
+          </div>
+          <p style={{ margin: 0, fontSize: "0.75rem", lineHeight: "1.4" }}>
+            Disclaimer: 9Jobs is a private career support, resume optimization, and job search facilitation provider. We are not associated with or endorsed by SEEK Limited, Jora, or LinkedIn Corporation. All product and service names, logos, and brands are property of their respective owners.
+          </p>
         </div>
       </div>
     </footer>

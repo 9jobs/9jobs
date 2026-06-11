@@ -82,7 +82,7 @@ export default function SeekTipsPage() {
           <h1>SEEK Profile Optimization: Top Sourcing Tips for <span className="heading-mark">Australia</span></h1>
           <p>Learn how to configure your SEEK profile summary, experience tags, and search settings to help you stand out to Australian employers.</p>
           <div style={{ marginTop: "16px", fontSize: "0.9rem", color: "var(--muted)" }}>
-            Published: June 3, 2026 • 7 min read
+            Published: June 3, 2026 â€¢ 7 min read
           </div>
         </div>
       </section>
@@ -116,7 +116,7 @@ export default function SeekTipsPage() {
           <div style={{ background: "var(--surface)", border: "1px solid var(--line)", padding: "24px", borderRadius: "8px", margin: "24px 0" }}>
             <h3>SEEK Profile Audit</h3>
             <p>Get a complete SEEK profile review and custom written summaries to rank higher in recruiter searches.</p>
-            <Link href="/seek-profile-optimization" className="fj-button fj-button--dark">
+            <Link href="/services/seek-profile-optimization" className="fj-button fj-button--dark">
               Learn about SEEK Services <ArrowRight size={16} />
             </Link>
           </div>
@@ -126,7 +126,7 @@ export default function SeekTipsPage() {
             Recruiters filter candidate lists based on salary boundaries and location constraints. If your target salary is set to incorrect benchmarks, you will be excluded from recruiter queries.
           </p>
           <p>
-            Research local industry benchmarks for your level. Set your target salary to a realistic range matching your target role values. Specify your preferred work arrangements (hybrid/remote/onsite) and target cities to ensure you show up in relevant search lists.
+            Research local industry benchmarks for your level. Set your target salary to a realistic range matching your target role values. Specify your preferred work arrangements (hybrid/remote/onsite) and target cities like <Link href="/jobs/sydney">Sydney</Link>, <Link href="/jobs/melbourne">Melbourne</Link>, <Link href="/jobs/brisbane">Brisbane</Link>, <Link href="/jobs/perth">Perth</Link>, and <Link href="/jobs/adelaide">Adelaide</Link> to ensure you show up in relevant search lists.
           </p>
 
           <h2>Step 4: Update Your Skills and Experience Tags</h2>
@@ -178,7 +178,19 @@ export default function SeekTipsPage() {
                 <article className="fj-city-card" key={`${city.slug}-${idx}`}>
                   <h3>{city.name} Jobs</h3>
                   <p>{city.description}</p>
-                  <Link href={`/${city.slug}`} style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}>
+                  <Link
+                    href={
+                      city.slug === "melbourne" ? "/jobs/melbourne" :
+                      city.slug === "sydney" ? "/jobs/sydney" :
+                      city.slug === "brisbane" ? "/jobs/brisbane" :
+                      city.slug === "perth" ? "/jobs/perth" :
+                      city.slug === "adelaide" ? "/jobs/adelaide" :
+                      city.slug === "geelong" ? "/jobs/geelong" :
+                      city.slug === "vic" ? "/jobs/vic" :
+                      `/${city.slug}`
+                    }
+                    style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}
+                  >
                     See more <ArrowRight size={16} />
                   </Link>
                 </article>

@@ -9,26 +9,39 @@ import { CalendlyLink } from "./CalendlyWidget";
 
 const links = [
   { href: "/about", label: "About" },
-  { href: "/feature", label: "Feature" },
+  { href: "/features", label: "Features" },
   { href: "/pricing", label: "Pricing" },
   { href: "/success-stories", label: "Success Stories" },
+  {
+    label: "Australian Jobs",
+    isDropdown: true,
+    dropdownLinks: [
+      { href: "/jobs/melbourne", label: "Melbourne" },
+      { href: "/jobs/sydney", label: "Sydney NSW" },
+      { href: "/jobs/brisbane", label: "Brisbane QLD" },
+      { href: "/jobs/perth", label: "Perth WA" },
+      { href: "/jobs/adelaide", label: "Adelaide SA" },
+      { href: "/jobs/geelong", label: "Geelong VIC" },
+      { href: "/jobs/vic", label: "Victoria VIC" },
+    ],
+  },
   {
     label: "Services",
     isDropdown: true,
     dropdownLinks: [
-      { href: "/resume-writing-services-australia", label: "Resume Writing" },
-      { href: "/linkedin-optimization-australia", label: "LinkedIn Optimization" },
-      { href: "/seek-profile-optimization", label: "SEEK Profile Optimization" },
-      { href: "/job-application-services-australia", label: "Job Application Services" },
-      { href: "/interview-support-australia", label: "Interview Support" },
+      { href: "/services/resume-writing", label: "Resume Writing" },
+      { href: "/services/linkedin-optimization", label: "LinkedIn Optimization" },
+      { href: "/services/seek-profile-optimization", label: "SEEK Profile Optimization" },
+      { href: "/services/job-application-automation", label: "Job Sourcing & Applications" },
+      { href: "/services/interview-coaching", label: "Interview Coaching" },
+      { href: "/blog", label: "Blog" },
     ],
   },
   { href: "/contact", label: "Contact" },
-  { href: "/blog", label: "Blog" },
 ];
 
 function isActive(pathname, href) {
-  if (href === "/feature") return pathname === "/feature" || pathname === "/features";
+  if (href === "/features") return pathname === "/features";
   return pathname === href;
 }
 
@@ -36,8 +49,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [desktopServicesOpen, setDesktopServicesOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [activeDesktopDropdown, setActiveDesktopDropdown] = useState(null);
+  const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 18);
@@ -50,7 +63,7 @@ export default function Navbar() {
     <header className={`site-nav fj-nav${scrolled ? " is-scrolled" : ""}`}>
       <div className="nav-inner fj-nav-inner">
         <Link className="brand fj-brand" href="/" aria-label="9Jobs home">
-          <span className="fj-brand-mark" aria-hidden="true">
+          <span className="fj-brand-mark" aria-hidden="hidden">
             <span />
             <span />
           </span>
@@ -61,18 +74,19 @@ export default function Navbar() {
           {links.map((link) => {
             if (link.isDropdown) {
               const isSubActive = link.dropdownLinks.some((sub) => pathname === sub.href);
+              const isDropdownOpen = activeDesktopDropdown === link.label;
               return (
                 <div
                   key={link.label}
                   className="nav-dropdown-wrapper"
-                  onMouseEnter={() => setDesktopServicesOpen(true)}
-                  onMouseLeave={() => setDesktopServicesOpen(false)}
+                  onMouseEnter={() => setActiveDesktopDropdown(link.label)}
+                  onMouseLeave={() => setActiveDesktopDropdown(null)}
                 >
                   <span className={`nav-dropdown-trigger${isSubActive ? " is-active" : ""}`}>
                     {link.label} <ChevronDown size={14} />
                   </span>
                   <AnimatePresence>
-                    {desktopServicesOpen && (
+                    {isDropdownOpen && (
                       <motion.div
                         className="nav-dropdown-menu"
                         initial={{ opacity: 0, y: 8 }}
@@ -141,24 +155,25 @@ export default function Navbar() {
             {links.map((link) => {
               if (link.isDropdown) {
                 const isSubActive = link.dropdownLinks.some((sub) => pathname === sub.href);
+                const isMobileDropdownOpen = activeMobileDropdown === link.label;
                 return (
                   <div key={link.label} className="mobile-dropdown-container">
                     <button
                       className={`mobile-dropdown-trigger${isSubActive ? " is-active" : ""}`}
                       type="button"
-                      onClick={() => setMobileServicesOpen((prev) => !prev)}
+                      onClick={() => setActiveMobileDropdown((prev) => prev === link.label ? null : link.label)}
                     >
                       <span>{link.label}</span>
                       <ChevronDown
                         size={18}
                         style={{
-                          transform: mobileServicesOpen ? "rotate(180deg)" : "rotate(0deg)",
+                          transform: isMobileDropdownOpen ? "rotate(180deg)" : "rotate(0deg)",
                           transition: "transform 0.2s ease",
                         }}
                       />
                     </button>
                     <AnimatePresence>
-                      {mobileServicesOpen && (
+                      {isMobileDropdownOpen && (
                         <motion.div
                           className="mobile-dropdown-links"
                           initial={{ height: 0, opacity: 0 }}
@@ -171,7 +186,10 @@ export default function Navbar() {
                               key={subLink.href}
                               className={`mobile-dropdown-link-item${pathname === subLink.href ? " is-active" : ""}`}
                               href={subLink.href}
-                              onClick={() => setIsOpen(false)}
+                              onClick={() => {
+                                setIsOpen(false);
+                                setActiveMobileDropdown(null);
+                              }}
                             >
                               {subLink.label}
                             </Link>

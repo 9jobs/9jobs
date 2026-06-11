@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, ChevronDown, FileText, Search, UserCheck, ShieldCheck, Sparkles, Target, Star } from "lucide-react";
-import { CalendlyLink } from "../../components/CalendlyWidget";
+import { CalendlyLink } from "../../../components/CalendlyWidget";
 
 export const metadata = {
-  title: "SEEK Profile Optimization & Optimization Services | 9Jobs",
-  description: "Get more recruiter calls in Australia. Optimize your SEEK profile, set up alert preferences, and stand out in search results with 9Jobs expert help.",
+  title: "SEEK Profile Optimization Service | Stand Out to Agencies",
+  description: "Get headhunted on SEEK. Optimize your SEEK candidate visibility settings, search terms, and summary for Australian recruiters.",
   alternates: {
-    canonical: "/seek-profile-optimization",
+    canonical: "https://9jobs.co/services/seek-profile-optimization",
   },
 };
 
@@ -61,15 +61,85 @@ export default function SeekOptimizationPage() {
     }))
   };
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "SEEK Profile Optimization Services",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "9Jobs",
+      "url": "https://9jobs.co",
+      "logo": "https://9jobs.co/framer/app-icon.svg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Melbourne",
+        "addressRegion": "VIC",
+        "addressCountry": "AU"
+      }
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Australia"
+    },
+    "description": "Professional SEEK profile optimization services to increase visibility to recruitment agencies in Australia.",
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "AUD",
+      "lowPrice": "99",
+      "highPrice": "199",
+      "offerCount": "1"
+    }
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://9jobs.co"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Services",
+        "item": "https://9jobs.co/services"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "SEEK Profile Optimization",
+        "item": "https://9jobs.co/services/seek-profile-optimization"
+      }
+    ]
+  };
+
   return (
     <main className="site-main fj-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
 
       <section className="fj-page-hero">
         <div className="fj-container">
+          <nav className="fj-breadcrumbs" aria-label="Breadcrumb" style={{ marginBottom: "24px", display: "flex", gap: "8px", alignItems: "center", fontSize: "0.88rem", color: "var(--fj-muted)", fontWeight: 600 }}>
+            <Link href="/" style={{ color: "inherit" }}>Home</Link>
+            <span>&gt;</span>
+            <span>Services</span>
+            <span>&gt;</span>
+            <span style={{ color: "var(--fj-ink)", fontWeight: 800 }}>SEEK Profile Optimization</span>
+          </nav>
           <span className="fj-announcement"><span>Services</span> SEEK Profile Optimization</span>
           <h1>Get Recruiter Inquiries with an Optimized <span className="heading-mark">SEEK Profile</span></h1>
           <p>We optimize your SEEK profile summary, experience tags, and search settings to help you stand out to Australian employers and recruitment agencies.</p>
@@ -191,7 +261,7 @@ export default function SeekOptimizationPage() {
         <div className="fj-container fj-leader-card">
           <div>
             <h2>Gain complete coverage of the local market <span className="heading-mark">now</span></h2>
-            <p>Combine your optimized SEEK profile with a professional [Resume Review](/resume-writing-services-australia) and [LinkedIn Profile Optimization](/linkedin-optimization-australia) to maximize calls.</p>
+            <p>Combine your optimized SEEK profile with a professional <Link href="/services/resume-writing">Resume Review</Link> and <Link href="/services/linkedin-optimization">LinkedIn Profile Optimization</Link> to maximize calls.</p>
           </div>
           <div className="fj-leader-media">
             <Sparkles size={120} color="var(--lime)" style={{ margin: "auto" }} />

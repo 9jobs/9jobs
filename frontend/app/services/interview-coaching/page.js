@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, ChevronDown, Bell, Search, UserCheck, ShieldCheck, Sparkles, Target, Star } from "lucide-react";
-import { CalendlyLink } from "../../components/CalendlyWidget";
+import { CalendlyLink } from "../../../components/CalendlyWidget";
 
 export const metadata = {
-  title: "Job Interview Support & Placement Services Australia | 9Jobs",
-  description: "Secure more job offers. Get expert interview notifications, targeted interview preparation, and placement coaching tailored for Australian employers.",
+  title: "Interview Support Australia | Mock Prep & Placement Coaching",
+  description: "Secure more job offers. Get expert interview notifications, targeted STAR behavioral preparation, and placement coaching tailored for Australian employers.",
   alternates: {
-    canonical: "/interview-support-australia",
+    canonical: "https://9jobs.co/services/interview-coaching",
   },
 };
 
@@ -61,15 +61,85 @@ export default function InterviewSupportPage() {
     }))
   };
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Interview Coaching and Prep Support Services",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "9Jobs",
+      "url": "https://9jobs.co",
+      "logo": "https://9jobs.co/framer/app-icon.svg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Melbourne",
+        "addressRegion": "VIC",
+        "addressCountry": "AU"
+      }
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Australia"
+    },
+    "description": "Structured job interview preparation and mock practice coaching tailored to Australian business standards.",
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "AUD",
+      "lowPrice": "149",
+      "highPrice": "399",
+      "offerCount": "2"
+    }
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://9jobs.co"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Services",
+        "item": "https://9jobs.co/services"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Interview Coaching",
+        "item": "https://9jobs.co/services/interview-coaching"
+      }
+    ]
+  };
+
   return (
     <main className="site-main fj-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
 
       <section className="fj-page-hero">
         <div className="fj-container">
+          <nav className="fj-breadcrumbs" aria-label="Breadcrumb" style={{ marginBottom: "24px", display: "flex", gap: "8px", alignItems: "center", fontSize: "0.88rem", color: "var(--fj-muted)", fontWeight: 600 }}>
+            <Link href="/" style={{ color: "inherit" }}>Home</Link>
+            <span>&gt;</span>
+            <span>Services</span>
+            <span>&gt;</span>
+            <span style={{ color: "var(--fj-ink)", fontWeight: 800 }}>Interview Coaching</span>
+          </nav>
           <span className="fj-announcement"><span>Services</span> Interview Support Australia</span>
           <h1>Secure Your Next Job Offer in <span className="heading-mark">Australia</span></h1>
           <p>Mock interviews, behavioral preparation, and negotiation coaching tailored to the expectations of local Australian hiring managers.</p>
@@ -191,7 +261,7 @@ export default function InterviewSupportPage() {
         <div className="fj-container fj-leader-card">
           <div>
             <h2>Align your entire profile for career success <span className="heading-mark">today</span></h2>
-            <p>Pair your interview readiness with an optimized [Professional Resume](/resume-writing-services-australia), [LinkedIn Profile](/linkedin-optimization-australia), and active [Job Applications](/job-application-services-australia).</p>
+            <p>Pair your interview readiness with an optimized <Link href="/services/resume-writing">Professional Resume</Link>, <Link href="/services/linkedin-optimization">LinkedIn Profile</Link>, and active <Link href="/services/job-application-automation">Job Applications</Link>.</p>
           </div>
           <div className="fj-leader-media">
             <Sparkles size={120} color="var(--lime)" style={{ margin: "auto" }} />

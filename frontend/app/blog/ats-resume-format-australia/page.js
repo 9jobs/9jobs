@@ -82,7 +82,7 @@ export default function AtsResumeFormatPage() {
           <h1>Best ATS Resume Format for Australian <span className="heading-mark">Recruiters</span></h1>
           <p>Learn how to format and optimize your resume to pass automated screens, align with local benchmarks, and secure callbacks.</p>
           <div style={{ marginTop: "16px", fontSize: "0.9rem", color: "var(--muted)" }}>
-            Published: June 3, 2026 • 7 min read
+            Published: June 3, 2026 â€¢ 7 min read
           </div>
         </div>
       </section>
@@ -91,7 +91,7 @@ export default function AtsResumeFormatPage() {
         <div className="fj-container" style={{ maxWidth: "800px", margin: "0 auto", color: "var(--muted)", lineHeight: "1.8", display: "flex", flexDirection: "column", gap: "24px" }}>
           <h2>Why ATS Compatibility is the First Gate to Clear</h2>
           <p>
-            When you apply for a job on SEEK, Jora, or LinkedIn, your resume rarely goes straight to a human hiring manager. Instead, it is processed by an Applicant Tracking System (ATS). These databases parse your resume file, extract your experience, and calculate a compatibility score based on how closely your experience matches the job specification.
+            When you apply for a job on SEEK, Jora, or LinkedIn, your resume rarely goes straight to a human hiring manager. Instead, it is processed by an Applicant Tracking System (ATS). This is especially true in highly competitive markets like <Link href="/jobs/sydney">Sydney</Link>, <Link href="/jobs/melbourne">Melbourne</Link>, <Link href="/jobs/brisbane">Brisbane</Link>, <Link href="/jobs/perth">Perth</Link>, and <Link href="/jobs/adelaide">Adelaide</Link> where recruiters process hundreds of applications per role.
           </p>
           <p>
             If your file uses a layout that cannot be read by these scanners, your text becomes scrambled or unreadable, leading to an automatic rejection. To land interviews, your resume must be designed to pass the digital screen first.
@@ -123,7 +123,7 @@ export default function AtsResumeFormatPage() {
           <div style={{ background: "var(--surface)", border: "1px solid var(--line)", padding: "24px", borderRadius: "8px", margin: "24px 0" }}>
             <h3>ATS Formatting Help</h3>
             <p>Our writers specialize in creating ATS-compliant, recruiter-ready resumes tailored for the Australian job market.</p>
-            <Link href="/resume-writing-services-australia" className="fj-button fj-button--dark">
+            <Link href="/services/resume-writing" className="fj-button fj-button--dark">
               Learn about Resume Writing <ArrowRight size={16} />
             </Link>
           </div>
@@ -133,7 +133,7 @@ export default function AtsResumeFormatPage() {
             The ranking score calculated by the ATS relies heavily on keyword matching. Recruiters enter search criteria (e.g. &quot;React Developer&quot;, &quot;Agile&quot;, &quot;SaaS&quot;) and the system shows profiles that contain those terms.
           </p>
           <p>
-            Review the job description of roles you want, find repeating industry terms, and integrate them naturally. Avoid &quot;keyword stuffing&quot;—listing terms without context—as human recruiters will immediately notice. Instead, weave them into accomplishment statements: &quot;Implemented React and Node.js solutions to automate internal data sync, reducing processing time by 20%.&quot;
+            Review the job description of roles you want, find repeating industry terms, and integrate them naturally. Avoid &quot;keyword stuffing&quot;â€”listing terms without contextâ€”as human recruiters will immediately notice. Instead, weave them into accomplishment statements: &quot;Implemented React and Node.js solutions to automate internal data sync, reducing processing time by 20%.&quot;
           </p>
 
           <h2>Achievement-Focused Writing vs. Task Listing</h2>
@@ -185,7 +185,19 @@ export default function AtsResumeFormatPage() {
                 <article className="fj-city-card" key={`${city.slug}-${idx}`}>
                   <h3>{city.name} Jobs</h3>
                   <p>{city.description}</p>
-                  <Link href={`/${city.slug}`} style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}>
+                  <Link
+                    href={
+                      city.slug === "melbourne" ? "/jobs/melbourne" :
+                      city.slug === "sydney" ? "/jobs/sydney" :
+                      city.slug === "brisbane" ? "/jobs/brisbane" :
+                      city.slug === "perth" ? "/jobs/perth" :
+                      city.slug === "adelaide" ? "/jobs/adelaide" :
+                      city.slug === "geelong" ? "/jobs/geelong" :
+                      city.slug === "vic" ? "/jobs/vic" :
+                      `/${city.slug}`
+                    }
+                    style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}
+                  >
                     See more <ArrowRight size={16} />
                   </Link>
                 </article>

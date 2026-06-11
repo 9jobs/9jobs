@@ -2,8 +2,8 @@ import ContactForm from "../../components/ContactForm";
 import { Mail, MapPin, Phone, Sparkles } from "lucide-react";
 
 export const metadata = {
-  title: "Contact | 9Jobs",
-  description: "Contact 9Jobs for demos, resume support, LinkedIn optimization, and job application help.",
+  title: "Contact 9Jobs | Resume & Job Search Support in Australia",
+  description: "Get in touch with the 9Jobs team for questions, demo requests, resume writing services, LinkedIn profile optimization, and daily job application support.",
   alternates: {
     canonical: "/contact",
   },

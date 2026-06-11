@@ -1,23 +1,12 @@
 import mongoose from 'mongoose';
 
 const InterviewFeedbackSchema = new mongoose.Schema({
-  companyName: { type: String, required: true },
-  contactName: { type: String, required: true },
-  email: { type: String, required: true },
-  phoneNumber: { type: String, default: '' },
-  candidateName: { type: String, required: true },
-  jobRole: { type: String, required: true },
-  interviewDate: { type: String, required: true },
-  interviewRound: { type: String, required: true },
-  suitable: { type: String, required: true },
-  commRating: { type: String, required: true },
-  skillsRating: { type: String, required: true },
-  profRating: { type: String, required: true },
-  overallRating: { type: String, required: true },
-  sendMore: { type: String, required: true },
-  status: { type: String, required: true },
-  candidateFeedback: { type: String, default: '' },
-  recruiterFeedback: { type: String, default: '' },
-}, { timestamps: true });
+  interviewer_name: { type: String, required: true },
+  job_role: { type: String, required: true },
+  overall_rating: { type: Number, required: true },
+  experience_message: { type: String, required: true },
+  sentiment: { type: String, required: true },
+  show_as_experience: { type: Boolean, default: false },
+}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
 export default mongoose.models.InterviewFeedback || mongoose.model('InterviewFeedback', InterviewFeedbackSchema);

@@ -37,12 +37,82 @@ const posts = [
     "Job Search",
     FileText,
     "/blog/why-you-are-not-getting-job-interviews"
+  ],
+  [
+    "Best Resume Format Australia 2026",
+    "Discover the best resume format for Australia in 2026. Learn about ATS compliance, section ordering, page length, and key terms to stand out to recruiters.",
+    "Resume",
+    FileText,
+    "/blog/best-resume-format-australia-2026"
+  ],
+  [
+    "How ATS Systems Work in Australia",
+    "Learn how Applicant Tracking Systems (ATS) scan, parse, and rank resumes in Australia. Discover formatting rules and keyword strategies to clear automated screens.",
+    "Resume",
+    FileText,
+    "/blog/how-ats-systems-work-in-australia"
+  ],
+  [
+    "How to Get More Interviews in Melbourne",
+    "Get more interview invitations in Melbourne's competitive job market. Discover local hiring trends, recruiter preferences, and profile optimization strategies.",
+    "Job Search",
+    Briefcase,
+    "/blog/how-to-get-more-interviews-in-melbourne"
+  ],
+  [
+    "How to Get More Interviews in Sydney",
+    "Navigate Sydney's corporate job market successfully. Learn about recruiter preferences, key hiring hubs, and profile strategies to get more interviews.",
+    "Job Search",
+    Briefcase,
+    "/blog/how-to-get-more-interviews-in-sydney"
+  ],
+  [
+    "Top LinkedIn Mistakes Job Seekers Make",
+    "Avoid the most common LinkedIn mistakes that keep you invisible to recruiters. Learn how to optimize your headline, summary, and settings for recruitment searches.",
+    "LinkedIn",
+    BookUser,
+    "/blog/top-linkedin-mistakes-job-seekers-make"
+  ],
+  [
+    "SEEK Profile Optimization Checklist",
+    "Optimize your SEEK profile to attract Australian recruiters. Discover settings configurations, summary writing tips, and sitemap indexing tricks.",
+    "SEEK",
+    Search,
+    "/blog/seek-profile-optimization-checklist"
+  ],
+  [
+    "How Recruiters Find Candidates on LinkedIn",
+    "Understand the backend search mechanics of LinkedIn Recruiter. Learn how boolean search, location filters, and profile completeness affect your rankings.",
+    "LinkedIn",
+    BookUser,
+    "/blog/how-recruiters-find-candidates-on-linkedin"
+  ],
+  [
+    "Why Your Resume Gets Rejected in Australia",
+    "Discover the most common reasons why resumes get rejected in Australia. Learn about ATS formatting blocks, duty-based lists, and local terminology.",
+    "Resume",
+    FileText,
+    "/blog/why-your-resume-gets-rejected-in-australia"
+  ],
+  [
+    "Jobs in Australia for New Migrants",
+    "A comprehensive career guide for new migrants seeking jobs in Australia. Learn about work rights, resume localization, and local interview nuances.",
+    "Job Search",
+    Briefcase,
+    "/blog/jobs-in-australia-for-new-migrants"
+  ],
+  [
+    "Australian Resume vs International Resume",
+    "Understand the key differences between Australian resumes and international formats. Discover length rules, personal data exclusions, and localization tips.",
+    "Resume",
+    FileText,
+    "/blog/australian-resume-vs-international-resume"
   ]
 ];
 
 export const metadata = {
-  title: "Blog | 9Jobs",
-  description: "Career tips from 9Jobs for resumes, LinkedIn profiles, interviews, and smarter applications.",
+  title: "9Jobs Career Blog | ATS Resume & Job Sourcing Guides",
+  description: "Expert tips on writing ATS-friendly resumes, optimizing SEEK and LinkedIn profiles, and navigating the recruitment lifecycle in major Australian cities.",
   alternates: {
     canonical: "/blog",
   },
@@ -87,7 +157,19 @@ export default function BlogPage() {
                 <article className="fj-city-card" key={`${city.slug}-${idx}`}>
                   <h3>{city.name} Jobs</h3>
                   <p>{city.description}</p>
-                  <Link href={`/${city.slug}`} style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}>
+                  <Link
+                    href={
+                      city.slug === "melbourne" ? "/jobs/melbourne" :
+                      city.slug === "sydney" ? "/jobs/sydney" :
+                      city.slug === "brisbane" ? "/jobs/brisbane" :
+                      city.slug === "perth" ? "/jobs/perth" :
+                      city.slug === "adelaide" ? "/jobs/adelaide" :
+                      city.slug === "geelong" ? "/jobs/geelong" :
+                      city.slug === "vic" ? "/jobs/vic" :
+                      `/${city.slug}`
+                    }
+                    style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}
+                  >
                     See more <ArrowRight size={16} />
                   </Link>
                 </article>

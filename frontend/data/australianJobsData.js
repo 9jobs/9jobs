@@ -101,6 +101,20 @@ const pagesConfig = [
     title: "Interview Coaching Melbourne | Mock Interviews & Prep | 9Jobs",
     metaDescription: "Master the STAR method for Melbourne interviews. Get local coaching, communication guidance, and mock practice with 9Jobs career coaches."
   },
+  {
+    city: "melbourne",
+    slug: "jobs-melbourne",
+    keyword: "Jobs Melbourne",
+    title: "Jobs Melbourne | Local Sourcing & Vacancies | 9Jobs",
+    metaDescription: "Find jobs in Melbourne. Standard resume configurations, local SEO setups, and daily job application assistance from 9Jobs."
+  },
+  {
+    city: "melbourne",
+    slug: "get-jobs-vic",
+    keyword: "Get Jobs in Melbourne VIC",
+    title: "How to Get Jobs in Melbourne VIC | Professional Support | 9Jobs",
+    metaDescription: "Learn how to get jobs in Melbourne VIC. Adjust your location filters, format your resume for VIC databases, and secure callbacks."
+  },
 
   // Sydney
   {
@@ -211,6 +225,27 @@ const pagesConfig = [
     keyword: "Career Coaching Perth WA",
     title: "Career Coaching Perth | Professional Career Consulting | 9Jobs",
     metaDescription: "Navigate career transitions in Perth. Structural planning, local network insights, and tailored mock interview support."
+  },
+  {
+    city: "perth",
+    slug: "jobs-perth",
+    keyword: "Jobs Perth",
+    title: "Jobs Perth | Local Sourcing & Professional Support | 9Jobs",
+    metaDescription: "Accelerate your search with professional jobs in Perth. Get ATS-optimized resumes and SEEK profile setups to stand out in Western Australia."
+  },
+  {
+    city: "perth",
+    slug: "jobs-in-perth",
+    keyword: "Jobs in Perth",
+    title: "Jobs in Perth | Local Vacancies & Sourcing Support | 9Jobs",
+    metaDescription: "Find vacancies and jobs in Perth, WA. Optimize your profile settings, pass applicant tracking systems, and secure mock interview calls."
+  },
+  {
+    city: "perth",
+    slug: "jobs-in-perth-wa",
+    keyword: "Jobs in Perth WA",
+    title: "Jobs in Perth WA | Local Sourcing & Professional CVs | 9Jobs",
+    metaDescription: "Browse opportunities and jobs in Perth WA. Rebuild your CV, optimize your SEEK preferences, and outsource your applications."
   },
 
   // Adelaide

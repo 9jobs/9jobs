@@ -112,39 +112,50 @@ export default function FeedbackStats() {
           ))}
         </motion.div>
 
-        {/* Feedback CTA Grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "32px", marginTop: "56px", overflow: "hidden" }}>
+        {/* Feedback CTA Banner */}
+        <div style={{ marginTop: "72px" }}>
           
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            variants={getLeftSlideVariant()}
-            style={{ background: "var(--surface-strong)", padding: "56px 32px", borderRadius: "var(--radius-lg)", border: "1px solid var(--line)", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}
+            variants={getCardVariant()}
+            className="feedback-banner"
+            style={{ 
+              background: "var(--surface-strong)", 
+              padding: "var(--banner-padding, 64px 80px)", 
+              borderRadius: "var(--radius-lg)", 
+              border: "1px solid var(--line)", 
+              boxShadow: "var(--soft-shadow)",
+              display: "flex", 
+              flexDirection: "row", 
+              alignItems: "center", 
+              justifyContent: "space-between", 
+              gap: "32px",
+              flexWrap: "wrap",
+              minHeight: "220px"
+            }}
           >
-            <h3 style={{ fontSize: "1.5rem", marginBottom: "12px", fontWeight: "800" }}>Had a recent interview?</h3>
-            <p style={{ color: "var(--muted)", marginBottom: "32px", fontSize: "1.1rem", maxWidth: "320px", lineHeight: "1.6" }}>Help us improve our candidate matching by sharing your interview experience.</p>
-            <Link href="/interview-feedback" passHref legacyBehavior>
-              <motion.a whileHover={!prefersReducedMotion ? { scale: 1.05 } : {}} whileTap={!prefersReducedMotion ? { scale: 0.95 } : {}} className="fj-button fj-button--dark">
-                Share Interview Feedback
-              </motion.a>
-            </Link>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={getRightSlideVariant()}
-            style={{ background: "var(--surface-strong)", padding: "56px 32px", borderRadius: "var(--radius-lg)", border: "1px solid var(--line)", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}
-          >
-            <h3 style={{ fontSize: "1.5rem", marginBottom: "12px", fontWeight: "800" }}>How was our service?</h3>
-            <p style={{ color: "var(--muted)", marginBottom: "32px", fontSize: "1.1rem", maxWidth: "320px", lineHeight: "1.6" }}>Let us know how satisfied you are with 9Jobs' hiring process.</p>
-            <Link href="/client-service-feedback" passHref legacyBehavior>
-              <motion.a whileHover={!prefersReducedMotion ? { scale: 1.05 } : {}} whileTap={!prefersReducedMotion ? { scale: 0.95 } : {}} className="fj-button fj-button--dark">
-                Share Service Experience
-              </motion.a>
-            </Link>
+            <div style={{ flex: "1 1 450px", textAlign: "left" }}>
+              <h3 style={{ fontSize: "2rem", marginBottom: "14px", fontWeight: "900", lineHeight: "1.2" }}>
+                How was our <span className="heading-mark">service?</span>
+              </h3>
+              <p style={{ color: "var(--muted)", fontSize: "1.15rem", lineHeight: "1.7", margin: 0, maxWidth: "550px" }}>
+                Let us know how satisfied you are with 9Jobs' hiring process. Your experience helps us fine-tune our recruitment and support services.
+              </p>
+            </div>
+            <div style={{ flexShrink: 0, width: "var(--btn-wrapper-width, auto)" }}>
+              <Link href="/client-service-feedback" passHref legacyBehavior>
+                <motion.a 
+                  whileHover={!prefersReducedMotion ? { scale: 1.05 } : {}} 
+                  whileTap={!prefersReducedMotion ? { scale: 0.95 } : {}} 
+                  className="fj-button fj-button--dark"
+                  style={{ display: "inline-flex", whiteSpace: "var(--btn-whitespace, nowrap)", padding: "16px 36px", fontSize: "1rem", fontWeight: "700", border: "none", width: "var(--btn-width, auto)", justifyContent: "center", textAlign: "center" }}
+                >
+                  Share Service Experience
+                </motion.a>
+              </Link>
+            </div>
           </motion.div>
 
         </div>

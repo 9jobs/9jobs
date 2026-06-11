@@ -82,7 +82,7 @@ export default function WhyNoInterviewsPage() {
           <h1>Not Getting Job Interviews in Australia? Here is Why & How to <span className="heading-mark">Fix It</span></h1>
           <p>Analyze your application funnel, identify common rejection triggers, and learn how to configure your resume and profiles for success.</p>
           <div style={{ marginTop: "16px", fontSize: "0.9rem", color: "var(--muted)" }}>
-            Published: June 3, 2026 • 8 min read
+            Published: June 3, 2026 â€¢ 8 min read
           </div>
         </div>
       </section>
@@ -94,7 +94,7 @@ export default function WhyNoInterviewsPage() {
             One of the most discouraging experiences in a career transition is submitting dozens of applications only to receive silence or generic automatic rejections (&quot;We regret to inform you...&quot;). Many candidates believe they lack the experience required for the roles they target.
           </p>
           <p>
-            However, in most cases, rejections are not caused by a lack of capability. They are caused by structural errors in your application funnel: formatting issues that block scanner parsing, missing keywords, incorrect visibility parameters, or visa status uncertainty. This guide explains why this happens and how to fix it.
+            However, in most cases, rejections are not caused by a lack of capability. They are caused by structural errors in your application funnel: formatting issues that block scanner parsing, missing keywords, incorrect visibility parameters, or visa status uncertainty. This is true whether you are applying for roles in <Link href="/jobs/sydney">Sydney</Link>, <Link href="/jobs/melbourne">Melbourne</Link>, <Link href="/jobs/brisbane">Brisbane</Link>, <Link href="/jobs/perth">Perth</Link>, or <Link href="/jobs/adelaide">Adelaide</Link>. This guide explains why this happens and how to fix it.
           </p>
 
           <h2>Reason 1: Your Resume is Getting Blocked by ATS Filters</h2>
@@ -102,7 +102,7 @@ export default function WhyNoInterviewsPage() {
             Over 75% of resumes submitted online are filtered out automatically by Applicant Tracking Systems (ATS). If your file uses design templates (with columns, text boxes, tables, or graphs), the parser will scramble the text.
           </p>
           <p>
-            To fix this, rebuild your resume using a clean, single-column format. Remove graphics, charts, and non-standard fonts. Read our [Resume Writing Services](/resume-writing-services-australia) guide to learn how to structure an ATS-friendly layout.
+            To fix this, rebuild your resume using a clean, single-column format. Remove graphics, charts, and non-standard fonts. Read our [Resume Writing Services](/services/resume-writing) guide to learn how to structure an ATS-friendly layout.
           </p>
 
           <h2>Reason 2: You Lack Relevant Sourcing Keywords</h2>
@@ -110,7 +110,7 @@ export default function WhyNoInterviewsPage() {
             Recruiters use search filters to query candidate databases on platforms like SEEK or LinkedIn. If your profile lacks target industry terms and skill tags, you will be excluded from search queries before you apply.
           </p>
           <p>
-            Review local job listings, identify repeating technical terms, tools, or certifications in your field, and add them to your resume and digital profiles. Read our [LinkedIn Optimization](/linkedin-optimization-australia) and [SEEK Optimization](/seek-profile-optimization) guides to configure your keywords correctly.
+            Review local job listings, identify repeating technical terms, tools, or certifications in your field, and add them to your resume and digital profiles. Read our [LinkedIn Optimization](/services/linkedin-optimization) and [SEEK Optimization](/services/seek-profile-optimization) guides to configure your keywords correctly.
           </p>
 
           <div style={{ background: "var(--surface)", border: "1px solid var(--line)", padding: "24px", borderRadius: "8px", margin: "24px 0" }}>
@@ -134,7 +134,7 @@ export default function WhyNoInterviewsPage() {
             Job vacancies in Australia are filled quickly. Sourcing teams start contacting candidates within 48 hours of posting. If you only apply in batches on weekends, you miss out on high-priority roles.
           </p>
           <p>
-            Apply to roles daily as they are listed. 9Jobs offers a professional [Job Application Service](/job-application-services-australia) where our team researches and submits applications on your behalf daily, maintaining consistency.
+            Apply to roles daily as they are listed. 9Jobs offers a professional [Job Application Service](/services/job-application-automation) where our team researches and submits applications on your behalf daily, maintaining consistency.
           </p>
 
           <h2>Reason 5: Weak Phone Screen Performance</h2>
@@ -142,7 +142,7 @@ export default function WhyNoInterviewsPage() {
             If you pass the initial screen, you will receive phone screening calls. Sourcing teams use these conversations to verify basic parameters. If you cannot explain your background, working rights, and salary expectations clearly, you will be filtered out.
           </p>
           <p>
-            Prepare for screening calls by structuring your achievements using the STAR method. For mock interview practice and communication coaching, check our [Interview Support](/interview-support-australia) program.
+            Prepare for screening calls by structuring your achievements using the STAR method. For mock interview practice and communication coaching, check our [Interview Support](/services/interview-coaching) program.
           </p>
         </div>
       </section>
@@ -186,7 +186,19 @@ export default function WhyNoInterviewsPage() {
                 <article className="fj-city-card" key={`${city.slug}-${idx}`}>
                   <h3>{city.name} Jobs</h3>
                   <p>{city.description}</p>
-                  <Link href={`/${city.slug}`} style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}>
+                  <Link
+                    href={
+                      city.slug === "melbourne" ? "/jobs/melbourne" :
+                      city.slug === "sydney" ? "/jobs/sydney" :
+                      city.slug === "brisbane" ? "/jobs/brisbane" :
+                      city.slug === "perth" ? "/jobs/perth" :
+                      city.slug === "adelaide" ? "/jobs/adelaide" :
+                      city.slug === "geelong" ? "/jobs/geelong" :
+                      city.slug === "vic" ? "/jobs/vic" :
+                      `/${city.slug}`
+                    }
+                    style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}
+                  >
                     See more <ArrowRight size={16} />
                   </Link>
                 </article>

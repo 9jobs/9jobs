@@ -1,24 +1,19 @@
-import { Quote } from "lucide-react";
+"use client";
 
-const testimonials = [
+import { Quote, Star } from "lucide-react";
+import { useState, useEffect } from "react";
+
+const defaultTestimonials = [
   {
-    name: "Danielle Rodrigues",
-    role: "HR lead",
-    quote: "9Jobs made the whole application process easier to understand and easier to manage.",
-  },
-  {
-    name: "David Wilson",
-    role: "Founder",
-    quote: "The clean workflow keeps candidates focused on the next meaningful action.",
-  },
-  {
-    name: "Dennis Howell",
-    role: "Software candidate",
-    quote: "My resume and LinkedIn profile felt sharper before the first application went out.",
-  },
+    name: "Nafisa Eqbali",
+    role: "Verified Client",
+    quote: "Great experience with 9Jobs. The team is professional, responsive, and truly supportive. I highly recommend their services",
+    rating: 4
+  }
 ];
 
 function getInitials(name) {
+  if (!name) return "";
   return name
     .split(" ")
     .map((part) => part[0])
@@ -28,7 +23,46 @@ function getInitials(name) {
 }
 
 export default function Testimonials() {
-  const duplicatedTestimonials = [...testimonials, ...testimonials];
+  const [dbTestimonials, setDbTestimonials] = useState([]);
+
+  useEffect(() => {
+    async function loadTestimonials() {
+      try {
+        const res = await fetch(`/api/client-service-feedback?t=${Date.now()}`, {
+          cache: 'no-store'
+        });
+        if (res.ok) {
+          const result = await res.json();
+          if (result.success && Array.isArray(result.data)) {
+            // Only keep testimonials from Nafisa Eqbali
+            const filteredData = result.data.filter(item =>
+              item.full_name && /Nafisa|Nafisha/i.test(item.full_name)
+            );
+            const mapped = filteredData.map(item => ({
+              name: item.full_name,
+              role: "Verified Client",
+              quote: item.experience_message,
+              rating: item.overall_satisfaction
+            }));
+            setDbTestimonials(mapped);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load testimonials:", err);
+      }
+    }
+    loadTestimonials();
+  }, []);
+
+  const listToUse = dbTestimonials.length > 0 ? dbTestimonials : defaultTestimonials;
+
+  // Make sure we have at least 6 items in the list for smooth marquee scrolling without layout gaps
+  let filledList = [...listToUse];
+  while (filledList.length > 0 && filledList.length < 6) {
+    filledList = [...filledList, ...listToUse];
+  }
+
+  const duplicatedTestimonials = [...filledList, ...filledList];
 
   return (
     <section className="fj-section" style={{ overflow: "hidden" }}>
@@ -43,7 +77,7 @@ export default function Testimonials() {
         <div className="marquee-wrapper">
           <div className="marquee-track">
             {duplicatedTestimonials.map((testimonial, idx) => (
-              <article className="fj-feature-card" key={`${testimonial.name}-${idx}`} style={{ width: "400px", flexShrink: 0, padding: "32px", display: "flex", flexDirection: "column", background: "#fff", border: "1px solid var(--fj-line)" }}>
+              <article className="fj-feature-card" key={`${testimonial.name}-${idx}`} style={{ width: "var(--card-width, 400px)", flexShrink: 0, padding: "32px", display: "flex", flexDirection: "column", background: "#fff", border: "1px solid var(--fj-line)" }}>
                 <div style={{ marginBottom: "24px" }}>
                   <Quote size={32} color="var(--fj-line)" strokeWidth={1.5} style={{ fill: "var(--fj-soft)", marginBottom: "16px" }} />
                   <p style={{ fontSize: "1.05rem", fontWeight: 500, color: "var(--fj-muted)", lineHeight: 1.7, margin: 0, textAlign: "left" }}>
@@ -54,7 +88,14 @@ export default function Testimonials() {
                 <div style={{ marginTop: "auto", paddingTop: "24px", borderTop: "1px solid var(--fj-line)", display: "flex", alignItems: "center", gap: 14 }}>
                   <span className="fj-testimonial-avatar" aria-hidden="true">{getInitials(testimonial.name)}</span>
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 2 }}>
-                    <strong style={{ fontSize: "0.95rem", color: "var(--fj-ink)", fontWeight: 700 }}>{testimonial.name}</strong>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                      <strong style={{ fontSize: "0.95rem", color: "var(--fj-ink)", fontWeight: 700 }}>{testimonial.name}</strong>
+                      <div style={{ display: "flex", gap: 2 }}>
+                        {Array.from({ length: testimonial.rating || 5 }).map((_, i) => (
+                           <Star key={i} size={14} style={{ color: "#fbbf24", fill: "#fbbf24" }} />
+                        ))}
+                      </div>
+                    </div>
                     <span style={{ fontSize: "0.85rem", color: "var(--fj-muted)" }}>{testimonial.role}</span>
                   </div>
                 </div>
@@ -90,9 +131,17 @@ export default function Testimonials() {
           }
           .marquee-track {
             display: flex;
-            gap: 32px;
+            gap: var(--marquee-gap, 32px);
             width: max-content;
             animation: marquee 25s linear infinite;
+            --card-width: 400px;
+            --marquee-gap: 32px;
+          }
+          @media (max-width: 480px) {
+            .marquee-track {
+              --card-width: 290px;
+              --marquee-gap: 16px;
+            }
           }
           .marquee-track:hover {
             animation-play-state: paused;
@@ -113,7 +162,7 @@ export default function Testimonials() {
           }
           @keyframes marquee {
             0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-50% - 16px)); }
+            100% { transform: translateX(calc(-50% - (var(--marquee-gap) / 2))); }
           }
         `}</style>
       </div>

@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, ChevronDown, ClipboardCheck, Search, UserCheck, ShieldCheck, Sparkles, Target, Star } from "lucide-react";
-import { CalendlyLink } from "../../components/CalendlyWidget";
+import { CalendlyLink } from "../../../components/CalendlyWidget";
 
 export const metadata = {
-  title: "Professional Job Application Services Australia | 9Jobs",
-  description: "We apply for matching jobs on your behalf. Save time and stay consistent in your Australian job search with 9Jobs end-to-end application support.",
+  title: "9Jobs | Done-For-You Job Search & Applications Australia",
+  description: "Outsource your Australian job search. 9Jobs builds your ATS resume, optimizes SEEK, and applies to matching corporate roles daily.",
   alternates: {
-    canonical: "/job-application-services-australia",
+    canonical: "https://9jobs.co/services/job-application-automation",
   },
 };
 
@@ -61,15 +61,85 @@ export default function JobApplicationServicesPage() {
     }))
   };
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Job Sourcing and Application Management",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "9Jobs",
+      "url": "https://9jobs.co",
+      "logo": "https://9jobs.co/framer/app-icon.svg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Melbourne",
+        "addressRegion": "VIC",
+        "addressCountry": "AU"
+      }
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Australia"
+    },
+    "description": "Done-for-you job search and automatic application submission service for professionals in Australia.",
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "AUD",
+      "lowPrice": "199",
+      "highPrice": "699",
+      "offerCount": "3"
+    }
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://9jobs.co"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Services",
+        "item": "https://9jobs.co/services"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Job Application Automation",
+        "item": "https://9jobs.co/services/job-application-automation"
+      }
+    ]
+  };
+
   return (
     <main className="site-main fj-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
 
       <section className="fj-page-hero">
         <div className="fj-container">
+          <nav className="fj-breadcrumbs" aria-label="Breadcrumb" style={{ marginBottom: "24px", display: "flex", gap: "8px", alignItems: "center", fontSize: "0.88rem", color: "var(--fj-muted)", fontWeight: 600 }}>
+            <Link href="/" style={{ color: "inherit" }}>Home</Link>
+            <span>&gt;</span>
+            <span>Services</span>
+            <span>&gt;</span>
+            <span style={{ color: "var(--fj-ink)", fontWeight: 800 }}>Job Application Automation</span>
+          </nav>
           <span className="fj-announcement"><span>Services</span> Job Application Services Australia</span>
           <h1>We Apply for Jobs in Australia on Your <span className="heading-mark">Behalf</span></h1>
           <p>Save time, maintain consistency, and land more interviews. 9Jobs manages your daily application workflow from matching to submission.</p>
@@ -191,7 +261,7 @@ export default function JobApplicationServicesPage() {
         <div className="fj-container fj-leader-card">
           <div>
             <h2>Prepare for incoming interview requests <span className="heading-mark">confidently</span></h2>
-            <p>Once your applications are running consistently, prepare for recruiter calls with our specialized [Interview Support](/interview-support-australia) program.</p>
+            <p>Once your applications are running consistently, prepare for recruiter calls with our specialized <Link href="/services/interview-coaching">Interview Support</Link> program.</p>
           </div>
           <div className="fj-leader-media">
             <Sparkles size={120} color="var(--lime)" style={{ margin: "auto" }} />

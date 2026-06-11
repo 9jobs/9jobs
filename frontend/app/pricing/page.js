@@ -30,8 +30,8 @@ const plans = [
 ];
 
 export const metadata = {
-  title: "Pricing | 9Jobs",
-  description: "Choose a 9Jobs plan for resume, LinkedIn, application, and team support.",
+  title: "Plans & Pricing | Resume Writing & Job Application Packages | 9Jobs",
+  description: "Explore 9Jobs pricing plans tailored for IT and non-IT job seekers in Australia. Packages include resume reviews, LinkedIn optimization, and daily role submissions.",
   alternates: {
     canonical: "/pricing",
   },

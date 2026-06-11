@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, ChevronDown, Search, UserCheck, ShieldCheck, Sparkles, Target, Star } from "lucide-react";
-import { CalendlyLink } from "../../components/CalendlyWidget";
+import { CalendlyLink } from "../../../components/CalendlyWidget";
 
 export const metadata = {
-  title: "LinkedIn Profile Optimization Services Australia | 9Jobs",
-  description: "Optimize your LinkedIn profile to attract Australian recruiters. Improve your headline, summary, skills section, and search visibility with 9Jobs.",
+  title: "LinkedIn Optimization Australia | Profile Writing Services",
+  description: "Boost your recruiter search appearances by 140%. Professional LinkedIn profile optimization services tailored to the Australian market.",
   alternates: {
-    canonical: "/linkedin-optimization-australia",
+    canonical: "https://9jobs.co/services/linkedin-optimization",
   },
 };
 
@@ -61,15 +61,85 @@ export default function LinkedinOptimizationPage() {
     }))
   };
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "LinkedIn Profile Optimization Services",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "9Jobs",
+      "url": "https://9jobs.co",
+      "logo": "https://9jobs.co/framer/app-icon.svg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Melbourne",
+        "addressRegion": "VIC",
+        "addressCountry": "AU"
+      }
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Australia"
+    },
+    "description": "Professional LinkedIn profile optimization and writing services tailored for the Australian job market.",
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "AUD",
+      "lowPrice": "99",
+      "highPrice": "299",
+      "offerCount": "2"
+    }
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://9jobs.co"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Services",
+        "item": "https://9jobs.co/services"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "LinkedIn Optimization",
+        "item": "https://9jobs.co/services/linkedin-optimization"
+      }
+    ]
+  };
+
   return (
     <main className="site-main fj-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
 
       <section className="fj-page-hero">
         <div className="fj-container">
+          <nav className="fj-breadcrumbs" aria-label="Breadcrumb" style={{ marginBottom: "24px", display: "flex", gap: "8px", alignItems: "center", fontSize: "0.88rem", color: "var(--fj-muted)", fontWeight: 600 }}>
+            <Link href="/" style={{ color: "inherit" }}>Home</Link>
+            <span>&gt;</span>
+            <span>Services</span>
+            <span>&gt;</span>
+            <span style={{ color: "var(--fj-ink)", fontWeight: 800 }}>LinkedIn Optimization</span>
+          </nav>
           <span className="fj-announcement"><span>Services</span> LinkedIn Optimization Australia</span>
           <h1>Get More Sourcing Calls with an Optimized <span className="heading-mark">LinkedIn</span></h1>
           <p>We optimize your LinkedIn profile to rank higher in recruiter searches, capture local hiring team interest, and build a strong professional brand in Australia.</p>
@@ -190,7 +260,7 @@ export default function LinkedinOptimizationPage() {
         <div className="fj-container fj-leader-card">
           <div>
             <h2>Integrate your online and offline <span className="heading-mark">brand</span></h2>
-            <p>Make sure your LinkedIn works in tandem with an optimized [Resume Format](/resume-writing-services-australia) and a fully tuned [SEEK Profile](/seek-profile-optimization) to maximize conversion.</p>
+            <p>Make sure your LinkedIn works in tandem with an optimized <Link href="/services/resume-writing">Resume Format</Link> and a fully tuned <Link href="/services/seek-profile-optimization">SEEK Profile</Link> to maximize conversion.</p>
           </div>
           <div className="fj-leader-media">
             <Sparkles size={120} color="var(--lime)" style={{ margin: "auto" }} />

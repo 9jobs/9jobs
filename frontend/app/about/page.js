@@ -33,9 +33,9 @@ const supportAreas = [
 ];
 
 export const metadata = {
-  title: "About | 9Jobs",
+  title: "About 9Jobs | Smart Job Application & Career Support Services",
   description:
-    "Learn how 9Jobs helps IT and non-IT candidates find better opportunities with resume, LinkedIn, application, and follow-up support.",
+    "Learn how 9Jobs helps IT and non-IT professionals navigate the Australian job market with ATS-ready resume writing, profile optimization, and job search automation.",
   alternates: {
     canonical: "/about",
   },

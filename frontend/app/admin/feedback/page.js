@@ -47,7 +47,7 @@ export default function AdminFeedbackDashboard() {
     <main className="site-main fj-page" style={{ background: "var(--surface)", minHeight: "100vh" }}>
       <section className="fj-section" style={{ paddingTop: "140px" }}>
         <div className="fj-container">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "40px" }}>
+          <div className="admin-header-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "40px", gap: "16px" }}>
             <h2>Feedback <span className="heading-mark">Dashboard</span></h2>
             <button className="fj-button fj-button--dark">Export CSV</button>
           </div>
@@ -67,7 +67,7 @@ export default function AdminFeedbackDashboard() {
           </div>
 
           <div style={{ background: "#fff", borderRadius: "var(--radius-lg)", border: "1px solid var(--line)", overflow: "hidden" }}>
-            <div style={{ padding: "24px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div className="admin-activity-flex" style={{ padding: "24px", borderBottom: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "16px" }}>
               <h3 style={{ fontSize: "1.2rem", fontWeight: "700" }}>Recent Feedback Activity</h3>
               <select style={{ padding: "8px 12px", borderRadius: "8px", border: "1px solid var(--line)", background: "var(--surface)" }}>
                 <option>All Feedback</option>

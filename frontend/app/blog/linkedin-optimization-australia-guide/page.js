@@ -82,7 +82,7 @@ export default function LinkedInGuidePage() {
           <h1>LinkedIn Optimization Guide for Job Seekers in <span className="heading-mark">Australia</span></h1>
           <p>Learn how to optimize your LinkedIn headline, summary, skills tags, and backend settings to get found by Australian talent acquisition teams.</p>
           <div style={{ marginTop: "16px", fontSize: "0.9rem", color: "var(--muted)" }}>
-            Published: June 3, 2026 • 8 min read
+            Published: June 3, 2026 â€¢ 8 min read
           </div>
         </div>
       </section>
@@ -94,7 +94,7 @@ export default function LinkedInGuidePage() {
             In the modern Australian recruitment landscape, a resume is no longer the only document that matters. When a recruiter finds your resume on SEEK or receives an application, their first action is to search for your name on LinkedIn.
           </p>
           <p>
-            Additionally, agencies and corporate sourcing teams use LinkedIn Recruiter to find matching candidates before posting ads. If your profile is empty, lacks relevant keywords, or is set to incorrect search settings, you are invisible in these queries. Optimizing your profile ensures you receive inbound sourcing messages directly in your inbox.
+            Additionally, agencies and corporate sourcing teams in <Link href="/jobs/sydney">Sydney</Link>, <Link href="/jobs/melbourne">Melbourne</Link>, <Link href="/jobs/brisbane">Brisbane</Link>, <Link href="/jobs/perth">Perth</Link>, and <Link href="/jobs/adelaide">Adelaide</Link> use LinkedIn Recruiter to find matching candidates before posting ads. If your profile is empty, lacks relevant keywords, or is set to incorrect search settings, you are invisible in these queries. Optimizing your profile ensures you receive inbound sourcing messages directly in your inbox.
           </p>
 
           <h2>Headline Formula: How to Pass Sourcing Queries</h2>
@@ -124,7 +124,7 @@ export default function LinkedInGuidePage() {
           <div style={{ background: "var(--surface)", border: "1px solid var(--line)", padding: "24px", borderRadius: "8px", margin: "24px 0" }}>
             <h3>LinkedIn Profile Audit</h3>
             <p>Get a complete LinkedIn profile optimization checklist and custom summaries written by our career coaches.</p>
-            <Link href="/linkedin-optimization-australia" className="fj-button fj-button--dark">
+            <Link href="/services/linkedin-optimization" className="fj-button fj-button--dark">
               Learn about LinkedIn Optimization <ArrowRight size={16} />
             </Link>
           </div>
@@ -188,7 +188,19 @@ export default function LinkedInGuidePage() {
                 <article className="fj-city-card" key={`${city.slug}-${idx}`}>
                   <h3>{city.name} Jobs</h3>
                   <p>{city.description}</p>
-                  <Link href={`/${city.slug}`} style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}>
+                  <Link
+                    href={
+                      city.slug === "melbourne" ? "/jobs/melbourne" :
+                      city.slug === "sydney" ? "/jobs/sydney" :
+                      city.slug === "brisbane" ? "/jobs/brisbane" :
+                      city.slug === "perth" ? "/jobs/perth" :
+                      city.slug === "adelaide" ? "/jobs/adelaide" :
+                      city.slug === "geelong" ? "/jobs/geelong" :
+                      city.slug === "vic" ? "/jobs/vic" :
+                      `/${city.slug}`
+                    }
+                    style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}
+                  >
                     See more <ArrowRight size={16} />
                   </Link>
                 </article>

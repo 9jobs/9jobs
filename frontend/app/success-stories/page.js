@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Star, Target, UsersRound, CalendarCheck, ShieldCheck } from "lucide-react";
 import Testimonials from "../../components/Testimonials";
+import InterviewExperiences from "../../components/InterviewExperiences";
 
 const stats = [
   { value: "4.8/5", label: "Average Client Rating", icon: Star },

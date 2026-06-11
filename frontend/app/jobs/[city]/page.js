@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, ChevronDown, CheckCircle2, MapPin, Briefcase } from "lucide-react";
-import { CalendlyLink } from "../../components/CalendlyWidget";
-import { cities, pagesConfig } from "../../data/australianJobsData";
-import { getContentForPage } from "../../data/contentGenerator";
+import { CalendlyLink } from "../../../components/CalendlyWidget";
+import { cities, pagesConfig } from "../../../data/australianJobsData";
+import { getContentForPage } from "../../../data/contentGenerator";
 
 export async function generateStaticParams() {
   return Object.keys(cities).map(city => ({
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
     title: config.title,
     description: config.metaDescription,
     alternates: {
-      canonical: `https://9jobs.co/${city}`
+      canonical: `https://9jobs.co/jobs/${city}`
     }
   };
 }
@@ -70,6 +70,13 @@ export default async function CityPage({ params }) {
       {/* Hero Section */}
       <section className="fj-page-hero">
         <div className="fj-container">
+          <nav className="fj-breadcrumbs" aria-label="Breadcrumb" style={{ marginBottom: "24px", display: "flex", gap: "8px", alignItems: "center", fontSize: "0.88rem", color: "var(--fj-muted)", fontWeight: 600 }}>
+            <Link href="/" style={{ color: "inherit" }}>Home</Link>
+            <span>&gt;</span>
+            <span>Australian Jobs</span>
+            <span>&gt;</span>
+            <span style={{ color: "var(--fj-ink)", fontWeight: 800 }}>{pageData.cityMeta.name}</span>
+          </nav>
           <span className="fj-announcement">
             <span>Australian Jobs</span> {pageData.cityMeta.name} Jobs
           </span>
@@ -151,12 +158,12 @@ export default async function CityPage({ params }) {
             <span className="fj-label">Core Writing & Optimization Services</span>
             <h2>Maximize your interview callbacks in <span className="heading-mark">Australia</span></h2>
           </div>
-          <div className="fj-card-grid fj-card-grid--four">
+          <div className="fj-card-grid fj-card-grid--five">
             <article className="fj-feature-card">
               <div className="fj-icon-chip"><CheckCircle2 size={22} /></div>
               <h3>Resume Writing</h3>
               <p>Get a localized, single-column CV built to pass Australian Applicant Tracking Systems.</p>
-              <Link href="/resume-writing-services-australia" className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>
+              <Link href="/services/resume-writing" className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>
                 Learn more <ArrowRight size={14} />
               </Link>
             </article>
@@ -165,7 +172,7 @@ export default async function CityPage({ params }) {
               <div className="fj-icon-chip"><CheckCircle2 size={22} /></div>
               <h3>LinkedIn Optimization</h3>
               <p>Boost your profile settings and keyword alignment to trigger calls from local recruiters.</p>
-              <Link href="/linkedin-optimization-australia" className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>
+              <Link href="/services/linkedin-optimization" className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>
                 Learn more <ArrowRight size={14} />
               </Link>
             </article>
@@ -174,7 +181,7 @@ export default async function CityPage({ params }) {
               <div className="fj-icon-chip"><CheckCircle2 size={22} /></div>
               <h3>SEEK Profile Optimization</h3>
               <p>Configure your SEEK preferences and search visibility to match Australian agency searches.</p>
-              <Link href="/seek-profile-optimization" className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>
+              <Link href="/services/seek-profile-optimization" className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>
                 Learn more <ArrowRight size={14} />
               </Link>
             </article>
@@ -183,7 +190,16 @@ export default async function CityPage({ params }) {
               <div className="fj-icon-chip"><CheckCircle2 size={22} /></div>
               <h3>Job Application Services</h3>
               <p>Outsource the job search workflow. We apply to matching roles daily on your behalf.</p>
-              <Link href="/job-application-services-australia" className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>
+              <Link href="/services/job-application-automation" className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>
+                Learn more <ArrowRight size={14} />
+              </Link>
+            </article>
+
+            <article className="fj-feature-card">
+              <div className="fj-icon-chip"><CheckCircle2 size={22} /></div>
+              <h3>Interview Support</h3>
+              <p>Prepare for Australian structured behavioral queries with tailored mock prep sessions.</p>
+              <Link href="/services/interview-coaching" className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>
                 Learn more <ArrowRight size={14} />
               </Link>
             </article>
@@ -195,13 +211,13 @@ export default async function CityPage({ params }) {
       <section className="fj-section">
         <div className="fj-container">
           <div className="fj-section-head">
-            <span className="fj-label">Other Regions</span>
-            <h2>Professional local career guides in <span className="heading-mark">other cities</span></h2>
+            <span className="fj-label">Related Locations</span>
+            <h2>Explore opportunities in <span className="heading-mark">other regions</span></h2>
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", justifyContent: "center" }}>
             {pageData.otherCities.map(c => (
-              <Link key={c.href} href={c.href} className="fj-button fj-button--ghost" style={{ minWidth: "160px", textAlign: "center" }}>
-                {c.name} Jobs <ArrowRight size={14} />
+              <Link key={c.href} href={c.href} className="fj-button fj-button--ghost" style={{ minWidth: "220px", textAlign: "center" }}>
+                {c.name} <ArrowRight size={14} />
               </Link>
             ))}
           </div>

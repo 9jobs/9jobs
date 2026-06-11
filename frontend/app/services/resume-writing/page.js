@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, ChevronDown, FileText, Search, UserCheck, ShieldCheck, Sparkles, Target, Star } from "lucide-react";
-import { CalendlyLink } from "../../components/CalendlyWidget";
+import { CalendlyLink } from "../../../components/CalendlyWidget";
 
 export const metadata = {
-  title: "Professional Resume Writing Services Australia | 9Jobs",
-  description: "Get an ATS-friendly, recruiter-ready resume tailored for the Australian job market. Standard and technical professional resumes written by 9Jobs experts.",
+  title: "Resume Writing Australia | ATS-Optimized Professional CVs",
+  description: "Land 3x more interviews with professional resume writing services in Australia. ATS-friendly structures tailored for SEEK & local recruiters.",
   alternates: {
-    canonical: "/resume-writing-services-australia",
+    canonical: "https://9jobs.co/services/resume-writing",
   },
 };
 
@@ -61,15 +61,85 @@ export default function ResumeServicesPage() {
     }))
   };
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Resume Writing Services",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "9Jobs",
+      "url": "https://9jobs.co",
+      "logo": "https://9jobs.co/framer/app-icon.svg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Melbourne",
+        "addressRegion": "VIC",
+        "addressCountry": "AU"
+      }
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Australia"
+    },
+    "description": "ATS-optimized professional resume writing services tailored to Australian recruitment and hiring practices.",
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "AUD",
+      "lowPrice": "99",
+      "highPrice": "499",
+      "offerCount": "3"
+    }
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://9jobs.co"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Services",
+        "item": "https://9jobs.co/services"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Resume Writing",
+        "item": "https://9jobs.co/services/resume-writing"
+      }
+    ]
+  };
+
   return (
     <main className="site-main fj-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
 
       <section className="fj-page-hero">
         <div className="fj-container">
+          <nav className="fj-breadcrumbs" aria-label="Breadcrumb" style={{ marginBottom: "24px", display: "flex", gap: "8px", alignItems: "center", fontSize: "0.88rem", color: "var(--fj-muted)", fontWeight: 600 }}>
+            <Link href="/" style={{ color: "inherit" }}>Home</Link>
+            <span>&gt;</span>
+            <span>Services</span>
+            <span>&gt;</span>
+            <span style={{ color: "var(--fj-ink)", fontWeight: 800 }}>Resume Writing</span>
+          </nav>
           <span className="fj-announcement"><span>Services</span> Resume Writing Services Australia</span>
           <h1>Get an ATS-Optimized Resume Built for <span className="heading-mark">Australia</span></h1>
           <p>We rewrite and format your resume to pass applicant tracking systems, highlight your key professional outcomes, and capture attention from Australian recruiters.</p>
@@ -190,7 +260,7 @@ export default function ResumeServicesPage() {
         <div className="fj-container fj-leader-card">
           <div>
             <h2>Start applying with absolute <span className="heading-mark">confidence</span></h2>
-            <p>Combine your optimized resume with our [LinkedIn Optimization](/linkedin-optimization-australia) and [SEEK Profile Optimization](/seek-profile-optimization) services to double your interview callbacks.</p>
+            <p>Combine your optimized resume with our <Link href="/services/linkedin-optimization">LinkedIn Optimization</Link> and <Link href="/services/seek-profile-optimization">SEEK Profile Optimization</Link> services to double your interview callbacks.</p>
           </div>
           <div className="fj-leader-media">
             <ShieldCheck size={120} color="var(--lime)" style={{ margin: "auto" }} />
