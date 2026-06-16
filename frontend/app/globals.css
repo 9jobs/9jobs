@@ -2409,8 +2409,8 @@ section.hero.hero-split,
   flex: 1 1 auto;
   min-width: 0;
   justify-content: center;
-  gap: clamp(22px, 1.9vw, 34px);
-  padding-inline: clamp(28px, 4vw, 96px);
+  gap: clamp(16px, 1.4vw, 26px);
+  padding-inline: clamp(18px, 2.4vw, 52px);
 }
 
 .fj-nav-actions {
@@ -2424,12 +2424,15 @@ section.hero.hero-split,
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
   min-height: 44px;
   padding: 10px 2px;
   color: var(--fj-ink);
   font-family: var(--fj-font);
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 0.98rem;
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .fj-nav-links > a::after,
