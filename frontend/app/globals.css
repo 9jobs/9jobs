@@ -4555,8 +4555,10 @@ section.hero.hero-split,
   gap: 6px;
   color: var(--fj-ink);
   font-family: var(--fj-font);
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 0.98rem;
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
   cursor: pointer;
   transition: color 180ms ease;
 }
