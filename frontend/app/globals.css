@@ -2334,7 +2334,7 @@ section.hero.hero-split,
   position: fixed;
   inset: 0 0 auto;
   z-index: 1000;
-  padding: 14px 24px;
+  padding: 14px 32px;
   border-bottom: 1px solid transparent;
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(18px);
@@ -2351,20 +2351,20 @@ section.hero.hero-split,
 }
 
 .fj-nav-inner {
-  width: min(100%, 1400px);
+  width: min(100%, 1460px);
   min-height: 68px;
-  display: grid;
+  display: flex;
   align-items: center;
-  grid-template-columns: minmax(200px, 1fr) auto minmax(280px, 1fr);
-  column-gap: clamp(24px, 3vw, 56px);
+  justify-content: space-between;
+  gap: clamp(28px, 3vw, 64px);
 }
 
 .fj-brand {
+  flex: 0 0 auto;
   gap: 12px;
   color: var(--fj-ink);
   font-size: 1.9rem;
   font-weight: 700;
-  justify-self: start;
   padding-block: 8px;
 }
 
@@ -2406,13 +2406,17 @@ section.hero.hero-split,
 }
 
 .fj-nav-links {
-  gap: clamp(18px, 1.8vw, 30px);
-  justify-self: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: center;
+  gap: clamp(22px, 1.9vw, 34px);
+  padding-inline: clamp(28px, 4vw, 96px);
 }
 
 .fj-nav-actions {
-  justify-self: end;
-  gap: 12px;
+  flex: 0 0 auto;
+  margin-left: auto;
+  gap: 16px;
 }
 
 .fj-nav-links > a,
@@ -2460,6 +2464,14 @@ section.hero.hero-split,
   line-height: 1;
   white-space: nowrap;
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.fj-nav-actions .fj-button {
+  min-width: 132px;
+}
+
+.fj-nav-actions .fj-button--dark {
+  min-width: 176px;
 }
 
 .fj-button:hover {
@@ -5264,4 +5276,3 @@ section.hero.hero-split,
     --btn-wrapper-width: 100%;
   }
 }
-
