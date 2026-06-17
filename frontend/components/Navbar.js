@@ -34,7 +34,7 @@ const links = [
       { href: "/services/resume-writing", label: "Resume Writing" },
       { href: "/services/linkedin-optimization", label: "Linkedin Optimization" },
       { href: "/services/seek-profile-optimization", label: "Seek Profile Optimization" },
-      { href: "/services/job-application-automation", label: "Job Sourcing & Applications" },
+      { href: "/services/job-application-automation", label: "Job Sourcing - Applications" },
       { href: "/services/interview-coaching", label: "Interview Coaching" },
       { href: "/blog", label: "Blog" },
     ],

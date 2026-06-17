@@ -4615,6 +4615,12 @@ section.hero.hero-split,
   transition: background 180ms ease, color 180ms ease;
 }
 
+.nav-links .dropdown-link-item,
+.nav-links .dropdown-link-item.is-active,
+.nav-links .dropdown-link-item:hover {
+  font-weight: 400;
+}
+
 .dropdown-link-item:hover {
   background: var(--fj-soft);
   color: var(--fj-ink-deep);
@@ -4681,6 +4687,12 @@ section.hero.hero-split,
   color: var(--fj-muted);
   text-align: left;
   transition: color 180ms ease;
+}
+
+.mobile-drawer .mobile-dropdown-link-item,
+.mobile-drawer .mobile-dropdown-link-item.is-active,
+.mobile-drawer .mobile-dropdown-link-item:hover {
+  font-weight: 400;
 }
 
 .mobile-dropdown-link-item:hover,
