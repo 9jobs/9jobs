@@ -75,7 +75,6 @@ export default function Navbar() {
         <nav className="nav-links fj-nav-links" aria-label="Primary navigation">
           {links.map((link) => {
             if (link.isDropdown) {
-              const isSubActive = link.dropdownLinks.some((sub) => pathname === sub.href) || pathname === link.href;
               const isDropdownOpen = activeDesktopDropdown === link.label;
               return (
                 <div
@@ -84,7 +83,7 @@ export default function Navbar() {
                   onMouseEnter={() => setActiveDesktopDropdown(link.label)}
                   onMouseLeave={() => setActiveDesktopDropdown(null)}
                 >
-                  <Link href={link.href} className={`nav-dropdown-trigger${isSubActive ? " is-active" : ""}`}>
+                  <Link href={link.href} className="nav-dropdown-trigger">
                     {link.label} <ChevronDown size={14} />
                   </Link>
                   <div
@@ -155,12 +154,11 @@ export default function Navbar() {
           >
             {links.map((link) => {
               if (link.isDropdown) {
-                const isSubActive = link.dropdownLinks.some((sub) => pathname === sub.href);
                 const isMobileDropdownOpen = activeMobileDropdown === link.label;
                 return (
                   <div key={link.label} className="mobile-dropdown-container">
                     <button
-                      className={`mobile-dropdown-trigger${isSubActive ? " is-active" : ""}`}
+                      className="mobile-dropdown-trigger"
                       type="button"
                       onClick={() => setActiveMobileDropdown((prev) => prev === link.label ? null : link.label)}
                     >
