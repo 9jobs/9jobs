@@ -9,6 +9,30 @@ const defaultTestimonials = [
     role: "Verified Client",
     quote: "Great experience with 9Jobs. The team is professional, responsive, and truly supportive. I highly recommend their services",
     rating: 4
+  },
+  {
+    name: "Lachlan",
+    role: "Verified Client",
+    quote: "Honestly, the job application automation saved me so much time. I was struggling to find hours to apply while working full-time, but their team handled it seamlessly. Ended up getting three interview calls in two weeks.",
+    rating: 5
+  },
+  {
+    name: "Sarah",
+    role: "Verified Client",
+    quote: "My resume was completely overhauled to meet Australian ATS standards. The writers knew exactly what local recruiters look for. I saw a noticeable increase in responses from employers almost immediately after updating it.",
+    rating: 5
+  },
+  {
+    name: "Oliver",
+    role: "Verified Client",
+    quote: "Highly recommend their LinkedIn and Seek profile optimization services. They polished my profiles, added the right keywords, and made them look incredibly professional. I've had multiple recruiters reach out to me directly.",
+    rating: 5
+  },
+  {
+    name: "Amelia",
+    role: "Verified Client",
+    quote: "The interview coaching was a game-changer for me. The mock sessions gave me the confidence I needed to handle tough questions and present my experience effectively. Secured a great role last month.",
+    rating: 5
   }
 ];
 
@@ -60,7 +84,14 @@ export default function Testimonials() {
     loadTestimonials();
   }, []);
 
-  const listToUse = dbTestimonials.length > 0 ? dbTestimonials : defaultTestimonials;
+  // Extract Nafisa from DB testimonials if present, otherwise use default Nafisa
+  const defaultNafisa = defaultTestimonials.find(t => t.name === "Nafisa");
+  const dbNafisa = dbTestimonials.find(t => /Nafisa/i.test(t.name));
+  const nafisaToUse = dbNafisa || defaultNafisa;
+
+  // Combine Nafisa with the rest of the default testimonials
+  const otherDefaults = defaultTestimonials.filter(t => t.name !== "Nafisa");
+  const listToUse = [nafisaToUse, ...otherDefaults];
 
   // Make sure we have at least 6 items in the list for smooth marquee scrolling without layout gaps
   let filledList = [...listToUse];
