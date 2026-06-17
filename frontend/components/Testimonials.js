@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 const defaultTestimonials = [
   {
-    name: "Nafisa Eqbali",
+    name: "Nafisa",
     role: "Verified Client",
     quote: "Great experience with 9Jobs. The team is professional, responsive, and truly supportive. I highly recommend their services",
     rating: 4
@@ -34,16 +34,22 @@ export default function Testimonials() {
         if (res.ok) {
           const result = await res.json();
           if (result.success && Array.isArray(result.data)) {
-            // Only keep testimonials from Nafisa Eqbali
+            // Only keep testimonials from Nafisa
             const filteredData = result.data.filter(item =>
               item.full_name && /Nafisa|Nafisha/i.test(item.full_name)
             );
-            const mapped = filteredData.map(item => ({
-              name: item.full_name,
-              role: "Verified Client",
-              quote: item.experience_message,
-              rating: item.overall_satisfaction
-            }));
+            const mapped = filteredData.map(item => {
+              let displayName = item.full_name || "Nafisa";
+              // Remove Eqbali case-insensitively
+              displayName = displayName.replace(/\s*Eqbali\s*/gi, "").trim();
+              if (!displayName) displayName = "Nafisa";
+              return {
+                name: displayName,
+                role: "Verified Client",
+                quote: item.experience_message,
+                rating: item.overall_satisfaction
+              };
+            });
             setDbTestimonials(mapped);
           }
         }
