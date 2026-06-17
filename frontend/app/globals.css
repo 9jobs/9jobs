@@ -4609,7 +4609,7 @@ section.hero.hero-split,
   padding: 10px 20px;
   font-family: var(--fj-font);
   font-size: 0.92rem;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--fj-ink);
   text-align: left;
   transition: background 180ms ease, color 180ms ease;
@@ -4623,7 +4623,7 @@ section.hero.hero-split,
 .dropdown-link-item.is-active {
   background: var(--fj-soft-2);
   color: var(--fj-ink-deep);
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .dropdown-link-item:first-of-type {
@@ -4677,7 +4677,7 @@ section.hero.hero-split,
   padding: 10px 16px;
   font-family: var(--fj-font);
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--fj-muted);
   text-align: left;
   transition: color 180ms ease;

@@ -32,8 +32,8 @@ const links = [
     isDropdown: true,
     dropdownLinks: [
       { href: "/services/resume-writing", label: "Resume Writing" },
-      { href: "/services/linkedin-optimization", label: "LinkedIn Optimization" },
-      { href: "/services/seek-profile-optimization", label: "SEEK Profile Optimization" },
+      { href: "/services/linkedin-optimization", label: "Linkedin Optimization" },
+      { href: "/services/seek-profile-optimization", label: "Seek Profile Optimization" },
       { href: "/services/job-application-automation", label: "Job Sourcing & Applications" },
       { href: "/services/interview-coaching", label: "Interview Coaching" },
       { href: "/blog", label: "Blog" },
@@ -41,6 +41,10 @@ const links = [
   },
   { href: "/contact", label: "Contact" },
 ];
+
+function normalizeMenuLabel(label) {
+  return label.replace(/[—–‑−]/g, "-");
+}
 
 function isActive(pathname, href) {
   if (href === "/features") return pathname === "/features";
@@ -102,7 +106,7 @@ export default function Navbar() {
                         className={`dropdown-link-item${pathname === subLink.href ? " is-active" : ""}`}
                         href={subLink.href}
                       >
-                        {subLink.label}
+                        {normalizeMenuLabel(subLink.label)}
                       </Link>
                     ))}
                   </div>
@@ -190,7 +194,7 @@ export default function Navbar() {
                                 setActiveMobileDropdown(null);
                               }}
                             >
-                              {subLink.label}
+                              {normalizeMenuLabel(subLink.label)}
                             </Link>
                           ))}
                         </motion.div>
