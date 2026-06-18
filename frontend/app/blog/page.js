@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, BookUser, Briefcase, FileText, Play, Search } from "lucide-react";
 import connectMongoDB from "@/lib/mongodb";
 import SocialBlog from "@/models/SocialBlog";
+import socialMedia from "@/lib/blog/socialMedia";
 import { cities } from "../../data/australianJobsData";
 import { createSeoMetadata, getRouteSeo } from "../../data/seo";
 
@@ -116,6 +117,7 @@ const posts = [
 ];
 
 const routeSeo = getRouteSeo("/blog");
+const { getPlayableMediaHref, shouldOpenMediaExternally } = socialMedia;
 
 export const metadata = createSeoMetadata(routeSeo);
 
@@ -226,9 +228,18 @@ export default async function BlogPage() {
             {socialPosts.map((post) => {
               const cardImage = getSocialCardImage(post);
               const isVideo = post.mediaType === "video";
+              const mediaHref = getPlayableMediaHref(post) || `/blog/${post.slug}`;
+              const mediaExternal = shouldOpenMediaExternally(post);
               return (
                 <article className="fj-blog-card fj-social-blog-card" key={post.id}>
-                  <Link href={`/blog/${post.slug}`} className="fj-social-card-media" aria-label={`Open ${post.title}`}>
+                  <Link
+                    href={mediaHref}
+                    className="fj-social-card-media"
+                    aria-label={isVideo ? `Play ${post.title}` : `Open ${post.title}`}
+                    target={mediaExternal ? "_blank" : undefined}
+                    rel={mediaExternal ? "noopener noreferrer" : undefined}
+                    prefetch={mediaExternal ? false : undefined}
+                  >
                     {cardImage ? (
                       <img className="fj-social-blog-image" src={cardImage} alt="" loading="lazy" decoding="async" />
                     ) : (

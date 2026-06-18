@@ -3435,15 +3435,24 @@ section.hero.hero-split,
 .fj-social-card-media {
   position: relative;
   display: block;
+  overflow: hidden;
+  border-radius: 18px;
 }
 
 .fj-social-blog-image {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 8px;
+  aspect-ratio: 4 / 3;
+  min-height: 240px;
+  border-radius: 18px;
   background: var(--fj-soft);
   object-fit: cover;
+  transition: transform 220ms ease, filter 220ms ease;
+}
+
+.fj-social-card-media:hover .fj-social-blog-image {
+  transform: scale(1.03);
+  filter: saturate(1.05);
 }
 
 .fj-social-blog-image--empty {
@@ -3521,6 +3530,10 @@ section.hero.hero-split,
   overflow: hidden;
   border-radius: 18px;
   background: var(--fj-soft);
+}
+
+.fj-social-detail-media--interactive {
+  display: block;
 }
 
 .fj-social-detail-media--empty {
@@ -4205,6 +4218,10 @@ section.hero.hero-split,
 
   .fj-social-blog-card {
     padding: 16px;
+  }
+
+  .fj-social-blog-image {
+    min-height: 220px;
   }
 
   .fj-social-play-badge {

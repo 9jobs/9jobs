@@ -3,10 +3,12 @@ import { ArrowLeft, ArrowRight, ExternalLink, Play } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import connectMongoDB from '@/lib/mongodb';
 import SocialBlog from '@/models/SocialBlog';
+import socialMedia from '@/lib/blog/socialMedia';
 import { BlogSupportLinks } from '../../../components/RelatedSeoLinks';
 import { JsonLd, createArticleSchema, createBreadcrumbSchema, createSeoMetadata } from '../../../data/seo';
 
 export const dynamic = 'force-dynamic';
+const { getPlayableMediaHref, shouldOpenMediaExternally } = socialMedia;
 
 function formatDate(date) {
   return new Intl.DateTimeFormat('en-AU', {
@@ -86,6 +88,8 @@ export default async function SocialBlogDetailPage({ params }) {
   const platformLabel = formatUiLabel(post.platform === 'linkedin' ? 'LinkedIn' : 'Facebook');
   const mediaLabel = post.mediaType === 'video' ? 'Reel' : 'Post';
   const mediaImage = post.thumbnailUrl || post.imageUrl || '';
+  const playableHref = getPlayableMediaHref(post);
+  const openMediaExternally = shouldOpenMediaExternally(post);
   const description = post.content.slice(0, 155);
   const articleSchema = createArticleSchema({
     title: post.title,
@@ -129,14 +133,31 @@ export default async function SocialBlogDetailPage({ params }) {
               src={post.videoUrl}
             />
           ) : mediaImage ? (
-            <div className="fj-social-detail-media">
-              <img className="fj-social-detail-image" src={mediaImage} alt="" loading="lazy" decoding="async" />
-              {post.mediaType === 'video' && (
-                <span className="fj-social-play-badge fj-social-play-badge--detail" aria-hidden="true">
-                  <Play size={24} fill="currentColor" />
-                </span>
-              )}
-            </div>
+            playableHref ? (
+              <a
+                className="fj-social-detail-media fj-social-detail-media--interactive"
+                href={playableHref}
+                target={openMediaExternally ? '_blank' : undefined}
+                rel={openMediaExternally ? 'noopener noreferrer' : undefined}
+                aria-label={post.mediaType === 'video' ? `Play ${post.title}` : `Open ${post.title}`}
+              >
+                <img className="fj-social-detail-image" src={mediaImage} alt="" loading="lazy" decoding="async" />
+                {post.mediaType === 'video' && (
+                  <span className="fj-social-play-badge fj-social-play-badge--detail" aria-hidden="true">
+                    <Play size={24} fill="currentColor" />
+                  </span>
+                )}
+              </a>
+            ) : (
+              <div className="fj-social-detail-media">
+                <img className="fj-social-detail-image" src={mediaImage} alt="" loading="lazy" decoding="async" />
+                {post.mediaType === 'video' && (
+                  <span className="fj-social-play-badge fj-social-play-badge--detail" aria-hidden="true">
+                    <Play size={24} fill="currentColor" />
+                  </span>
+                )}
+              </div>
+            )
           ) : post.mediaType === 'video' ? (
             <div className="fj-social-detail-media fj-social-detail-media--empty" aria-hidden="true">
               <span className="fj-social-play-badge fj-social-play-badge--detail">
@@ -157,9 +178,14 @@ export default async function SocialBlogDetailPage({ params }) {
             ))}
           </div>
 
-          {post.sourceUrl && (
-            <a className="fj-button fj-button--dark" href={post.sourceUrl} target="_blank" rel="noopener noreferrer">
-              Open original {mediaLabel.toLowerCase()} <ExternalLink size={16} />
+          {playableHref && (
+            <a
+              className="fj-button fj-button--dark"
+              href={playableHref}
+              target={openMediaExternally ? '_blank' : undefined}
+              rel={openMediaExternally ? 'noopener noreferrer' : undefined}
+            >
+              {post.mediaType === 'video' && !post.videoUrl ? 'Play on Facebook' : `Open original ${mediaLabel.toLowerCase()}`} <ExternalLink size={16} />
             </a>
           )}
         </article>
