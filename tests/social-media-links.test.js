@@ -1,4 +1,5 @@
 const {
+  getInlineVideoSrc,
   getFacebookEmbedUrl,
   getPreferredSocialImage,
   getPlayableMediaHref,
@@ -83,6 +84,22 @@ describe('social media playback links', () => {
       sourceUrl: 'https://www.facebook.com/profile.php?id=61589408708559',
     };
 
+    expect(shouldShowOriginalMediaLink(post)).toBe(false);
+  });
+
+  test('uses a generated local preview video for imported reels without a real video file', () => {
+    const post = {
+      platform: 'facebook',
+      mediaType: 'video',
+      imageUrl: '/social-imports/2026-06-16-reel.jpg',
+      thumbnailUrl: '/social-imports/2026-06-16-reel.jpg',
+      videoUrl: '',
+      sourceUrl: 'https://www.facebook.com/profile.php?id=61589408708559',
+    };
+
+    expect(getPlayableMediaHref(post)).toBe('/social-imports/2026-06-16-reel.mp4');
+    expect(getInlineVideoSrc(post)).toBe('/social-imports/2026-06-16-reel.mp4');
+    expect(shouldOpenMediaExternally(post)).toBe(false);
     expect(shouldShowOriginalMediaLink(post)).toBe(false);
   });
 });

@@ -12,6 +12,7 @@ import { JsonLd, createArticleSchema, createBreadcrumbSchema, createSeoMetadata 
 export const dynamic = 'force-dynamic';
 const {
   getFacebookEmbedUrl,
+  getInlineVideoSrc,
   getPlayableMediaHref,
   getPreferredSocialImage,
   shouldOpenMediaExternally,
@@ -83,6 +84,7 @@ export default async function SocialBlogDetailPage({ params }) {
   const platformLabel = formatUiLabel(post.platform === 'linkedin' ? 'LinkedIn' : 'Facebook');
   const mediaLabel = post.mediaType === 'video' ? 'Reel' : 'Post';
   const mediaImage = getPreferredSocialImage(post);
+  const inlineVideoSrc = getInlineVideoSrc(post);
   const embedUrl = getFacebookEmbedUrl(post);
   const usesGeneratedPoster = shouldUseGeneratedPoster(post);
   const playableHref = getPlayableMediaHref(post);
@@ -121,14 +123,14 @@ export default async function SocialBlogDetailPage({ params }) {
 
       <section className="fj-section fj-section--tight">
         <article className="fj-container fj-social-detail">
-          {post.mediaType === 'video' && post.videoUrl ? (
+          {post.mediaType === 'video' && inlineVideoSrc ? (
             <video
               className="fj-social-detail-video"
               controls
               playsInline
               preload="metadata"
               poster={mediaImage || undefined}
-              src={post.videoUrl}
+              src={inlineVideoSrc}
             />
           ) : post.mediaType === 'video' && embedUrl ? (
             <div className="fj-social-embed-shell">

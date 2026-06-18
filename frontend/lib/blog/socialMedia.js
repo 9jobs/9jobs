@@ -2,10 +2,28 @@ function isLowResImportedImage(value) {
   return typeof value === 'string' && value.startsWith('/social-imports/');
 }
 
+function getGeneratedPreviewVideoUrl(post = {}) {
+  if (post.mediaType !== 'video') {
+    return '';
+  }
+
+  const candidate = post.imageUrl || post.thumbnailUrl || '';
+  if (!isLowResImportedImage(candidate) || !candidate.endsWith('.jpg')) {
+    return '';
+  }
+
+  return candidate.replace(/\.jpg$/i, '.mp4');
+}
+
+function getInlineVideoSrc(post = {}) {
+  return post.videoUrl || getGeneratedPreviewVideoUrl(post) || '';
+}
+
 function getPlayableMediaHref(post = {}) {
   if (post.mediaType === 'video') {
-    if (post.videoUrl) {
-      return post.videoUrl;
+    const inlineVideoSrc = getInlineVideoSrc(post);
+    if (inlineVideoSrc) {
+      return inlineVideoSrc;
     }
 
     if (post.platform === 'facebook' && post.socialPostId) {
@@ -19,7 +37,7 @@ function getPlayableMediaHref(post = {}) {
 }
 
 function getFacebookEmbedUrl(post = {}) {
-  if (post.platform !== 'facebook' || post.mediaType !== 'video' || post.videoUrl) {
+  if (post.platform !== 'facebook' || post.mediaType !== 'video' || getInlineVideoSrc(post)) {
     return '';
   }
 
@@ -56,15 +74,21 @@ function shouldUseGeneratedPoster(post = {}) {
 }
 
 function shouldOpenMediaExternally(post = {}) {
-  return post.mediaType === 'video' && !post.videoUrl && Boolean(post.sourceUrl);
+  return post.mediaType === 'video' && !getInlineVideoSrc(post) && Boolean(post.sourceUrl);
 }
 
 function shouldShowOriginalMediaLink(post = {}) {
+  if (getInlineVideoSrc(post)) {
+    return false;
+  }
+
   return Boolean(getPlayableMediaHref(post)) && !getFacebookEmbedUrl(post);
 }
 
 module.exports = {
   getFacebookEmbedUrl,
+  getGeneratedPreviewVideoUrl,
+  getInlineVideoSrc,
   getPreferredSocialImage,
   getPlayableMediaHref,
   isLowResImportedImage,
