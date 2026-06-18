@@ -3423,8 +3423,18 @@ section.hero.hero-split,
 }
 
 .fj-social-blog-card {
+  position: relative;
   gap: 16px;
   padding: 18px;
+}
+
+.fj-section-head--social {
+  margin-bottom: 28px;
+}
+
+.fj-social-card-media {
+  position: relative;
+  display: block;
 }
 
 .fj-social-blog-image {
@@ -3438,6 +3448,35 @@ section.hero.hero-split,
 
 .fj-social-blog-image--empty {
   border: 1px solid var(--fj-line);
+  display: grid;
+  place-items: center;
+  color: var(--fj-muted);
+  font-weight: 800;
+  background:
+    radial-gradient(circle at top left, rgba(224, 255, 130, 0.55), transparent 45%),
+    linear-gradient(180deg, #f6f8ef, #eef2e7);
+}
+
+.fj-social-play-badge {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: rgba(5, 5, 5, 0.78);
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(5, 5, 5, 0.18);
+}
+
+.fj-social-play-badge--detail {
+  right: 18px;
+  bottom: 18px;
+  width: 58px;
+  height: 58px;
 }
 
 .fj-social-blog-meta,
@@ -3456,6 +3495,12 @@ section.hero.hero-split,
   margin-left: 0;
 }
 
+.fj-badge--ghost {
+  background: transparent;
+  border: 1px solid var(--fj-line);
+  color: var(--fj-muted);
+}
+
 .fj-social-back-link {
   display: inline-flex;
   align-items: center;
@@ -3471,11 +3516,34 @@ section.hero.hero-split,
   gap: 24px;
 }
 
+.fj-social-detail-media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--fj-soft);
+}
+
+.fj-social-detail-media--empty {
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at top left, rgba(224, 255, 130, 0.55), transparent 42%),
+    linear-gradient(180deg, #f6f8ef, #eef2e7);
+}
+
 .fj-social-detail-image {
   width: 100%;
   max-height: 520px;
-  border-radius: 8px;
   object-fit: cover;
+}
+
+.fj-social-detail-video {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  border-radius: 18px;
+  background: #0d1117;
 }
 
 .fj-social-detail-content {
@@ -4133,6 +4201,20 @@ section.hero.hero-split,
 
   .fj-blog-card h2 {
     font-size: 1.32rem;
+  }
+
+  .fj-social-blog-card {
+    padding: 16px;
+  }
+
+  .fj-social-play-badge {
+    width: 40px;
+    height: 40px;
+  }
+
+  .fj-social-play-badge--detail {
+    width: 52px;
+    height: 52px;
   }
 
   .fj-activity-row {

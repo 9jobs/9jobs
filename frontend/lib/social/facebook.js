@@ -31,7 +31,10 @@ export async function fetchFacebookPosts() {
       platform: 'facebook',
       socialPostId: post.id,
       caption: post.message,
+      mediaType: 'post',
       imageUrl: post.full_picture || '',
+      thumbnailUrl: post.full_picture || '',
+      videoUrl: '',
       sourceUrl: post.permalink_url || '',
       publishedAt: post.created_time,
     }));

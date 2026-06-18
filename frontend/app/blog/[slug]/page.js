@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, Play } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import connectMongoDB from '@/lib/mongodb';
 import SocialBlog from '@/models/SocialBlog';
@@ -27,7 +27,10 @@ function serializePost(post) {
     title: post.title,
     slug: post.slug,
     content: post.content || '',
+    mediaType: post.mediaType || 'post',
     imageUrl: post.imageUrl || '',
+    thumbnailUrl: post.thumbnailUrl || '',
+    videoUrl: post.videoUrl || '',
     sourceUrl: post.sourceUrl || '',
     platform: post.platform,
     publishedAt: post.publishedAt,
@@ -81,6 +84,8 @@ export default async function SocialBlogDetailPage({ params }) {
 
   const paragraphs = post.content.split(/\n{2,}/).map((paragraph) => paragraph.trim()).filter(Boolean);
   const platformLabel = formatUiLabel(post.platform === 'linkedin' ? 'LinkedIn' : 'Facebook');
+  const mediaLabel = post.mediaType === 'video' ? 'Reel' : 'Post';
+  const mediaImage = post.thumbnailUrl || post.imageUrl || '';
   const description = post.content.slice(0, 155);
   const articleSchema = createArticleSchema({
     title: post.title,
@@ -104,9 +109,9 @@ export default async function SocialBlogDetailPage({ params }) {
           <Link href="/blog" className="fj-social-back-link">
             <ArrowLeft size={16} /> Back to Blog
           </Link>
-          <span className="fj-announcement"><span>Blog</span> {platformLabel} update</span>
+          <span className="fj-announcement"><span>Blog</span> {platformLabel} {mediaLabel.toLowerCase()}</span>
           <h1>{post.title}</h1>
-          <p>{formatDate(post.publishedAt)} - Published from {platformLabel}</p>
+          <p>{formatDate(post.publishedAt)} - Published from {platformLabel} as a {mediaLabel.toLowerCase()}</p>
         </div>
       </section>
 
@@ -114,12 +119,35 @@ export default async function SocialBlogDetailPage({ params }) {
 
       <section className="fj-section fj-section--tight">
         <article className="fj-container fj-social-detail">
-          {post.imageUrl && (
-            <img className="fj-social-detail-image" src={post.imageUrl} alt="" loading="lazy" decoding="async" />
-          )}
+          {post.mediaType === 'video' && post.videoUrl ? (
+            <video
+              className="fj-social-detail-video"
+              controls
+              playsInline
+              preload="metadata"
+              poster={mediaImage || undefined}
+              src={post.videoUrl}
+            />
+          ) : mediaImage ? (
+            <div className="fj-social-detail-media">
+              <img className="fj-social-detail-image" src={mediaImage} alt="" loading="lazy" decoding="async" />
+              {post.mediaType === 'video' && (
+                <span className="fj-social-play-badge fj-social-play-badge--detail" aria-hidden="true">
+                  <Play size={24} fill="currentColor" />
+                </span>
+              )}
+            </div>
+          ) : post.mediaType === 'video' ? (
+            <div className="fj-social-detail-media fj-social-detail-media--empty" aria-hidden="true">
+              <span className="fj-social-play-badge fj-social-play-badge--detail">
+                <Play size={24} fill="currentColor" />
+              </span>
+            </div>
+          ) : null}
 
           <div className="fj-social-detail-meta">
             <span className="fj-badge">{platformLabel}</span>
+            <span className="fj-badge fj-badge--ghost">{mediaLabel}</span>
             <span>{formatDate(post.publishedAt)}</span>
           </div>
 
@@ -131,7 +159,7 @@ export default async function SocialBlogDetailPage({ params }) {
 
           {post.sourceUrl && (
             <a className="fj-button fj-button--dark" href={post.sourceUrl} target="_blank" rel="noopener noreferrer">
-              Original social post <ExternalLink size={16} />
+              Open original {mediaLabel.toLowerCase()} <ExternalLink size={16} />
             </a>
           )}
         </article>

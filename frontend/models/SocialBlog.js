@@ -23,7 +23,20 @@ const SocialBlogSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    mediaType: {
+      type: String,
+      enum: ['post', 'video'],
+      default: 'post',
+    },
     imageUrl: {
+      type: String,
+      default: '',
+    },
+    thumbnailUrl: {
+      type: String,
+      default: '',
+    },
+    videoUrl: {
       type: String,
       default: '',
     },

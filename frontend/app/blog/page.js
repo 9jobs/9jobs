@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, BookUser, Briefcase, FileText, Search } from "lucide-react";
+import { ArrowRight, BookOpen, BookUser, Briefcase, FileText, Play, Search } from "lucide-react";
 import connectMongoDB from "@/lib/mongodb";
 import SocialBlog from "@/models/SocialBlog";
 import { cities } from "../../data/australianJobsData";
@@ -132,6 +132,10 @@ function createExcerpt(content) {
   return text.length > 145 ? `${text.slice(0, 142).trim()}...` : text;
 }
 
+function getSocialCardImage(post) {
+  return post.thumbnailUrl || post.imageUrl || "";
+}
+
 function formatUiLabel(value) {
   const text = String(value || "").trim();
   if (!text) return "";
@@ -155,7 +159,10 @@ async function getSocialBlogPosts() {
       title: post.title,
       slug: post.slug,
       content: post.content || "",
+      mediaType: post.mediaType || "post",
       imageUrl: post.imageUrl || "",
+      thumbnailUrl: post.thumbnailUrl || "",
+      videoUrl: post.videoUrl || "",
       platform: post.platform,
       publishedAt: post.publishedAt,
     }));
@@ -207,23 +214,45 @@ export default async function BlogPage() {
       </section>
 
       <section className="fj-section fj-section--tight">
-        <div className="fj-container fj-card-grid fj-card-grid--three">
-          {socialPosts.map((post) => (
-            <article className="fj-blog-card fj-social-blog-card" key={post.id}>
-              {post.imageUrl ? (
-                <img className="fj-social-blog-image" src={post.imageUrl} alt="" loading="lazy" decoding="async" />
-              ) : (
-                <div className="fj-social-blog-image fj-social-blog-image--empty" aria-hidden="true" />
-              )}
-              <div className="fj-social-blog-meta">
-                <span className="fj-badge">{formatUiLabel(post.platform === "linkedin" ? "LinkedIn" : "Facebook")}</span>
-                <time dateTime={new Date(post.publishedAt).toISOString()}>{formatDate(post.publishedAt)}</time>
-              </div>
-              <h2>{post.title}</h2>
-              <p>{createExcerpt(post.content)}</p>
-              <Link href={`/blog/${post.slug}`}>Read More <ArrowRight size={16} /></Link>
-            </article>
-          ))}
+        <div className="fj-container">
+          {socialPosts.length > 0 && (
+            <div className="fj-section-head fj-section-head--social">
+              <span className="fj-label">Latest from 9Jobs Social</span>
+              <h2>Recent Facebook posts and reels</h2>
+              <p>Open the latest 9Jobs social updates, including reels and posts, directly from the website.</p>
+            </div>
+          )}
+          <div className="fj-card-grid fj-card-grid--three">
+            {socialPosts.map((post) => {
+              const cardImage = getSocialCardImage(post);
+              const isVideo = post.mediaType === "video";
+              return (
+                <article className="fj-blog-card fj-social-blog-card" key={post.id}>
+                  <Link href={`/blog/${post.slug}`} className="fj-social-card-media" aria-label={`Open ${post.title}`}>
+                    {cardImage ? (
+                      <img className="fj-social-blog-image" src={cardImage} alt="" loading="lazy" decoding="async" />
+                    ) : (
+                      <div className="fj-social-blog-image fj-social-blog-image--empty" aria-hidden="true">
+                        <span>{isVideo ? "Video" : "Post"}</span>
+                      </div>
+                    )}
+                    {isVideo && (
+                      <span className="fj-social-play-badge" aria-hidden="true">
+                        <Play size={18} fill="currentColor" />
+                      </span>
+                    )}
+                  </Link>
+                  <div className="fj-social-blog-meta">
+                    <span className="fj-badge">{formatUiLabel(post.platform === "linkedin" ? "LinkedIn" : "Facebook")}</span>
+                    <span className="fj-badge fj-badge--ghost">{isVideo ? "Reel" : "Post"}</span>
+                    <time dateTime={new Date(post.publishedAt).toISOString()}>{formatDate(post.publishedAt)}</time>
+                  </div>
+                  <h2>{post.title}</h2>
+                  <p>{createExcerpt(post.content)}</p>
+                  <Link href={`/blog/${post.slug}`}>Open {isVideo ? "Reel" : "Post"} <ArrowRight size={16} /></Link>
+                </article>
+              );
+            })}
           {posts.map(([title, text, tag, Icon, href]) => (
             <article className="fj-blog-card" key={title}>
               <div className="fj-icon-chip"><Icon size={22} /></div>
@@ -233,6 +262,7 @@ export default async function BlogPage() {
               <Link href={href}>Read Article <ArrowRight size={16} /></Link>
             </article>
           ))}
+          </div>
         </div>
       </section>
 

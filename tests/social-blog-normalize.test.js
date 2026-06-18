@@ -52,4 +52,40 @@ describe('social post blog normalization', () => {
     expect(normalized.content).toContain('Need help with jobs, interviews, or career guidance in Australia? Contact 9Jobs today.');
     expect(normalized.publishedAt).toEqual(new Date('2026-06-15T02:00:00.000Z'));
   });
+
+  test('keeps media-specific fields for video social posts', () => {
+    const normalized = normalizeSocialPostToBlog({
+      platform: 'facebook',
+      socialPostId: 'reel_001',
+      caption: 'A reel update for job seekers',
+      imageUrl: 'https://example.com/fallback.jpg',
+      thumbnailUrl: 'https://example.com/thumb.jpg',
+      videoUrl: 'https://example.com/reel.mp4',
+      sourceUrl: 'https://facebook.com/example/reel/1',
+      mediaType: 'video',
+      publishedAt: '2026-06-18T02:00:00.000Z',
+    });
+
+    expect(normalized).toMatchObject({
+      mediaType: 'video',
+      imageUrl: 'https://example.com/fallback.jpg',
+      thumbnailUrl: 'https://example.com/thumb.jpg',
+      videoUrl: 'https://example.com/reel.mp4',
+      sourceUrl: 'https://facebook.com/example/reel/1',
+    });
+  });
+
+  test('defaults mediaType to post when not provided', () => {
+    const normalized = normalizeSocialPostToBlog({
+      platform: 'facebook',
+      socialPostId: 'post_001',
+      caption: 'A standard post',
+      sourceUrl: 'https://facebook.com/example/post/1',
+      publishedAt: '2026-06-18T02:00:00.000Z',
+    });
+
+    expect(normalized.mediaType).toBe('post');
+    expect(normalized.thumbnailUrl).toBe('');
+    expect(normalized.videoUrl).toBe('');
+  });
 });
