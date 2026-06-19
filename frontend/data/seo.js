@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "9Jobs",
+  name: "9jobs",
   siteUrl: "https://9jobs.co",
   defaultImage: {
     url: "/dashboard.png",
@@ -13,11 +13,19 @@ export const siteConfig = {
 export const siteRoutes = [
   {
     path: "/",
-    title: "9Jobs Australia | Resume Writing, LinkedIn & Job Application Services",
-    description: "Professional resume writing, LinkedIn optimization, interview coaching and job application services across Australia.",
+    title: "9 Jobs Australia | 9jobs Resume Writing & Job Application Services",
+    description: "9jobs, also known as 9 Jobs, helps Australian professionals with Resume Writing Australia, LinkedIn Optimization, ATS Resume support, and Job Application Services.",
     lastModified: "2026-06-15",
     changeFrequency: "daily",
     priority: 1,
+  },
+  {
+    path: "/9-jobs",
+    title: "9 Jobs Australia | Resume Writing & Job Application Services",
+    description: "Discover how 9 Jobs Australia by 9jobs supports resume writing, LinkedIn optimization, ATS resume upgrades, and job application services.",
+    lastModified: "2026-06-19",
+    changeFrequency: "weekly",
+    priority: 0.9,
   },
   {
     path: "/about",

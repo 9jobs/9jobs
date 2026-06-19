@@ -6,8 +6,8 @@ import { CalendlyLoader } from "../components/CalendlyWidget";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
-const homepageTitle = "9Jobs Australia | Resume Writing, LinkedIn & Job Application Services";
-const homepageDescription = "Professional resume writing, LinkedIn optimization, interview coaching and job application services across Australia.";
+const homepageTitle = "9 Jobs Australia | 9jobs Resume Writing & Job Application Services";
+const homepageDescription = "9jobs, also known as 9 Jobs, helps Australian professionals with Resume Writing Australia, LinkedIn Optimization, ATS Resume support, and Job Application Services.";
 const siteUrl = "https://9jobs.co/";
 const socialImage = {
   url: "/dashboard.png",
@@ -27,7 +27,7 @@ export const metadata = {
     title: homepageTitle,
     description: homepageDescription,
     url: siteUrl,
-    siteName: "9Jobs",
+    siteName: "9jobs",
     images: [socialImage],
     locale: "en_AU",
     type: "website",
@@ -47,86 +47,22 @@ function jsonLd(schema) {
 export default function RootLayout({ children }) {
   const organizationSchema = {
     "@context": "https://schema.org",
-    "@type": ["Organization", "ProfessionalService"],
+    "@type": "Organization",
     "@id": "https://9jobs.co/#organization",
-    "name": "9Jobs",
+    "name": "9jobs",
     "alternateName": [
       "9 Jobs",
-      "9Jobs Australia",
-      "9Jobs Application Services"
+      "9jobs.co"
     ],
     "url": siteUrl,
     "logo": "https://9jobs.co/framer/app-icon.svg",
-    "description": "9Jobs is a Career Services / Job Search Support provider helping Australian job seekers with resumes, LinkedIn, SEEK profiles, interviews, and applications.",
-    "slogan": "Resume writing, profile optimization, and job application support for Australia.",
-    "knowsAbout": [
-      "ATS resume writing Australia",
-      "LinkedIn profile optimization",
-      "SEEK profile optimization",
-      "job application support",
-      "interview coaching",
-      "Australian recruitment"
-    ],
+    "description": "9jobs, also known as 9 Jobs, is an Australian career support brand helping professionals with resumes, LinkedIn optimization, ATS resume strategy, and job application services.",
     "areaServed": {
       "@type": "Country",
       "name": "Australia"
     },
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Level 12, 120 Collins Street",
-      "addressLocality": "Melbourne",
-      "addressRegion": "VIC",
-      "postalCode": "3000",
-      "addressCountry": "AU"
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "9Jobs Career Support Services",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Resume Writing Australia",
-            "url": "https://9jobs.co/services/resume-writing"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "LinkedIn Optimization Australia",
-            "url": "https://9jobs.co/services/linkedin-optimization"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "SEEK Profile Optimization",
-            "url": "https://9jobs.co/services/seek-profile-optimization"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Job Application Support",
-            "url": "https://9jobs.co/services/job-application-automation"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Interview Coaching Australia",
-            "url": "https://9jobs.co/services/interview-coaching"
-          }
-        }
-      ]
-    },
     "sameAs": [
-      "https://www.facebook.com/profile.php?id=61589408708559",
+      "https://www.facebook.com/9jobs.co",
       "https://www.instagram.com/9jobsau/",
       "https://www.linkedin.com/company/9jobs/",
       "https://www.youtube.com/@9jobs"
@@ -137,8 +73,9 @@ export default function RootLayout({ children }) {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": "https://9jobs.co/#website",
-    "name": "9Jobs",
+    "name": "9jobs",
     "url": siteUrl,
+    "alternateName": "9 Jobs",
     "publisher": {
       "@id": "https://9jobs.co/#organization"
     },

@@ -60,6 +60,7 @@ export default function About() {
             <span className="fj-label">Our story</span>
             <h2>Connecting skilled people with companies that need <span className="heading-mark">them.</span></h2>
             <p>9Jobs was created for candidates who know they can contribute, but need a sharper way to present skills, choose the right roles, and stay consistent through applications.</p>
+            <p>9jobs, also known as 9 Jobs, helps professionals across Australia improve resumes, optimize LinkedIn profiles and secure interviews.</p>
           </div>
           <div className="fj-image-card">
             <Image src="/framer/story-ops.jpg" alt="9Jobs team reviewing candidate opportunities" width={1200} height={800} />

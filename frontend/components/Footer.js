@@ -31,10 +31,10 @@ const footerGroups = [
     title: "Explore 9Jobs",
     href: "/jobs",
     links: [
-      { href: "/jobs/sydney", label: "Jobs in Sydney" },
-      { href: "/jobs/melbourne", label: "Jobs in Melbourne" },
-      { href: "/jobs/brisbane", label: "Jobs in Brisbane" },
-      { href: "/services/resume-writing", label: "Resume Writing" },
+      { href: "/9-jobs", label: "9 Jobs" },
+      { href: "/jobs", label: "9jobs Australia" },
+      { href: "/services/resume-writing", label: "9 Jobs Resume Service" },
+      { href: "/about", label: "9 Jobs Career Support" },
       { href: "/services/linkedin-optimization", label: "LinkedIn Optimization" },
       { href: "/services/interview-coaching", label: "Interview Coaching" },
       { href: "/blog/how-to-get-a-job-in-australia", label: "How to Get a Job in Australia" },
@@ -140,7 +140,7 @@ export default function Footer() {
                   <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
                 </svg>
               </a>
-              <a href="https://www.facebook.com/profile.php?id=61589408708559" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <a href="https://www.facebook.com/9jobs.co" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
                 </svg>

@@ -18,6 +18,7 @@ function listPageFiles(relativeDir) {
 
 const indexableRoutes = [
   "/",
+  "/9-jobs",
   "/about",
   "/pricing",
   "/contact",
