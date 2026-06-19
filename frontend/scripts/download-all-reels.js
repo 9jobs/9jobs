@@ -115,7 +115,7 @@ async function processReel(reel) {
     await downloadFile(bestAudio.url, tempAudioFile);
 
     console.log("Merging video and audio using ffmpeg...");
-    const cmd = `"${FFMPEG_EXE}" -y -i "${tempVideoFile}" -i "${tempAudioFile}" -c:v libx264 -pix_fmt yuv420p -c:a aac -map 0:v:0 -map 1:a:0 "${mergedFile}"`;
+    const cmd = `"${FFMPEG_EXE}" -y -i "${tempVideoFile}" -i "${tempAudioFile}" -c:v libx264 -pix_fmt yuv420p -movflags +faststart -c:a aac -map 0:v:0 -map 1:a:0 "${mergedFile}"`;
     execSync(cmd, { stdio: 'ignore' });
     
     console.log(`Successfully saved merged video: ${mergedFile}`);

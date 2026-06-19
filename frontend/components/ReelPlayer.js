@@ -29,14 +29,11 @@ export default function ReelPlayer({ src, poster, title = 'Video Reel' }) {
               setIsMuted(true);
               
               videoRef.current.play()
-                .then(() => setIsPlaying(true))
                 .catch((err) => {
                   console.log('Autoplay blocked by browser policy:', err);
-                  setIsPlaying(false);
                 });
             } else {
               videoRef.current.pause();
-              setIsPlaying(false);
             }
           }
         });
@@ -56,13 +53,11 @@ export default function ReelPlayer({ src, poster, title = 'Video Reel' }) {
   const handlePlayPause = (e) => {
     if (e) e.stopPropagation();
     if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    } else {
+    if (videoRef.current.paused) {
       videoRef.current.play()
-        .then(() => setIsPlaying(true))
         .catch((err) => console.log('Play blocked:', err));
+    } else {
+      videoRef.current.pause();
     }
   };
 
@@ -115,6 +110,8 @@ export default function ReelPlayer({ src, poster, title = 'Video Reel' }) {
         className="w-full h-full object-contain"
         muted={isMuted}
         playsInline
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
         onTimeUpdate={handleTimeUpdate}
         onEnded={handleVideoEnded}
         style={{
