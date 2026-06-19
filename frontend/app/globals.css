@@ -3988,8 +3988,8 @@ section.hero.hero-split,
 
 .fj-footer-grid {
   display: grid;
-  grid-template-columns: 1.3fr repeat(5, minmax(0, 1fr));
-  gap: 40px;
+  grid-template-columns: 1.35fr repeat(6, minmax(0, 1fr));
+  gap: 28px;
   align-items: start;
 }
 
@@ -4043,8 +4043,8 @@ section.hero.hero-split,
 
 .fj-footer-links {
   display: grid;
-  gap: 14px;
-  margin-top: 24px;
+  gap: 12px;
+  margin-top: 18px;
 }
 
 .fj-footer-link-placeholder {
@@ -4054,6 +4054,7 @@ section.hero.hero-split,
 .fj-footer-links a {
   color: var(--fj-muted);
   font-weight: 600;
+  line-height: 1.35;
 }
 
 .fj-footer-links a:hover {
