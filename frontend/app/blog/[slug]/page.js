@@ -131,17 +131,6 @@ export default async function SocialBlogDetailPage({ params }) {
               preload="metadata"
               poster={mediaImage || undefined}
               src={inlineVideoSrc}
-              style={{
-                width: '100%',
-                maxWidth: '280px',
-                aspectRatio: '9 / 16',
-                maxHeight: '497px',
-                height: 'auto',
-                margin: '0 auto',
-                objectFit: 'contain',
-                borderRadius: '24px',
-                background: '#0d1117',
-              }}
             />
           ) : post.mediaType === 'video' && embedUrl ? (
             <div className="fj-social-embed-shell">
