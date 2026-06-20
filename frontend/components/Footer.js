@@ -1,8 +1,5 @@
-"use client";
-
 import Link from "next/link";
-import { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import NewsletterForm from "./NewsletterForm";
 
 const footerGroups = [
   {
@@ -75,36 +72,6 @@ const footerGroups = [
 const footerRows = Math.max(...footerGroups.map((group) => group.links.length));
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  async function handleNewsletterSubmit(event) {
-    event.preventDefault();
-    setLoading(true);
-    setStatus("");
-
-    try {
-      const response = await fetch("/api/newsletter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Unable to submit email.");
-      }
-
-      setEmail("");
-      setStatus("Thanks, we will keep you updated.");
-    } catch (error) {
-      setStatus(error.message || "Unable to submit email.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
   return (
     <footer className="site-footer fj-footer">
       <div className="fj-container">
@@ -118,20 +85,7 @@ export default function Footer() {
               <span>9Jobs</span>
             </Link>
             <p>Join the 40,000+ businesses in Australia using 9Jobs, today.</p>
-            <form className="fj-newsletter" onSubmit={handleNewsletterSubmit}>
-              <input
-                aria-label="Email address"
-                type="email"
-                placeholder="Email address"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                required
-              />
-              <button className="fj-button fj-button--lime" type="submit" disabled={loading}>
-                {loading ? "Sending..." : "Get updated"} <ArrowRight size={16} />
-              </button>
-            </form>
-            {status && <p className="fj-newsletter-status">{status}</p>}
+            <NewsletterForm />
             <div className="fj-footer-socials">
               <a href="https://www.instagram.com/9jobsau/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

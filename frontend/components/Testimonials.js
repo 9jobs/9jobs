@@ -1,7 +1,4 @@
-"use client";
-
 import { Quote, Star } from "lucide-react";
-import { useState, useEffect } from "react";
 
 const defaultTestimonials = [
   {
@@ -47,53 +44,7 @@ function getInitials(name) {
 }
 
 export default function Testimonials() {
-  const [dbTestimonials, setDbTestimonials] = useState([]);
-
-  useEffect(() => {
-    async function loadTestimonials() {
-      try {
-        const res = await fetch(`/api/client-service-feedback?t=${Date.now()}`, {
-          cache: 'no-store'
-        });
-        if (res.ok) {
-          const result = await res.json();
-          if (result.success && Array.isArray(result.data)) {
-            // Only keep testimonials from Nafisa
-            const filteredData = result.data.filter(item =>
-              item.full_name && /Nafisa|Nafisha/i.test(item.full_name)
-            );
-            const mapped = filteredData.map(item => {
-              let displayName = item.full_name || "Nafisa";
-              // Remove Eqbali case-insensitively
-              displayName = displayName.replace(/\s*Eqbali\s*/gi, "").trim();
-              if (!displayName) displayName = "Nafisa";
-              return {
-                name: displayName,
-                role: "Verified Client",
-                quote: item.experience_message,
-                rating: item.overall_satisfaction
-              };
-            });
-            setDbTestimonials(mapped);
-          }
-        }
-      } catch (err) {
-        console.error("Failed to load testimonials:", err);
-      }
-    }
-    loadTestimonials();
-  }, []);
-
-  // Extract Nafisa from DB testimonials if present, otherwise use default Nafisa
-  const defaultNafisa = defaultTestimonials.find(t => t.name === "Nafisa");
-  const dbNafisa = dbTestimonials.find(t => /Nafisa/i.test(t.name));
-  const nafisaToUse = dbNafisa || defaultNafisa;
-
-  // Combine Nafisa with the rest of the default testimonials
-  const otherDefaults = defaultTestimonials.filter(t => t.name !== "Nafisa");
-  const listToUse = [nafisaToUse, ...otherDefaults];
-
-  // Make sure we have at least 6 items in the list for smooth marquee scrolling without layout gaps
+  const listToUse = [...defaultTestimonials];
   let filledList = [...listToUse];
   while (filledList.length > 0 && filledList.length < 6) {
     filledList = [...filledList, ...listToUse];

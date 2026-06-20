@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { CalendlyLink } from "./CalendlyWidget";
 
@@ -135,95 +134,79 @@ export default function Navbar() {
           </CalendlyLink>
         </div>
 
-        <motion.button
+        <button
           className="mobile-menu-button fj-menu-button"
           type="button"
           aria-label={isOpen ? "Close navigation" : "Open navigation"}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((value) => !value)}
-          whileTap={{ scale: 0.94 }}
         >
           {isOpen ? <X size={21} /> : <Menu size={21} />}
-        </motion.button>
+        </button>
       </div>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.nav
-            className="mobile-drawer fj-mobile-drawer"
-            aria-label="Mobile navigation"
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.22 }}
-          >
-            {links.map((link) => {
-              if (link.isDropdown) {
-                const isMobileDropdownOpen = activeMobileDropdown === link.label;
-                return (
-                  <div key={link.label} className="mobile-dropdown-container">
-                    <button
-                      className="mobile-dropdown-trigger"
-                      type="button"
-                      onClick={() => setActiveMobileDropdown((prev) => prev === link.label ? null : link.label)}
-                    >
-                      <span>{link.label}</span>
-                      <ChevronDown
-                        size={18}
-                        style={{
-                          transform: isMobileDropdownOpen ? "rotate(180deg)" : "rotate(0deg)",
-                          transition: "transform 0.2s ease",
-                        }}
-                      />
-                    </button>
-                    <AnimatePresence>
-                      {isMobileDropdownOpen && (
-                        <motion.div
-                          className="mobile-dropdown-links"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          {link.dropdownLinks.map((subLink) => (
-                            <Link
-                              key={subLink.href}
-                              className={`mobile-dropdown-link-item${pathname === subLink.href ? " is-active" : ""}`}
-                              href={subLink.href}
-                              onClick={() => {
-                                setIsOpen(false);
-                                setActiveMobileDropdown(null);
-                              }}
-                            >
-                              {normalizeMenuLabel(subLink.label)}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              }
-              return (
-                <Link
-                  key={link.href}
-                  className={isActive(pathname, link.href) ? "is-active" : undefined}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
+      <nav
+        className={`mobile-drawer fj-mobile-drawer${isOpen ? " is-open" : ""}`}
+        aria-label="Mobile navigation"
+        aria-hidden={isOpen ? "false" : "true"}
+      >
+        {links.map((link) => {
+          if (link.isDropdown) {
+            const isMobileDropdownOpen = activeMobileDropdown === link.label;
+            return (
+              <div key={link.label} className="mobile-dropdown-container">
+                <button
+                  className="mobile-dropdown-trigger"
+                  type="button"
+                  onClick={() => setActiveMobileDropdown((prev) => prev === link.label ? null : link.label)}
                 >
-                  {link.label}
-                </Link>
-              );
-            })}
-            <Link className="fj-button fj-button--ghost" href="/pricing" onClick={() => setIsOpen(false)}>
-              1 Day Trial
+                  <span>{link.label}</span>
+                  <ChevronDown
+                    size={18}
+                    style={{
+                      transform: isMobileDropdownOpen ? "rotate(180deg)" : "rotate(0deg)",
+                      transition: "transform 0.2s ease",
+                    }}
+                  />
+                </button>
+                {isMobileDropdownOpen ? (
+                  <div className="mobile-dropdown-links">
+                    {link.dropdownLinks.map((subLink) => (
+                      <Link
+                        key={subLink.href}
+                        className={`mobile-dropdown-link-item${pathname === subLink.href ? " is-active" : ""}`}
+                        href={subLink.href}
+                        onClick={() => {
+                          setIsOpen(false);
+                          setActiveMobileDropdown(null);
+                        }}
+                      >
+                        {normalizeMenuLabel(subLink.label)}
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            );
+          }
+          return (
+            <Link
+              key={link.href}
+              className={isActive(pathname, link.href) ? "is-active" : undefined}
+              href={link.href}
+              onClick={() => setIsOpen(false)}
+            >
+              {link.label}
             </Link>
-            <CalendlyLink className="fj-button fj-button--dark" onClick={() => setIsOpen(false)}>
-              Get a demo <ArrowRight size={17} />
-            </CalendlyLink>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+          );
+        })}
+        <Link className="fj-button fj-button--ghost" href="/pricing" onClick={() => setIsOpen(false)}>
+          1 Day Trial
+        </Link>
+        <CalendlyLink className="fj-button fj-button--dark" onClick={() => setIsOpen(false)}>
+          Get a demo <ArrowRight size={17} />
+        </CalendlyLink>
+      </nav>
     </header>
   );
 }
