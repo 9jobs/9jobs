@@ -33,7 +33,9 @@ const homepageDescription =
 const homepageUrl = "https://9jobs.co/";
 
 export const metadata = {
-  title: homepageTitle,
+  title: {
+    absolute: homepageTitle,
+  },
   description: homepageDescription,
   keywords: [
     "9jobs",
@@ -353,7 +355,7 @@ export default function Home() {
           <Image src="/framer/app-icon.svg" alt="9Jobs smarter job application automation tool" width={360} height={360} priority />
         </div>
         <div className="fj-container fj-hero-inner">
-          <Link className="fj-announcement" href="/features">
+          <Link className="fj-announcement" href="/features" prefetch={false}>
             <span>New</span>
             Announcing our Job Applying Automation Tool
             <ArrowRight size={24} />
@@ -361,7 +363,7 @@ export default function Home() {
           <h1>9Jobs – Job Search, Resume Writing & <span className="heading-mark">Career Support Australia</span></h1>
           <p>We optimize your resume, LinkedIn, SEEK and Jora profiles, apply for jobs on your behalf, and help you secure interviews and job offers.</p>
           <div className="fj-actions">
-            <Link className="fj-button fj-button--ghost" href="/pricing">1 Day Trial</Link>
+            <Link className="fj-button fj-button--ghost" href="/pricing" prefetch={false}>1 Day Trial</Link>
             <CalendlyLink className="fj-button fj-button--dark">Get a demo</CalendlyLink>
           </div>
         </div>
@@ -391,34 +393,34 @@ export default function Home() {
             <article className="fj-feature-card">
               <h3>Resume Writing Australia</h3>
               <p>ATS-friendly resumes written for Australian recruiter expectations, local keywords, and clear achievement-led scanning.</p>
-              <Link href="/services/resume-writing">Resume writing <ArrowRight size={16} /></Link>
+              <Link href="/services/resume-writing" prefetch={false}>Resume writing <ArrowRight size={16} /></Link>
             </article>
             <article className="fj-feature-card">
               <h3>LinkedIn Optimization</h3>
               <p>Profile headlines, summaries, skills, and experience sections aligned with LinkedIn Recruiter search behavior.</p>
-              <Link href="/services/linkedin-optimization">LinkedIn optimization <ArrowRight size={16} /></Link>
+              <Link href="/services/linkedin-optimization" prefetch={false}>LinkedIn optimization <ArrowRight size={16} /></Link>
             </article>
             <article className="fj-feature-card">
               <h3>SEEK Profile Optimization</h3>
               <p>SEEK summaries, target titles, skills, and visibility settings configured for Australian candidate searches.</p>
-              <Link href="/services/seek-profile-optimization">SEEK profile optimization <ArrowRight size={16} /></Link>
+              <Link href="/services/seek-profile-optimization" prefetch={false}>SEEK profile optimization <ArrowRight size={16} /></Link>
             </article>
             <article className="fj-feature-card">
               <h3>Job Application Support</h3>
               <p>Structured job sourcing and application support to keep your role pipeline active across SEEK, LinkedIn, and Jora.</p>
-              <Link href="/services/job-application-automation">Job application support <ArrowRight size={16} /></Link>
+              <Link href="/services/job-application-automation" prefetch={false}>Job application support <ArrowRight size={16} /></Link>
             </article>
             <article className="fj-feature-card">
               <h3>Interview Coaching</h3>
               <p>Mock interview practice, STAR answer coaching, and interview follow-up support for Australian hiring processes.</p>
-              <Link href="/services/interview-coaching">Interview coaching <ArrowRight size={16} /></Link>
+              <Link href="/services/interview-coaching" prefetch={false}>Interview coaching <ArrowRight size={16} /></Link>
             </article>
           </div>
           <div style={{ display: "flex", gap: "16px", justifyContent: "center", marginTop: "40px", flexWrap: "wrap" }}>
-            <Link href="/services" className="fj-button fj-button--ghost">
+            <Link href="/services" className="fj-button fj-button--ghost" prefetch={false}>
               Explore Services Hub <ArrowRight size={16} />
             </Link>
-            <Link href="/jobs" className="fj-button fj-button--ghost">
+            <Link href="/jobs" className="fj-button fj-button--ghost" prefetch={false}>
               Search Jobs in Australia <ArrowRight size={16} />
             </Link>
           </div>
@@ -441,7 +443,7 @@ export default function Home() {
                   <div className="fj-card-eyebrow"><Icon size={19} /> {item.eyebrow}</div>
                   <h3>{item.title} {item.badge && <span>{item.badge}</span>}</h3>
                   <p>{item.text}</p>
-                  <Link href="/features" aria-label={`Learn more about ${item.title}`}>Learn more <ArrowRight size={16} /></Link>
+                  <Link href="/features" aria-label={`Learn more about ${item.title}`} prefetch={false}>Learn more <ArrowRight size={16} /></Link>
                 </article>
               );
             })}
@@ -523,7 +525,7 @@ export default function Home() {
           <div className="fj-copy-block">
             <h2>Less stress, more interview <span className="heading-mark">calls</span></h2>
             <p>We integrate seamlessly with the tools you already use. Apply smarter with 9Jobs.</p>
-            <Link className="fj-link-light" href="/features">See all integrations <ArrowRight size={17} /></Link>
+            <Link className="fj-link-light" href="/features" prefetch={false}>See all integrations <ArrowRight size={17} /></Link>
           </div>
           <div className="fj-integration-grid">
             {["LinkedIn", "Gmail", "Calendar", "Indeed", "Seek", "Resume"].map((item) => (
@@ -606,6 +608,7 @@ export default function Home() {
                   <Link
                     href={`/jobs/${city.slug}`}
                     className="fj-button fj-button--ghost"
+                    prefetch={false}
                   >
                     Explore {city.name} <ArrowRight size={16} />
                   </Link>
@@ -628,7 +631,7 @@ export default function Home() {
               <article className="fj-feature-card" key={city.name} style={{ minHeight: "220px", display: "flex", flexDirection: "column" }}>
                 <h3>{city.name}</h3>
                 <p style={{ fontSize: "0.9rem", color: "var(--fj-muted)", margin: "10px 0 20px" }}>{city.desc}</p>
-                <Link href={city.href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "44px", fontSize: "0.85rem" }}>
+                <Link href={city.href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "44px", fontSize: "0.85rem" }} prefetch={false}>
                   Jobs in {city.name} <ArrowRight size={14} />
                 </Link>
               </article>
@@ -670,10 +673,10 @@ export default function Home() {
           <span>Automate with 9Jobs</span>
           <h2>Start for free <span className="heading-mark">today.</span></h2>
           <div className="fj-actions">
-            <Link className="fj-button fj-button--ghost" href="/pricing">1 Day Trial</Link>
+            <Link className="fj-button fj-button--ghost" href="/pricing" prefetch={false}>1 Day Trial</Link>
             <CalendlyLink className="fj-button fj-button--dark">Schedule a demo</CalendlyLink>
-            <Link className="fj-button fj-button--ghost" href="/blog">Read our Blog</Link>
-            <Link className="fj-button fj-button--ghost" href="/contact">Contact Us</Link>
+            <Link className="fj-button fj-button--ghost" href="/blog" prefetch={false}>Read our Blog</Link>
+            <Link className="fj-button fj-button--ghost" href="/contact" prefetch={false}>Contact Us</Link>
           </div>
         </div>
       </section>

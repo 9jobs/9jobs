@@ -77,7 +77,7 @@ export default function Footer() {
       <div className="fj-container">
         <div className="fj-footer-grid">
           <div className="fj-footer-brand">
-            <Link className="brand fj-brand" href="/" aria-label="9Jobs home page">
+            <Link className="brand fj-brand" href="/" aria-label="9Jobs home page" prefetch={false}>
               <span className="fj-brand-mark" aria-hidden="true">
                 <span />
                 <span />
@@ -113,7 +113,7 @@ export default function Footer() {
             <div className="fj-footer-column" key={group.title}>
               {group.href ? (
                 <h3>
-                  <Link href={group.href} style={{ color: "inherit", textDecoration: "none" }}>
+                  <Link href={group.href} style={{ color: "inherit", textDecoration: "none" }} prefetch={false}>
                     {group.title}
                   </Link>
                 </h3>
@@ -122,7 +122,7 @@ export default function Footer() {
               )}
               <div className="fj-footer-links">
                 {group.links.map((link) => (
-                  <Link href={link.href} key={`${group.title}-${link.label}`}>
+                  <Link href={link.href} key={`${group.title}-${link.label}`} prefetch={false}>
                     {link.label}
                   </Link>
                 ))}

@@ -84,7 +84,7 @@ export default function ServicesPage() {
       <section className="fj-page-hero">
         <div className="fj-container">
           <nav className="fj-breadcrumbs" aria-label="Breadcrumb" style={{ marginBottom: "24px", display: "flex", gap: "8px", alignItems: "center", fontSize: "0.88rem", color: "var(--fj-muted)", fontWeight: 600 }}>
-            <Link href="/" style={{ color: "inherit" }}>Home</Link>
+            <Link href="/" style={{ color: "inherit" }} prefetch={false}>Home</Link>
             <span>&gt;</span>
             <span style={{ color: "var(--fj-ink)", fontWeight: 800 }}>Services</span>
           </nav>
@@ -92,7 +92,7 @@ export default function ServicesPage() {
           <h1>Career Services for Australian Job Seekers</h1>
           <p>Choose focused support for your resume, LinkedIn profile, SEEK profile, applications, and interview preparation.</p>
           <div className="fj-actions">
-            <Link className="fj-button fj-button--ghost" href="/pricing">View plans</Link>
+            <Link className="fj-button fj-button--ghost" href="/pricing" prefetch={false}>View plans</Link>
             <CalendlyLink className="fj-button fj-button--dark">Book a call</CalendlyLink>
           </div>
         </div>
@@ -113,7 +113,7 @@ export default function ServicesPage() {
                   <div className="fj-icon-chip"><Icon size={22} /></div>
                   <h3>{service.title}</h3>
                   <p>{service.description}</p>
-                  <Link href={service.href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>
+                  <Link href={service.href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }} prefetch={false}>
                     Learn more <ArrowRight size={14} />
                   </Link>
                 </article>
@@ -135,7 +135,7 @@ export default function ServicesPage() {
               <article className="fj-feature-card" key={resource.href}>
                 <h3>{resource.title}</h3>
                 <p>{resource.text}</p>
-                <Link href={resource.href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>
+                <Link href={resource.href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }} prefetch={false}>
                   Read guide <ArrowRight size={14} />
                 </Link>
               </article>

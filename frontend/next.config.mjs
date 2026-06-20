@@ -7,8 +7,40 @@ const rootDir = path.join(appDir, "..");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   outputFileTracingRoot: rootDir,
+  poweredByHeader: false,
   turbopack: {
     root: rootDir,
+  },
+  async headers() {
+    const contentSecurityPolicy = [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'self'",
+      "object-src 'none'",
+      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://assets.calendly.com",
+      "style-src 'self' 'unsafe-inline' https://assets.calendly.com https://fonts.googleapis.com",
+      "img-src 'self' data: blob: https:",
+      "font-src 'self' https://fonts.gstatic.com data:",
+      "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com https://assets.calendly.com https://calendly.com",
+      "frame-src 'self' https://calendly.com",
+      "media-src 'self' blob: https:",
+      "worker-src 'self' blob:",
+      "upgrade-insecure-requests",
+    ].join("; ");
+
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "Content-Security-Policy", value: contentSecurityPolicy },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+        ],
+      },
+    ];
   },
   async redirects() {
     return [

@@ -87,7 +87,7 @@ export default function JobsHubPage() {
       <section className="fj-page-hero">
         <div className="fj-container">
           <nav className="fj-breadcrumbs" aria-label="Breadcrumb" style={{ marginBottom: "24px", display: "flex", gap: "8px", alignItems: "center", fontSize: "0.88rem", color: "var(--fj-muted)", fontWeight: 600 }}>
-            <Link href="/" style={{ color: "inherit" }}>Home</Link>
+            <Link href="/" style={{ color: "inherit" }} prefetch={false}>Home</Link>
             <span>&gt;</span>
             <span style={{ color: "var(--fj-ink)", fontWeight: 800 }}>Australian Jobs</span>
           </nav>
@@ -95,7 +95,7 @@ export default function JobsHubPage() {
           <h1>Find Jobs & Accelerate Your Career in <span className="heading-mark">Australia</span></h1>
           <p>Direct access to regional hiring markets, recruiter networks, and local application support across major Australian cities.</p>
           <div className="fj-actions">
-            <Link className="fj-button fj-button--ghost" href="/pricing">View plans</Link>
+            <Link className="fj-button fj-button--ghost" href="/pricing" prefetch={false}>View plans</Link>
             <CalendlyLink className="fj-button fj-button--dark">Book a consulting call</CalendlyLink>
           </div>
         </div>
@@ -118,7 +118,7 @@ export default function JobsHubPage() {
                 </div>
                 <h3 style={{ marginTop: "16px" }}>{city.name} Jobs</h3>
                 <p style={{ fontSize: "0.9rem", color: "var(--fj-muted)", margin: "10px 0 20px", flexGrow: 1 }}>{city.description}</p>
-                <Link href={`/jobs/${city.slug}`} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "44px", fontSize: "0.85rem", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
+                <Link href={`/jobs/${city.slug}`} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "44px", fontSize: "0.85rem", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "6px" }} prefetch={false}>
                   Explore {city.name} <ArrowRight size={14} />
                 </Link>
               </article>
@@ -144,7 +144,7 @@ export default function JobsHubPage() {
                   <div className="fj-icon-chip"><Icon size={22} /></div>
                   <h3>{service.name}</h3>
                   <p style={{ fontSize: "0.9rem", color: "var(--fj-muted)", margin: "10px 0 20px" }}>{service.desc}</p>
-                  <Link href={service.href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>
+                  <Link href={service.href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }} prefetch={false}>
                     Learn more <ArrowRight size={14} />
                   </Link>
                 </article>
@@ -186,7 +186,7 @@ export default function JobsHubPage() {
           <span>Outsource Your Sourcing</span>
           <h2>Accelerate your job search across Australia today</h2>
           <div className="fj-actions">
-            <Link className="fj-button fj-button--ghost" href="/pricing">View Plans</Link>
+            <Link className="fj-button fj-button--ghost" href="/pricing" prefetch={false}>View Plans</Link>
             <CalendlyLink className="fj-button fj-button--dark">Book a free strategy call</CalendlyLink>
           </div>
         </div>

@@ -60,17 +60,11 @@ export function CalendlyLink({ children, className, onClick }) {
     openCalendlyPopup();
   }
 
-  function handleMouseEnter() {
-    loadCalendly();
-  }
-
   return (
     <a
       className={className}
       href={CALENDLY_URL}
       onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onTouchStart={handleMouseEnter}
     >
       {children}
     </a>

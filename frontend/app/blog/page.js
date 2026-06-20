@@ -233,6 +233,7 @@ export default async function BlogPage() {
                     href={`/blog/${post.slug}`}
                     className={`fj-social-card-media ${isVideo ? 'fj-social-card-media--reel' : ''}`}
                     aria-label={isVideo ? `Play ${post.title}` : `Open ${post.title}`}
+                    prefetch={false}
                   >
                     {cardImage ? (
                       <img 
@@ -284,7 +285,7 @@ export default async function BlogPage() {
           <div className="fj-section-head">
             <span className="fj-label">Australian Cities Sourcing Guides</span>
             <h2>Local Sourcing Opportunities</h2>
-            <p>Target localized job markets across Australia's major hubs with tailored profiles, resumes, and networks.</p>
+            <p>Target localized job markets across Australia&apos;s major hubs with tailored profiles, resumes, and networks.</p>
           </div>
           
           <div className="cities-marquee-wrapper">

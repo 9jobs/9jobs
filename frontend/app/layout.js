@@ -4,22 +4,13 @@ import Footer from "../components/Footer";
 import ScrollAnimations from "../components/ScrollAnimations";
 import { CalendlyLoader } from "../components/CalendlyWidget";
 import WhatsAppButton from "../components/WhatsAppButton";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import DeferredAnalytics from "../components/DeferredAnalytics";
 
-const homepageTitle = "9jobs | 9 Jobs Australia - Resume Writing & Job Application Services";
-const homepageDescription = "9jobs (also known as 9 Jobs) helps Australian professionals with Resume Writing Australia, LinkedIn Optimization, ATS Resume support, and Job Application Services.";
 const siteUrl = "https://9jobs.co/";
-const socialImage = {
-  url: "/dashboard.png",
-  width: 1200,
-  height: 630,
-  alt: "9 Jobs (9jobs) career support dashboard for Australian job seekers",
-};
 
 export const metadata = {
   metadataBase: new URL("https://9jobs.co"),
-  title: homepageTitle,
-  description: homepageDescription,
+  applicationName: "9Jobs",
   keywords: [
     "9jobs",
     "9 Jobs",
@@ -34,21 +25,6 @@ export const metadata = {
   ],
   verification: {
     google: "S2M3LuBuz0NYvUAtbFqLd6ey52Ld9NgkvVAD04kfySY",
-  },
-  openGraph: {
-    title: homepageTitle,
-    description: homepageDescription,
-    url: siteUrl,
-    siteName: "9 Jobs (9jobs)",
-    images: [socialImage],
-    locale: "en_AU",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: homepageTitle,
-    description: homepageDescription,
-    images: ["/dashboard.png"],
   },
 };
 
@@ -128,10 +104,10 @@ export default function RootLayout({ children }) {
         <ScrollAnimations />
         <CalendlyLoader />
         <WhatsAppButton />
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <DeferredAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )}
       </body>
-      {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
-      )}
     </html>
   );
 }

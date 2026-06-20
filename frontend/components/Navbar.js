@@ -87,7 +87,7 @@ export default function Navbar() {
                   onMouseEnter={() => setActiveDesktopDropdown(link.label)}
                   onMouseLeave={() => setActiveDesktopDropdown(null)}
                 >
-                  <Link href={link.href} className="nav-dropdown-trigger">
+                  <Link href={link.href} className="nav-dropdown-trigger" prefetch={false}>
                     {link.label} <ChevronDown size={14} />
                   </Link>
                   <div
@@ -105,6 +105,7 @@ export default function Navbar() {
                         key={subLink.href}
                         className={`dropdown-link-item${pathname === subLink.href ? " is-active" : ""}`}
                         href={subLink.href}
+                        prefetch={false}
                       >
                         {normalizeMenuLabel(subLink.label)}
                       </Link>
@@ -118,6 +119,7 @@ export default function Navbar() {
                 key={link.href}
                 className={isActive(pathname, link.href) ? "is-active" : undefined}
                 href={link.href}
+                prefetch={false}
               >
                 {link.label}
               </Link>
@@ -126,7 +128,7 @@ export default function Navbar() {
         </nav>
 
         <div className="nav-actions fj-nav-actions">
-          <Link href="/pricing" className="fj-button fj-button--ghost">
+          <Link href="/pricing" className="fj-button fj-button--ghost" prefetch={false}>
             1 Day Trial
           </Link>
           <CalendlyLink className="fj-button fj-button--dark">
@@ -176,6 +178,7 @@ export default function Navbar() {
                         key={subLink.href}
                         className={`mobile-dropdown-link-item${pathname === subLink.href ? " is-active" : ""}`}
                         href={subLink.href}
+                        prefetch={false}
                         onClick={() => {
                           setIsOpen(false);
                           setActiveMobileDropdown(null);
@@ -194,13 +197,14 @@ export default function Navbar() {
               key={link.href}
               className={isActive(pathname, link.href) ? "is-active" : undefined}
               href={link.href}
+              prefetch={false}
               onClick={() => setIsOpen(false)}
             >
               {link.label}
             </Link>
           );
         })}
-        <Link className="fj-button fj-button--ghost" href="/pricing" onClick={() => setIsOpen(false)}>
+        <Link className="fj-button fj-button--ghost" href="/pricing" prefetch={false} onClick={() => setIsOpen(false)}>
           1 Day Trial
         </Link>
         <CalendlyLink className="fj-button fj-button--dark" onClick={() => setIsOpen(false)}>
