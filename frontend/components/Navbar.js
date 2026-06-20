@@ -70,7 +70,7 @@ export default function Navbar() {
     <header className={`site-nav fj-nav${scrolled ? " is-scrolled" : ""}`}>
       <div className="nav-inner fj-nav-inner">
         <Link className="brand fj-brand" href="/" aria-label="9Jobs home">
-          <span className="fj-brand-mark" aria-hidden="hidden">
+          <span className="fj-brand-mark" aria-hidden="true">
             <span />
             <span />
           </span>

@@ -441,7 +441,7 @@ export default function Home() {
                   <div className="fj-card-eyebrow"><Icon size={19} /> {item.eyebrow}</div>
                   <h3>{item.title} {item.badge && <span>{item.badge}</span>}</h3>
                   <p>{item.text}</p>
-                  <Link href="/features">Learn more <ArrowRight size={16} /></Link>
+                  <Link href="/features" aria-label={`Learn more about ${item.title}`}>Learn more <ArrowRight size={16} /></Link>
                 </article>
               );
             })}
@@ -570,7 +570,7 @@ export default function Home() {
               <article className="fj-plan-card" key={name}>
                 <h3>{name}</h3>
                 <p>{text}</p>
-                <Link href="/pricing">Learn more <ArrowRight size={16} /></Link>
+                <Link href="/pricing" aria-label={`Learn more about ${name} plan`}>Learn more <ArrowRight size={16} /></Link>
               </article>
             ))}
           </div>

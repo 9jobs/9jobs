@@ -1,29 +1,51 @@
 "use client";
 
-import Script from "next/script";
-
 const CALENDLY_URL = "https://calendly.com/mayanksodhi11/30min?hide_event_type_details=1";
 
-export function openCalendlyPopup() {
+let calendlyPromise = null;
+
+export function loadCalendly() {
+  if (typeof window === "undefined") return Promise.resolve(false);
+  if (window.Calendly) return Promise.resolve(true);
+  if (calendlyPromise) return calendlyPromise;
+
+  calendlyPromise = new Promise((resolve) => {
+    // 1. Load stylesheet
+    const link = document.createElement("link");
+    link.href = "https://assets.calendly.com/assets/external/widget.css";
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+
+    // 2. Load script
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
+
+  return calendlyPromise;
+}
+
+export async function openCalendlyPopup() {
   if (!window.Calendly) {
-    window.location.href = CALENDLY_URL;
-    return;
+    const loaded = await loadCalendly();
+    if (!loaded || !window.Calendly) {
+      window.location.href = CALENDLY_URL;
+      return;
+    }
   }
 
   window.Calendly.initPopupWidget({ url: CALENDLY_URL });
 }
 
 export function CalendlyLoader() {
-  return (
-    <>
-      <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
-      <Script
-        id="calendly-widget"
-        src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="lazyOnload"
-      />
-    </>
-  );
+  return null; // Don't load script on initial mount to avoid third-party cookies
 }
 
 export function CalendlyLink({ children, className, onClick }) {
@@ -38,8 +60,18 @@ export function CalendlyLink({ children, className, onClick }) {
     openCalendlyPopup();
   }
 
+  function handleMouseEnter() {
+    loadCalendly();
+  }
+
   return (
-    <a className={className} href={CALENDLY_URL} onClick={handleClick}>
+    <a
+      className={className}
+      href={CALENDLY_URL}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onTouchStart={handleMouseEnter}
+    >
       {children}
     </a>
   );
