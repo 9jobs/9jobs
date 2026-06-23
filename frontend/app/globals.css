@@ -5560,10 +5560,10 @@ section.hero.hero-split,
 }
 
 /* ==========================================
-   HOMEPAGE PREMIUM GOLD ACCENTS & THEME
-   (Applies ONLY to the Home Page via .fj-homepage)
+   GLOBAL PREMIUM GOLD ACCENTS & THEME
+   (Applies across the entire site via .fj-page)
    ========================================== */
-.fj-homepage {
+.fj-page {
   --fj-gold: #D4A017;
   --fj-gold-hover: #b5840d;
   --fj-gold-light: rgba(212, 160, 23, 0.08);
@@ -5571,22 +5571,22 @@ section.hero.hero-split,
 }
 
 /* 1. Premium Badges */
-.fj-homepage .fj-announcement span {
+.fj-page .fj-announcement span {
   background: var(--fj-gold);
   color: #1f2223;
   font-weight: 800;
 }
 
-.fj-homepage .fj-announcement {
+.fj-page .fj-announcement {
   border-color: var(--fj-gold-border);
 }
 
-.fj-homepage .fj-announcement:hover {
+.fj-page .fj-announcement:hover {
   border-color: var(--fj-gold);
   box-shadow: 0 4px 12px rgba(212, 160, 23, 0.15);
 }
 
-.fj-homepage .fj-badge-gold {
+.fj-page .fj-badge-gold {
   display: inline-flex;
   width: fit-content;
   padding: 4px 10px;
@@ -5601,7 +5601,7 @@ section.hero.hero-split,
 }
 
 /* 2. Trust Indicators */
-.fj-homepage .fj-trust-badge {
+.fj-page .fj-trust-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -5615,57 +5615,57 @@ section.hero.hero-split,
   margin-right: 12px;
 }
 
-.fj-homepage .fj-icon-gold {
+.fj-page .fj-icon-gold {
   color: var(--fj-gold);
 }
 
 /* 3. Featured Service Highlights */
-.fj-homepage .fj-feature-card--premium {
+.fj-page .fj-feature-card--premium {
   position: relative;
   border-top: 3px solid var(--fj-gold) !important;
   background: linear-gradient(180deg, rgba(212, 160, 23, 0.02) 0%, #ffffff 100%) !important;
 }
 
-.fj-homepage .fj-feature-card--premium .fj-badge-gold {
+.fj-page .fj-feature-card--premium .fj-badge-gold {
   position: absolute;
   top: 16px;
   right: 16px;
 }
 
 /* 4. Plans Premium Highlights */
-.fj-homepage .fj-plan-card--premium {
+.fj-page .fj-plan-card--premium {
   position: relative;
   border-top: 3px solid var(--fj-gold) !important;
 }
 
-.fj-homepage .fj-plan-card--premium .fj-badge-gold {
+.fj-page .fj-plan-card--premium .fj-badge-gold {
   position: absolute;
   top: 16px;
   right: 16px;
 }
 
 /* 5. Statistics & Counters */
-.fj-homepage .fj-stat-value {
+.fj-page .fj-stat-value {
   color: var(--fj-gold);
 }
 
-.fj-homepage .fj-stat-card {
+.fj-page .fj-stat-card {
   border-color: var(--fj-gold-border) !important;
   transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
 }
 
-.fj-homepage .fj-stat-card:hover {
+.fj-page .fj-stat-card:hover {
   border-color: var(--fj-gold) !important;
   transform: translateY(-4px);
 }
 
 /* Rating Card Icon custom background (Gold instead of lime) */
-.fj-homepage .fj-stat-card:first-child .fj-stat-icon {
+.fj-page .fj-stat-card:first-child .fj-stat-icon {
   background: var(--fj-gold) !important;
 }
 
 /* 6. Section Divider */
-.fj-homepage .fj-section-divider {
+.fj-page .fj-section-divider {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--fj-gold-border) 30%, var(--fj-gold-border) 70%, transparent);
   width: 85%;
@@ -5674,7 +5674,7 @@ section.hero.hero-split,
 }
 
 /* 7. Small UI Accents */
-.fj-homepage .is-gold {
+.fj-page .is-gold {
   background: var(--fj-gold-light) !important;
   color: var(--fj-gold) !important;
   border: 1px solid var(--fj-gold-border);
@@ -5688,22 +5688,22 @@ section.hero.hero-split,
   align-items: center;
 }
 
-.fj-homepage .fj-sparkles-gold {
+.fj-page .fj-sparkles-gold {
   color: var(--fj-gold) !important;
 }
 
 /* 8. Premium Hover States */
-.fj-homepage .fj-button--ghost:hover {
+.fj-page .fj-button--ghost:hover {
   border-color: var(--fj-gold) !important;
   color: var(--fj-gold) !important;
   box-shadow: 0 4px 12px rgba(212, 160, 23, 0.1) !important;
 }
 
-.fj-homepage .fj-feature-card:hover {
+.fj-page .fj-feature-card:hover {
   border-color: var(--fj-gold-border) !important;
 }
 
-.fj-homepage .fj-feature-card--premium:hover {
+.fj-page .fj-feature-card--premium:hover {
   border-color: var(--fj-gold) !important;
   box-shadow: 0 12px 30px rgba(212, 160, 23, 0.12) !important;
 }
