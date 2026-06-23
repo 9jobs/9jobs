@@ -5707,3 +5707,30 @@ section.hero.hero-split,
   border-color: var(--fj-gold) !important;
   box-shadow: 0 12px 30px rgba(212, 160, 23, 0.12) !important;
 }
+
+/* 9. Global Gold Card Borders Override */
+.fj-page .fj-feature-card,
+.fj-page .fj-plan-card,
+.fj-page .fj-pricing-card,
+.fj-page .fj-blog-card,
+.fj-page .fj-team-card,
+.fj-page .fj-activity-card,
+.fj-page .fj-role-card,
+.fj-page .fj-ai-card,
+.fj-page .fj-contact-panel,
+.fj-page .fj-stat-card {
+  border-color: var(--fj-gold) !important;
+}
+
+.fj-page .fj-feature-card:hover,
+.fj-page .fj-plan-card:hover,
+.fj-page .fj-pricing-card:hover,
+.fj-page .fj-blog-card:hover,
+.fj-page .fj-team-card:hover,
+.fj-page .fj-activity-card:hover,
+.fj-page .fj-role-card:hover,
+.fj-page .fj-ai-card:hover,
+.fj-page .fj-contact-panel:hover,
+.fj-page .fj-stat-card:hover {
+  border-color: var(--fj-gold-hover) !important;
+}
