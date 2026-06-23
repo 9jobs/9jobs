@@ -19,14 +19,16 @@ export default function FeedbackStats() {
           {stats.map((stat, idx) => (
             <div
               key={idx}
+              className="fj-stat-card"
               style={{ background: "var(--surface)", padding: "24px", borderRadius: "var(--radius-lg)", border: "1px solid var(--line)", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}
             >
               <div
+                className="fj-stat-icon"
                 style={{ width: "48px", height: "48px", background: "var(--lime)", borderRadius: "12px", display: "flex", alignItems: "center", justifyContent: "center" }}
               >
                 <stat.icon size={24} color="#000" />
               </div>
-              <strong style={{ fontSize: "2rem", fontWeight: "900", lineHeight: "1" }}>{stat.value}</strong>
+              <strong className="fj-stat-value" style={{ fontSize: "2rem", fontWeight: "900", lineHeight: "1" }}>{stat.value}</strong>
               <span style={{ color: "var(--muted)", fontWeight: "600" }}>{stat.label}</span>
             </div>
           ))}

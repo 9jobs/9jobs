@@ -5558,3 +5558,152 @@ section.hero.hero-split,
     --btn-wrapper-width: 100%;
   }
 }
+
+/* ==========================================
+   HOMEPAGE PREMIUM GOLD ACCENTS & THEME
+   (Applies ONLY to the Home Page via .fj-homepage)
+   ========================================== */
+.fj-homepage {
+  --fj-gold: #D4A017;
+  --fj-gold-hover: #b5840d;
+  --fj-gold-light: rgba(212, 160, 23, 0.08);
+  --fj-gold-border: rgba(212, 160, 23, 0.25);
+}
+
+/* 1. Premium Badges */
+.fj-homepage .fj-announcement span {
+  background: var(--fj-gold);
+  color: #1f2223;
+  font-weight: 800;
+}
+
+.fj-homepage .fj-announcement {
+  border-color: var(--fj-gold-border);
+}
+
+.fj-homepage .fj-announcement:hover {
+  border-color: var(--fj-gold);
+  box-shadow: 0 4px 12px rgba(212, 160, 23, 0.15);
+}
+
+.fj-homepage .fj-badge-gold {
+  display: inline-flex;
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--fj-gold);
+  color: #1f2223;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 2. Trust Indicators */
+.fj-homepage .fj-trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--fj-gold-light);
+  color: var(--fj-ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid var(--fj-gold-border);
+  margin-right: 12px;
+}
+
+.fj-homepage .fj-icon-gold {
+  color: var(--fj-gold);
+}
+
+/* 3. Featured Service Highlights */
+.fj-homepage .fj-feature-card--premium {
+  position: relative;
+  border-top: 3px solid var(--fj-gold) !important;
+  background: linear-gradient(180deg, rgba(212, 160, 23, 0.02) 0%, #ffffff 100%) !important;
+}
+
+.fj-homepage .fj-feature-card--premium .fj-badge-gold {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+/* 4. Plans Premium Highlights */
+.fj-homepage .fj-plan-card--premium {
+  position: relative;
+  border-top: 3px solid var(--fj-gold) !important;
+}
+
+.fj-homepage .fj-plan-card--premium .fj-badge-gold {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+/* 5. Statistics & Counters */
+.fj-homepage .fj-stat-value {
+  color: var(--fj-gold);
+}
+
+.fj-homepage .fj-stat-card {
+  border-color: var(--fj-gold-border) !important;
+  transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+}
+
+.fj-homepage .fj-stat-card:hover {
+  border-color: var(--fj-gold) !important;
+  transform: translateY(-4px);
+}
+
+/* Rating Card Icon custom background (Gold instead of lime) */
+.fj-homepage .fj-stat-card:first-child .fj-stat-icon {
+  background: var(--fj-gold) !important;
+}
+
+/* 6. Section Divider */
+.fj-homepage .fj-section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--fj-gold-border) 30%, var(--fj-gold-border) 70%, transparent);
+  width: 85%;
+  margin: 0 auto;
+  opacity: 0.7;
+}
+
+/* 7. Small UI Accents */
+.fj-homepage .is-gold {
+  background: var(--fj-gold-light) !important;
+  color: var(--fj-gold) !important;
+  border: 1px solid var(--fj-gold-border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 700;
+  margin-left: 6px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.fj-homepage .fj-sparkles-gold {
+  color: var(--fj-gold) !important;
+}
+
+/* 8. Premium Hover States */
+.fj-homepage .fj-button--ghost:hover {
+  border-color: var(--fj-gold) !important;
+  color: var(--fj-gold) !important;
+  box-shadow: 0 4px 12px rgba(212, 160, 23, 0.1) !important;
+}
+
+.fj-homepage .fj-feature-card:hover {
+  border-color: var(--fj-gold-border) !important;
+}
+
+.fj-homepage .fj-feature-card--premium:hover {
+  border-color: var(--fj-gold) !important;
+  box-shadow: 0 12px 30px rgba(212, 160, 23, 0.12) !important;
+}

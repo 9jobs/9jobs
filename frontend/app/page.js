@@ -21,6 +21,7 @@ import {
   FileText,
   Gauge,
   SearchCheck,
+  ShieldCheck,
   Sparkles,
   Target,
   UsersRound,
@@ -122,9 +123,9 @@ const growthItems = [
 ];
 
 const plans = [
-  ["Startups", "Learn about the Remote platform and services."],
-  ["Mid-size", "See our standard pricing and get a customized quote."],
-  ["Enterprise", "See our standard pricing and get a customized quote."],
+  ["Startups", "Learn about the Remote platform and services.", null],
+  ["Mid-size", "See our standard pricing and get a customized quote.", "Popular Choice"],
+  ["Enterprise", "See our standard pricing and get a customized quote.", "Executive Choice"],
 ];
 
 const displayFaqs = [
@@ -283,7 +284,7 @@ function DashboardPreview() {
             </div>
           </div>
           <div className="fj-dashboard-actions">
-            <span><Sparkles size={18} /></span>
+            <span className="fj-sparkles-gold"><Sparkles size={18} /></span>
             <span><Bell size={18} /></span>
           </div>
         </div>
@@ -308,6 +309,7 @@ function DashboardPreview() {
                 {role}
                 {role.includes("Product") && <em>Product</em>}
                 {role.includes("Engineer") && <em className="is-lime">Tech</em>}
+                {(role.includes("CEO") || role.includes("CFO")) && <em className="is-gold">Executive</em>}
               </span>
               <span><mark>{status}</mark></span>
               <span>{amount}</span>
@@ -345,7 +347,7 @@ export default function Home() {
   };
 
   return (
-    <main className="site-main fj-page">
+    <main className="site-main fj-page fj-homepage">
       <JsonLd schema={breadcrumbSchema} />
       <JsonLd schema={faqSchema} />
       <JsonLd schema={webpageSchema} />
@@ -375,7 +377,10 @@ export default function Home() {
 
       <section className="fj-section fj-section--tight">
         <div className="fj-container fj-trust">
-          <p>Trusted by job seekers and professionals across Australia</p>
+          <p>
+            <span className="fj-trust-badge"><ShieldCheck size={14} className="fj-icon-gold" /> Verified Executive Careers</span>
+            Trusted by job seekers and professionals across Australia
+          </p>
           <div className="fj-logo-row">
             {trustedBrands.map((brand) => <span key={brand}>{brand}</span>)}
           </div>
@@ -390,7 +395,8 @@ export default function Home() {
             <p>Targeted help for your resume, LinkedIn, SEEK, applications, and interviews.</p>
           </div>
           <div className="fj-card-grid fj-card-grid--three">
-            <article className="fj-feature-card">
+            <article className="fj-feature-card fj-feature-card--premium">
+              <span className="fj-badge-gold">Executive Preferred</span>
               <h3>Resume Writing Australia</h3>
               <p>ATS-friendly resumes written for Australian recruiter expectations, local keywords, and clear achievement-led scanning.</p>
               <Link href="/services/resume-writing" prefetch={false}>Resume writing <ArrowRight size={16} /></Link>
@@ -405,7 +411,8 @@ export default function Home() {
               <p>SEEK summaries, target titles, skills, and visibility settings configured for Australian candidate searches.</p>
               <Link href="/services/seek-profile-optimization" prefetch={false}>SEEK profile optimization <ArrowRight size={16} /></Link>
             </article>
-            <article className="fj-feature-card">
+            <article className="fj-feature-card fj-feature-card--premium">
+              <span className="fj-badge-gold">Top Sourcing Service</span>
               <h3>Job Application Support</h3>
               <p>Structured job sourcing and application support to keep your role pipeline active across SEEK, LinkedIn, and Jora.</p>
               <Link href="/services/job-application-automation" prefetch={false}>Job application support <ArrowRight size={16} /></Link>
@@ -441,7 +448,7 @@ export default function Home() {
               return (
                 <article className="fj-feature-card" key={item.title}>
                   <div className="fj-card-eyebrow"><Icon size={19} /> {item.eyebrow}</div>
-                  <h3>{item.title} {item.badge && <span>{item.badge}</span>}</h3>
+                  <h3>{item.title} {item.badge && <span className="fj-badge-gold">{item.badge}</span>}</h3>
                   <p>{item.text}</p>
                   <Link href="/features" aria-label={`Explore details for ${item.title}`} prefetch={false}>
                     Explore {item.title} <ArrowRight size={16} />
@@ -563,6 +570,8 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="fj-section-divider" />
+
       <section className="fj-section fj-section--muted">
         <div className="fj-container">
           <div className="fj-section-head">
@@ -570,8 +579,9 @@ export default function Home() {
             <p>We help you get your dream job.</p>
           </div>
           <div className="fj-card-grid fj-card-grid--three">
-            {plans.map(([name, text]) => (
-              <article className="fj-plan-card" key={name}>
+            {plans.map(([name, text, badge]) => (
+              <article className={`fj-plan-card${badge ? " fj-plan-card--premium" : ""}`} key={name}>
+                {badge && <span className="fj-badge-gold">{badge}</span>}
                 <h3>{name}</h3>
                 <p>{text}</p>
                 <Link href="/pricing" aria-label={`View pricing details for the ${name} plan`} prefetch={false}>
