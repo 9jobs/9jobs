@@ -62,15 +62,54 @@ function getFacebookEmbedUrl(post = {}) {
   return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(reelUrl)}&show_text=false&width=1280`;
 }
 
+const LOCAL_IMPORTED_IMAGES = new Set([
+  '2026-06-16-reel.jpg',
+  '2026-06-15-post.jpg',
+  '2026-06-14-reel.jpg',
+  '2026-06-13-reel.jpg',
+  '2026-06-10-post.jpg',
+  '2026-06-08-reel.jpg',
+  '2026-06-06-post.jpg',
+  '2026-06-05-post.jpg',
+  '2026-06-03-reel.jpg',
+  '2026-06-02-reel.jpg'
+]);
+
 function getPreferredSocialImage(post = {}) {
   const imageUrl = post.imageUrl || '';
   const thumbnailUrl = post.thumbnailUrl || '';
 
   if (imageUrl && !isLowResImportedImage(imageUrl)) {
+    if (post.publishedAt) {
+      try {
+        const dateStr = new Date(post.publishedAt).toISOString().split('T')[0];
+        const typeStr = post.mediaType === 'video' ? 'reel' : 'post';
+        const localFilename = `${dateStr}-${typeStr}.jpg`;
+
+        if (LOCAL_IMPORTED_IMAGES.has(localFilename)) {
+          return `/social-imports/${localFilename}`;
+        }
+      } catch (e) {
+        // Ignore
+      }
+    }
     return imageUrl;
   }
 
   if (thumbnailUrl && !isLowResImportedImage(thumbnailUrl)) {
+    if (post.publishedAt) {
+      try {
+        const dateStr = new Date(post.publishedAt).toISOString().split('T')[0];
+        const typeStr = post.mediaType === 'video' ? 'reel' : 'post';
+        const localFilename = `${dateStr}-${typeStr}.jpg`;
+
+        if (LOCAL_IMPORTED_IMAGES.has(localFilename)) {
+          return `/social-imports/${localFilename}`;
+        }
+      } catch (e) {
+        // Ignore
+      }
+    }
     return thumbnailUrl;
   }
 
