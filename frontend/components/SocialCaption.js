@@ -54,7 +54,8 @@ export default function SocialCaption({ content, publishedAt, platform }) {
           fontSize: '1rem',
           fontWeight: 400,
           whiteSpace: 'pre-wrap',
-          wordBreak: 'break-word'
+          wordBreak: 'break-word',
+          textAlign: 'justify'
         }}
       >
         {displayCaption}

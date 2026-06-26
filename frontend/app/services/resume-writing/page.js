@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, ChevronDown, FileText, Search, UserCheck, ShieldCheck, Sparkles, Target, Star } from "lucide-react";
+import { ArrowRight, CheckCircle2, FileText, Search, UserCheck, ShieldCheck, Sparkles, Target } from "lucide-react";
 import { CalendlyLink } from "../../../components/CalendlyWidget";
 import { ServiceRelatedGuides } from "../../../components/RelatedSeoLinks";
 import { createSeoMetadata, getRouteSeo } from "../../../data/seo";
+import { Reveal, StaggerContainer, StaggerItem, HoverCard, PageTransition, FloatingCard } from "../../../components/homepage/HomeMotion";
+import HomeFaq from "../../../components/homepage/HomeFaq";
 
 const routeSeo = getRouteSeo("/services/resume-writing");
 
@@ -115,194 +117,240 @@ export default function ResumeServicesPage() {
   };
 
   return (
-    <main className="site-main fj-page">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+    <PageTransition>
+      <main className="site-main fj-page" data-fj-motion-root="true">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
 
-      <section className="fj-page-hero">
-        <div className="fj-container">
-          <nav className="fj-breadcrumbs" aria-label="Breadcrumb" style={{ marginBottom: "24px", display: "flex", gap: "8px", alignItems: "center", fontSize: "0.88rem", color: "var(--fj-muted)", fontWeight: 600 }}>
-            <Link href="/" style={{ color: "inherit" }}>Home</Link>
-            <span>&gt;</span>
-            <span>Services</span>
-            <span>&gt;</span>
-            <span style={{ color: "var(--fj-ink)", fontWeight: 800 }}>Resume Writing</span>
-          </nav>
-          <span className="fj-announcement"><span>Services</span> Resume Writing Services Australia</span>
-          <h1>Get an ATS-Optimized Resume Built for <span className="heading-mark">Australia</span></h1>
-          <p>We rewrite and format your resume to pass applicant tracking systems, highlight your key professional outcomes, and capture attention from Australian recruiters.</p>
-          <div className="fj-actions">
-            <Link className="fj-button fj-button--ghost" href="/pricing">View plans</Link>
-            <CalendlyLink className="fj-button fj-button--dark">Book a call</CalendlyLink>
-          </div>
-        </div>
-      </section>
-
-      <section className="fj-section">
-        <div className="fj-container fj-split">
-          <div className="fj-copy-block">
-            <span className="fj-label">Why Your Resume Matters</span>
-            <h2>Why a generic resume fails in the Australian job <span className="heading-mark">market</span></h2>
-            <p>
-              Applying for jobs in Australia is a highly competitive process. Every advertised position on platforms like SEEK or Jora receives dozens or even hundreds of applications. To manage this volume, recruiters rely on digital scanners (Applicant Tracking Systems) to automatically filter out up to 75% of candidates before a human recruiter even views a file.
-            </p>
-            <p>
-              A resume that has too much graphics, uses multi-column tables, or fails to list localized keywords gets automatically scrambled or classified as irrelevant. 9Jobs understands how local hiring workflows operate. We rewrite your resume to clear the digital hurdles, focus on localized requirements, and present your profile in a format Australian employers expect.
-            </p>
-          </div>
-          <div className="fj-ai-card">
-            <div className="fj-ai-search">
-              <FileText size={22} />
-              <span>ATS Quality Score Check</span>
-            </div>
-            <div className="fj-ai-note">
-              <span>Formatting scan</span>
-              <strong>Tables, charts, columns check</strong>
-              <p>Pass. Standard single-column layout clean parsing.</p>
-            </div>
-            <div className="fj-ai-note">
-              <span>Keyword Density</span>
-              <strong>Australian English & Super terms</strong>
-              <p>Pass. Target industry keywords integrated at 4.2% density.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="fj-section fj-section--muted">
-        <div className="fj-container">
-          <div className="fj-section-head">
-            <span className="fj-label">Our Features</span>
-            <h2>Tailored details for professional <span className="heading-mark">impact</span></h2>
-          </div>
-          <div className="fj-card-grid fj-card-grid--four">
-            {services.map(([title, text, Icon]) => (
-              <article className="fj-feature-card" key={title}>
-                <div className="fj-icon-chip"><Icon size={22} /></div>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="fj-section">
-        <div className="fj-container fj-split fj-split--reverse">
-          <div className="fj-copy-block">
-            <span className="fj-label">Our Process</span>
-            <h2>How we craft your professional story <span className="heading-mark">step-by-step</span></h2>
-            <div className="fj-list-grid">
-              {checklist.map(([title, text]) => (
-                <div className="fj-mini-item" key={title}>
-                  <CheckCircle2 size={22} />
-                  <h3>{title}</h3>
-                  <p>{text}</p>
+        <section className="fj-page-hero">
+          <div className="fj-container">
+            <Reveal direction="down" duration={0.6}>
+              <nav className="fj-breadcrumbs" aria-label="Breadcrumb" style={{ marginBottom: "24px", display: "flex", gap: "8px", alignItems: "center", fontSize: "0.88rem", color: "var(--fj-muted)", fontWeight: 600 }}>
+                <Link href="/" style={{ color: "inherit" }}>Home</Link>
+                <span>&gt;</span>
+                <span>Services</span>
+                <span>&gt;</span>
+                <span style={{ color: "var(--fj-ink)", fontWeight: 800 }}>Resume Writing</span>
+              </nav>
+            </Reveal>
+            <Reveal direction="down" duration={0.6} delay={0.06}>
+              <span className="fj-announcement"><span>Services</span> Resume Writing Services Australia</span>
+            </Reveal>
+            <StaggerContainer as="div" className="fj-home-copy-stack" stagger={0.12} delayChildren={0.12}>
+              <StaggerItem as="div">
+                <h1>Get an ATS-Optimized Resume Built for <span className="heading-mark">Australia</span></h1>
+              </StaggerItem>
+              <StaggerItem as="div">
+                <p>We rewrite and format your resume to pass applicant tracking systems, highlight your key professional outcomes, and capture attention from Australian recruiters.</p>
+              </StaggerItem>
+              <StaggerItem as="div">
+                <div className="fj-actions">
+                  <Link className="fj-button fj-button--ghost" href="/pricing">View plans</Link>
+                  <CalendlyLink className="fj-button fj-button--dark">Book a call</CalendlyLink>
                 </div>
-              ))}
-            </div>
+              </StaggerItem>
+            </StaggerContainer>
           </div>
-          <div className="fj-role-card">
-            <div style={{ padding: "24px", borderBottom: "1px solid var(--line)" }}>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "8px" }}>Resume Revision Cycle</h3>
-              <p style={{ fontSize: "0.85rem", color: "var(--muted)" }}>Tracking document milestones</p>
-            </div>
-            {[
-              ["Professional Summary", "Parsed summary for local alignment"],
-              ["Job Description Match", "Integrated targeted local keywords"],
-              ["Achievement Format", "Updated tasks to metrics-focused achievements"]
-            ].map(([title, desc], idx) => (
-              <div className="fj-task-row" key={title}>
-                <CheckCircle2 size={18} />
-                <span><strong>{title}</strong>: {desc}</span>
+        </section>
+
+        <section className="fj-section">
+          <div className="fj-container fj-split">
+            <Reveal direction="left" distance={30}>
+              <div className="fj-copy-block">
+                <span className="fj-label">Why Your Resume Matters</span>
+                <h2>Why a generic resume fails in the Australian job <span className="heading-mark">market</span></h2>
+                <p>
+                  Applying for jobs in Australia is a highly competitive process. Every advertised position on platforms like SEEK or Jora receives dozens or even hundreds of applications. To manage this volume, recruiters rely on digital scanners (Applicant Tracking Systems) to automatically filter out up to 75% of candidates before a human recruiter even views a file.
+                </p>
+                <p>
+                  A resume that has too much graphics, uses multi-column tables, or fails to list localized keywords gets automatically scrambled or classified as irrelevant. 9Jobs understands how local hiring workflows operate. We rewrite your resume to clear the digital hurdles, focus on localized requirements, and present your profile in a format Australian employers expect.
+                </p>
               </div>
-            ))}
+            </Reveal>
+            <Reveal direction="right" distance={30} style={{ position: "relative" }}>
+              <div style={{ position: "relative" }}>
+                <FloatingCard depth={24} floatRange={12} duration={7.2}>
+                  <div className="fj-ai-card">
+                    <div className="fj-ai-search">
+                      <FileText size={22} />
+                      <span>ATS Quality Score Check</span>
+                    </div>
+                    <div className="fj-ai-note">
+                      <span>Formatting scan</span>
+                      <strong>Tables, charts, columns check</strong>
+                      <p>Pass. Standard single-column layout clean parsing.</p>
+                    </div>
+                    <div className="fj-ai-note">
+                      <span>Keyword Density</span>
+                      <strong>Australian English & Super terms</strong>
+                      <p>Pass. Target industry keywords integrated at 4.2% density.</p>
+                    </div>
+                  </div>
+                </FloatingCard>
+                <div className="fj-hero-floating-cluster" style={{ pointerEvents: 'none' }}>
+                  <FloatingCard className="fj-hero-floating-card" depth={14} floatRange={8} duration={6} style={{ position: 'absolute', top: '-20px', left: '-20px', background: '#fff', padding: '12px 18px', borderRadius: '14px', boxShadow: '0 10px 30px rgba(212, 160, 23, 0.08)', border: '1px solid rgba(212, 160, 23, 0.26)', display: 'flex', flexDirection: 'column', gap: '2px', zIndex: 10 }}>
+                    <strong style={{ fontSize: '0.85rem', color: 'var(--fj-ink)' }}>ATS score improved</strong>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--fj-muted)' }}>From 45% to 92%</span>
+                  </FloatingCard>
+                  <FloatingCard className="fj-hero-floating-card" depth={18} floatRange={10} duration={7} delay={0.4} style={{ position: 'absolute', bottom: '-20px', right: '-20px', background: '#fff', padding: '12px 18px', borderRadius: '14px', boxShadow: '0 10px 30px rgba(212, 160, 23, 0.08)', border: '1px solid rgba(212, 160, 23, 0.26)', display: 'flex', flexDirection: 'column', gap: '2px', zIndex: 10 }}>
+                    <strong style={{ fontSize: '0.85rem', color: 'var(--fj-ink)' }}>Keywords matched</strong>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--fj-muted)' }}>ATS audit pass</span>
+                  </FloatingCard>
+                </div>
+              </div>
+            </Reveal>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="fj-section fj-section--muted">
-        <div className="fj-container">
-          <div className="fj-section-head">
-            <span className="fj-label">Detailed Insights</span>
-            <h2>Crucial resume writing practices for <span className="heading-mark">Australia</span></h2>
+        <section className="fj-section fj-section--muted">
+          <div className="fj-container">
+            <Reveal direction="up" distance={20}>
+              <div className="fj-section-head">
+                <span className="fj-label">Our Features</span>
+                <h2>Tailored details for professional <span className="heading-mark">impact</span></h2>
+              </div>
+            </Reveal>
+            <StaggerContainer as="div" className="fj-card-grid fj-card-grid--four" stagger={0.1}>
+              {services.map(([title, text, Icon]) => (
+                <StaggerItem as="div" key={title}>
+                  <HoverCard className="fj-feature-card" style={{ height: "100%" }}>
+                    <div className="fj-icon-chip"><Icon size={22} /></div>
+                    <h3>{title}</h3>
+                    <p>{text}</p>
+                  </HoverCard>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
           </div>
-          <div style={{ maxWidth: "800px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "24px", lineHeight: "1.8", color: "var(--muted)" }}>
-            <p>
-              When applying for roles in Sydney, Melbourne, Brisbane, or other Australian cities, writing a resume is not just about translating your work history into bullet points. It requires matching the local employer expectations. In Australia, hiring teams expect to see a clear list of target skills, a concise professional summary that states your eligibility/visa status clearly, a summary of your career milestones, and a clear education history.
-            </p>
-            <p>
-              One of the biggest mistakes international applicants make is using a CV format that is too long or contains details like date of birth, marital status, or a profile photo. In Australia, due to anti-discrimination laws, recruiters actively dislike seeing personal details or photos on a resume. A standard, highly-focused document of 2 to 3 pages is the golden standard.
-            </p>
-            <p>
-              Another critical element is the format of your accomplishments. Writing descriptions like &quot;Responsible for managing client database&quot; is not enough. You must show the value: &quot;Managed a SQL database of 10,000+ client profiles, implementing security updates that reduced access latency by 15%.&quot; 9Jobs specializes in converting standard descriptions into outcomes that prove your business capability.
-            </p>
-            <p>
-              Lastly, we ensure that your resume works in tandem with your other online profiles. When a recruiter finds your resume on SEEK or receives it in an application, they will immediately search for you on LinkedIn. If the details, dates, or titles on your resume do not match your online presence, it raises immediate red flags. We ensure consistency across all surfaces so you present a clean, unified brand.
-            </p>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="fj-section">
-        <div className="fj-container fj-leader-card">
-          <div>
-            <h2>Start applying with absolute <span className="heading-mark">confidence</span></h2>
-            <p>Combine your optimized resume with our <Link href="/services/linkedin-optimization">LinkedIn Optimization</Link> and <Link href="/services/seek-profile-optimization">SEEK Profile Optimization</Link> services to double your interview callbacks.</p>
+        <section className="fj-section">
+          <div className="fj-container fj-split fj-split--reverse">
+            <Reveal direction="right" distance={30}>
+              <div className="fj-copy-block">
+                <span className="fj-label">Our Process</span>
+                <h2>How we craft your professional story <span className="heading-mark">step-by-step</span></h2>
+                <StaggerContainer as="div" className="fj-list-grid" stagger={0.1}>
+                  {checklist.map(([title, text]) => (
+                    <StaggerItem as="div" className="fj-mini-item" key={title}>
+                      <CheckCircle2 size={22} />
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </StaggerItem>
+                  ))}
+                </StaggerContainer>
+              </div>
+            </Reveal>
+            <Reveal direction="left" distance={30}>
+              <FloatingCard depth={18} floatRange={8} duration={6}>
+                <div className="fj-role-card">
+                  <div style={{ padding: "24px", borderBottom: "1px solid var(--line)" }}>
+                    <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "8px" }}>Resume Revision Cycle</h3>
+                    <p style={{ fontSize: "0.85rem", color: "var(--muted)" }}>Tracking document milestones</p>
+                  </div>
+                  {[
+                    ["Professional Summary", "Parsed summary for local alignment"],
+                    ["Job Description Match", "Integrated targeted local keywords"],
+                    ["Achievement Format", "Updated tasks to metrics-focused achievements"]
+                  ].map(([title, desc]) => (
+                    <div className="fj-task-row" key={title}>
+                      <CheckCircle2 size={18} />
+                      <span><strong>{title}</strong>: {desc}</span>
+                    </div>
+                  ))}
+                </div>
+              </FloatingCard>
+            </Reveal>
           </div>
-          <div className="fj-leader-media">
-            <ShieldCheck size={120} color="var(--lime)" style={{ margin: "auto" }} />
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <ServiceRelatedGuides topic="resume" />
-
-      <section className="fj-section fj-section--muted" id="faqs">
-        <div className="fj-container fj-faq-grid">
-          <div className="fj-faq-intro">
-            <span className="fj-label">FAQs</span>
-            <h2>Questions about resume writing in <span className="heading-mark">Australia</span></h2>
-            <p>Answers to help you understand local requirements and formats.</p>
-            <CalendlyLink className="fj-button fj-button--dark">
-              Talk to us <ArrowRight size={17} />
-            </CalendlyLink>
+        <section className="fj-section fj-section--muted">
+          <div className="fj-container">
+            <Reveal direction="up" distance={20}>
+              <div className="fj-section-head">
+                <span className="fj-label">Detailed Insights</span>
+                <h2>Crucial resume writing practices for <span className="heading-mark">Australia</span></h2>
+              </div>
+            </Reveal>
+            <div style={{ maxWidth: "800px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "24px", lineHeight: "1.8", color: "var(--muted)" }}>
+              <p>
+                When applying for roles in Sydney, Melbourne, Brisbane, or other Australian cities, writing a resume is not just about translating your work history into bullet points. It requires matching the local employer expectations. In Australia, hiring teams expect to see a clear list of target skills, a concise professional summary that states your eligibility/visa status clearly, a summary of your career milestones, and a clear education history.
+              </p>
+              <p>
+                One of the biggest mistakes international applicants make is using a CV format that is too long or contains details like date of birth, marital status, or a profile photo. In Australia, due to anti-discrimination laws, recruiters actively dislike seeing personal details or photos on a resume. A standard, highly-focused document of 2 to 3 pages is the golden standard.
+              </p>
+              <p>
+                Another critical element is the format of your accomplishments. Writing descriptions like &quot;Responsible for managing client database&quot; is not enough. You must show the value: &quot;Managed a SQL database of 10,000+ client profiles, implementing security updates that reduced access latency by 15%.&quot; 9Jobs specializes in converting standard descriptions into outcomes that prove your business capability.
+              </p>
+              <p>
+                Lastly, we ensure that your resume works in tandem with your other online profiles. When a recruiter finds your resume on SEEK or receives it in an application, they will immediately search for you on LinkedIn. If the details, dates, or titles on your resume do not match your online presence, it raises immediate red flags. We ensure consistency across all surfaces so you present a clean, unified brand.
+              </p>
+            </div>
           </div>
+        </section>
 
-          <div className="fj-faq-list">
-            {faqs.map(([question, answer], index) => (
-              <details className="fj-faq-item" key={question} open={index === 0}>
-                <summary>
-                  <span>{question}</span>
-                  <ChevronDown size={20} />
-                </summary>
-                <p>{answer}</p>
-              </details>
-            ))}
+        <section className="fj-section">
+          <div className="fj-container">
+            <Reveal direction="up" distance={24}>
+              <div className="fj-leader-card">
+                <div>
+                  <h2>Start applying with absolute <span className="heading-mark">confidence</span></h2>
+                  <p>Combine your optimized resume with our <Link href="/services/linkedin-optimization">LinkedIn Optimization</Link> and <Link href="/services/seek-profile-optimization">SEEK Profile Optimization</Link> services to double your interview callbacks.</p>
+                </div>
+                <div className="fj-leader-media">
+                  <ShieldCheck size={120} color="var(--lime)" style={{ margin: "auto" }} />
+                </div>
+              </div>
+            </Reveal>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="fj-section fj-section--tight">
-        <div className="fj-container fj-final-cta">
-          <span>Transform Your Profile</span>
-          <h2>Ready to get noticed by Australian recruiters?</h2>
-          <div className="fj-actions">
-            <Link className="fj-button fj-button--ghost" href="/pricing">Check pricing</Link>
-            <CalendlyLink className="fj-button fj-button--dark">Book a resume review</CalendlyLink>
+        <ServiceRelatedGuides topic="resume" />
+
+        <section className="fj-section fj-section--muted" id="faqs">
+          <div className="fj-container fj-faq-grid">
+            <Reveal direction="left" distance={30}>
+              <div className="fj-faq-intro">
+                <span className="fj-label">FAQs</span>
+                <h2>Questions about resume writing in <span className="heading-mark">Australia</span></h2>
+                <p>Answers to help you understand local requirements and formats.</p>
+                <CalendlyLink className="fj-button fj-button--dark">
+                  Talk to us <ArrowRight size={17} />
+                </CalendlyLink>
+              </div>
+            </Reveal>
+
+            <Reveal direction="right" distance={30} delay={0.06}>
+              <HomeFaq items={faqs} />
+            </Reveal>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+
+        <section className="fj-section fj-section--tight">
+          <div className="fj-container">
+            <Reveal direction="up" distance={24}>
+              <div className="fj-final-cta">
+                <span>Transform Your Profile</span>
+                <h2>Ready to get noticed by Australian recruiters?</h2>
+                <div className="fj-actions">
+                  <Link className="fj-button fj-button--ghost" href="/pricing">Check pricing</Link>
+                  <CalendlyLink className="fj-button fj-button--dark">Book a resume review</CalendlyLink>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      </main>
+    </PageTransition>
   );
 }

@@ -1,36 +1,40 @@
+"use client";
+
 import { Quote, Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { Marquee, Reveal, StaggerContainer, StaggerItem } from "./homepage/HomeMotion";
 
 const defaultTestimonials = [
   {
     name: "Nafisa",
     role: "Verified Client",
     quote: "Great experience with 9Jobs. The team is professional, responsive, and truly supportive. I highly recommend their services",
-    rating: 4
+    rating: 4,
   },
   {
     name: "Lachlan",
     role: "Verified Client",
     quote: "Honestly, the job application automation saved me so much time. I was struggling to find hours to apply while working full-time, but their team handled it seamlessly. Ended up getting three interview calls in two weeks.",
-    rating: 5
+    rating: 5,
   },
   {
     name: "Sarah",
     role: "Verified Client",
     quote: "My resume was completely overhauled to meet Australian ATS standards. The writers knew exactly what local recruiters look for. I saw a noticeable increase in responses from employers almost immediately after updating it.",
-    rating: 5
+    rating: 5,
   },
   {
     name: "Oliver",
     role: "Verified Client",
     quote: "Highly recommend their LinkedIn and Seek profile optimization services. They polished my profiles, added the right keywords, and made them look incredibly professional. I've had multiple recruiters reach out to me directly.",
-    rating: 5
+    rating: 5,
   },
   {
     name: "Amelia",
     role: "Verified Client",
     quote: "The interview coaching was a game-changer for me. The mock sessions gave me the confidence I needed to handle tough questions and present my experience effectively. Secured a great role last month.",
-    rating: 5
-  }
+    rating: 5,
+  },
 ];
 
 function getInitials(name) {
@@ -43,6 +47,52 @@ function getInitials(name) {
     .toUpperCase();
 }
 
+function TestimonialCard({ testimonial }) {
+  return (
+    <motion.article
+      className="fj-feature-card fj-testimonial-card"
+      drag="x"
+      dragConstraints={{ left: 0, right: 0 }}
+      dragElastic={0.08}
+      whileHover={{ y: -6, scale: 1.01 }}
+      transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        width: "var(--card-width, 400px)",
+        flexShrink: 0,
+        padding: "32px",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <div style={{ marginBottom: "24px", position: "relative" }}>
+        <div className="fj-quote-wrapper">
+          <Quote size={18} strokeWidth={2.5} />
+        </div>
+        <p className="fj-testimonial-quote-text">
+          {testimonial.quote}
+        </p>
+      </div>
+
+      <div className="fj-testimonial-user-row">
+        <span className="fj-testimonial-avatar" aria-hidden="true">
+          {getInitials(testimonial.name)}
+        </span>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 2 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+            <strong style={{ fontSize: "0.95rem", color: "var(--fj-ink)", fontWeight: 700 }}>{testimonial.name}</strong>
+            <div style={{ display: "flex", gap: 2 }}>
+              {Array.from({ length: testimonial.rating || 5 }).map((_, index) => (
+                <Star key={index} size={14} style={{ color: "#fbbf24", fill: "#fbbf24" }} />
+              ))}
+            </div>
+          </div>
+          <span style={{ fontSize: "0.85rem", color: "var(--fj-muted)" }}>{testimonial.role}</span>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
 export default function Testimonials() {
   const listToUse = [...defaultTestimonials];
   let filledList = [...listToUse];
@@ -50,109 +100,36 @@ export default function Testimonials() {
     filledList = [...filledList, ...listToUse];
   }
 
-  const duplicatedTestimonials = [...filledList, ...filledList];
-
   return (
-    <section className="fj-section" style={{ overflow: "hidden" }}>
+    <section className="fj-section fj-home-section--grid" style={{ overflow: "hidden" }}>
       <div className="fj-container">
-        <div className="fj-section-head" style={{ textAlign: "center", marginBottom: "64px" }}>
-          <span className="fj-label" style={{ display: "block", marginBottom: "16px", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "1px", color: "var(--fj-muted)" }}>Testimonials</span>
-          <h2 style={{ fontSize: "clamp(1rem, 3vw, 1.8rem)", fontWeight: 800, margin: 0, color: "var(--fj-ink)" }}>
-            What people are <span className="heading-mark">saying.</span>
-          </h2>
-        </div>
-        
-        <div className="marquee-wrapper">
-          <div className="marquee-track">
-            {duplicatedTestimonials.map((testimonial, idx) => (
-              <article className="fj-feature-card" key={`${testimonial.name}-${idx}`} style={{ width: "var(--card-width, 400px)", flexShrink: 0, padding: "32px", display: "flex", flexDirection: "column", background: "#fff", border: "1px solid var(--fj-line)" }}>
-                <div style={{ marginBottom: "24px" }}>
-                  <Quote size={32} color="var(--fj-line)" strokeWidth={1.5} style={{ fill: "var(--fj-soft)", marginBottom: "16px" }} />
-                  <p style={{ fontSize: "1.05rem", fontWeight: 500, color: "var(--fj-muted)", lineHeight: 1.7, margin: 0, textAlign: "left" }}>
-                    {testimonial.quote}
-                  </p>
-                </div>
-                
-                <div style={{ marginTop: "auto", paddingTop: "24px", borderTop: "1px solid var(--fj-line)", display: "flex", alignItems: "center", gap: 14 }}>
-                  <span className="fj-testimonial-avatar" aria-hidden="true">{getInitials(testimonial.name)}</span>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 2 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                      <strong style={{ fontSize: "0.95rem", color: "var(--fj-ink)", fontWeight: 700 }}>{testimonial.name}</strong>
-                      <div style={{ display: "flex", gap: 2 }}>
-                        {Array.from({ length: testimonial.rating || 5 }).map((_, i) => (
-                           <Star key={i} size={14} style={{ color: "#fbbf24", fill: "#fbbf24" }} />
-                        ))}
-                      </div>
-                    </div>
-                    <span style={{ fontSize: "0.85rem", color: "var(--fj-muted)" }}>{testimonial.role}</span>
-                  </div>
-                </div>
-              </article>
-            ))}
+        <Reveal as="div" direction="up" distance={28}>
+          <div className="fj-section-head" style={{ textAlign: "center", marginBottom: "64px" }}>
+            <span className="fj-label" style={{ display: "block", marginBottom: "16px" }}>
+              Testimonials
+            </span>
+            <h2 style={{ fontSize: "clamp(1rem, 3vw, 1.8rem)", fontWeight: 800, margin: 0, color: "var(--fj-ink)" }}>
+              What people are <span className="heading-mark">saying.</span>
+            </h2>
           </div>
+        </Reveal>
+
+        {/* Desktop gets a premium marquee; mobile falls back to scroll-snap cards. */}
+        <div className="fj-testimonial-marquee">
+          <Marquee className="fj-home-marquee-shell" itemClassName="fj-testimonial-marquee__item" speed="30s" mobileStatic>
+            {filledList.map((testimonial) => (
+              <TestimonialCard key={`desktop-${testimonial.name}-${testimonial.quote.slice(0, 18)}`} testimonial={testimonial} />
+            ))}
+          </Marquee>
         </div>
 
-        <style>{`
-          .marquee-wrapper {
-            width: 100%;
-            overflow: hidden;
-            position: relative;
-            padding: 10px 0;
-          }
-          .marquee-wrapper::before,
-          .marquee-wrapper::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            width: 150px;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-          }
-          .marquee-wrapper::before {
-            left: 0;
-            background: linear-gradient(to right, var(--background), transparent);
-          }
-          .marquee-wrapper::after {
-            right: 0;
-            background: linear-gradient(to left, var(--background), transparent);
-          }
-          .marquee-track {
-            display: flex;
-            gap: var(--marquee-gap, 32px);
-            width: max-content;
-            animation: marquee 25s linear infinite;
-            --card-width: 400px;
-            --marquee-gap: 32px;
-          }
-          @media (max-width: 480px) {
-            .marquee-track {
-              --card-width: 290px;
-              --marquee-gap: 16px;
-            }
-          }
-          .marquee-track:hover {
-            animation-play-state: paused;
-          }
-          .fj-testimonial-avatar {
-            display: inline-flex;
-            width: 44px;
-            height: 44px;
-            flex-shrink: 0;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--fj-line);
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f7faf9, #eaff82);
-            color: var(--fj-ink);
-            font-size: 0.86rem;
-            font-weight: 800;
-          }
-          @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-50% - (var(--marquee-gap) / 2))); }
-          }
-        `}</style>
+        <StaggerContainer as="div" className="fj-testimonial-scrollsnap" stagger={0.12} delayChildren={0.06}>
+          {listToUse.map((testimonial) => (
+            <StaggerItem as="div" key={`mobile-${testimonial.name}`}>
+              <TestimonialCard testimonial={testimonial} />
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
       </div>
     </section>
   );

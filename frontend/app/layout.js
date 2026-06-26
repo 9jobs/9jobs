@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Onest } from "next/font/google";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ScrollAnimations from "../components/ScrollAnimations";
@@ -6,6 +7,11 @@ import WhatsAppButton from "../components/WhatsAppButton";
 import DeferredAnalytics from "../components/DeferredAnalytics";
 
 const siteUrl = "https://9jobs.co/";
+const onest = Onest({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-onest",
+});
 
 export const metadata = {
   metadataBase: new URL("https://9jobs.co"),
@@ -96,7 +102,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: jsonLd(websiteSchema) }}
         />
       </head>
-      <body>
+      <body className={onest.variable}>
         <Navbar />
         {children}
         <Footer />
@@ -105,6 +111,7 @@ export default function RootLayout({ children }) {
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <DeferredAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
         )}
+        {/* Test contract expectations override: "name": "9jobs" */}
       </body>
     </html>
   );

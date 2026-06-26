@@ -52,6 +52,14 @@ export const siteRoutes = [
     priority: 0.8,
   },
   {
+    path: "/success-stories",
+    title: "Client Success Stories | 9 Jobs (9jobs) Hiring Outcomes Australia",
+    description: "Read 9 Jobs (9jobs) client success stories, interview outcomes, placements, and hiring results across Australia.",
+    lastModified: "2026-06-26",
+    changeFrequency: "monthly",
+    priority: 0.8,
+  },
+  {
     path: "/services",
     title: "Career Services Australia | Resume, LinkedIn & Job Support | 9 Jobs (9jobs)",
     description: "Explore 9 Jobs (9jobs) career services for Australian job seekers, including resume writing, LinkedIn optimization, SEEK optimization, and interview coaching.",

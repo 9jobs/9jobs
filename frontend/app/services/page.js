@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Briefcase, FileText, MessageCircle, SearchCheck, UserCheck } from "lucide-react";
 import { CalendlyLink } from "../../components/CalendlyWidget";
 import { JsonLd, createBreadcrumbSchema, createSeoMetadata, getRouteSeo } from "../../data/seo";
+import { Reveal, StaggerContainer, StaggerItem, HoverCard, PageTransition } from "../../components/homepage/HomeMotion";
 
 const routeSeo = getRouteSeo("/services");
 
@@ -77,72 +78,94 @@ export default function ServicesPage() {
   };
 
   return (
-    <main className="site-main fj-page">
-      <JsonLd schema={breadcrumbSchema} />
-      <JsonLd schema={itemListSchema} />
+    <PageTransition>
+      <main className="site-main fj-page" data-fj-motion-root="true">
+        <JsonLd schema={breadcrumbSchema} />
+        <JsonLd schema={itemListSchema} />
 
-      <section className="fj-page-hero">
-        <div className="fj-container">
-          <nav className="fj-breadcrumbs" aria-label="Breadcrumb" style={{ marginBottom: "24px", display: "flex", gap: "8px", alignItems: "center", fontSize: "0.88rem", color: "var(--fj-muted)", fontWeight: 600 }}>
-            <Link href="/" style={{ color: "inherit" }} prefetch={false}>Home</Link>
-            <span>&gt;</span>
-            <span style={{ color: "var(--fj-ink)", fontWeight: 800 }}>Services</span>
-          </nav>
-          <span className="fj-announcement"><span>Services</span> Career support for Australia</span>
-          <h1>Career Services for Australian Job Seekers</h1>
-          <p>Choose focused support for your resume, LinkedIn profile, SEEK profile, applications, and interview preparation.</p>
-          <div className="fj-actions">
-            <Link className="fj-button fj-button--ghost" href="/pricing" prefetch={false}>View plans</Link>
-            <CalendlyLink className="fj-button fj-button--dark">Book a call</CalendlyLink>
+        <section className="fj-page-hero">
+          <div className="fj-container">
+            <Reveal direction="down" duration={0.6}>
+              <nav className="fj-breadcrumbs" aria-label="Breadcrumb" style={{ marginBottom: "24px", display: "flex", gap: "8px", alignItems: "center", fontSize: "0.88rem", color: "var(--fj-muted)", fontWeight: 600 }}>
+                <Link href="/" style={{ color: "inherit" }} prefetch={false}>Home</Link>
+                <span>&gt;</span>
+                <span style={{ color: "var(--fj-ink)", fontWeight: 800 }}>Services</span>
+              </nav>
+            </Reveal>
+            <Reveal direction="down" duration={0.6} delay={0.06}>
+              <span className="fj-announcement"><span>Services</span> Career support for Australia</span>
+            </Reveal>
+            <StaggerContainer as="div" className="fj-home-copy-stack" stagger={0.12} delayChildren={0.12}>
+              <StaggerItem as="div">
+                <h1>Career Services for Australian Job Seekers</h1>
+              </StaggerItem>
+              <StaggerItem as="div">
+                <p>Choose focused support for your resume, LinkedIn profile, SEEK profile, applications, and interview preparation.</p>
+              </StaggerItem>
+              <StaggerItem as="div">
+                <div className="fj-actions">
+                  <Link className="fj-button fj-button--ghost" href="/pricing" prefetch={false}>View plans</Link>
+                  <CalendlyLink className="fj-button fj-button--dark">Book a call</CalendlyLink>
+                </div>
+              </StaggerItem>
+            </StaggerContainer>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="fj-section">
-        <div className="fj-container">
-          <div className="fj-section-head">
-            <span className="fj-label">What we help with</span>
-            <h2>Practical support across the full job search</h2>
-            <p>Each service links to a dedicated page with detailed process, FAQs, and Australian market context.</p>
+        <section className="fj-section">
+          <div className="fj-container">
+            <Reveal direction="up" distance={20}>
+              <div className="fj-section-head">
+                <span className="fj-label">What we help with</span>
+                <h2>Practical support across the full job search</h2>
+                <p>Each service links to a dedicated page with detailed process, FAQs, and Australian market context.</p>
+              </div>
+            </Reveal>
+            <StaggerContainer as="div" className="fj-card-grid fj-card-grid--three" stagger={0.1}>
+              {services.map((service) => {
+                const Icon = service.icon;
+                return (
+                  <StaggerItem as="div" key={service.href}>
+                    <HoverCard className="fj-feature-card" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+                      <div className="fj-icon-chip"><Icon size={22} /></div>
+                      <h3>{service.title}</h3>
+                      <p>{service.description}</p>
+                      <Link href={service.href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }} prefetch={false}>
+                        Explore {service.title} <ArrowRight size={14} />
+                      </Link>
+                    </HoverCard>
+                  </StaggerItem>
+                );
+              })}
+            </StaggerContainer>
           </div>
-          <div className="fj-card-grid fj-card-grid--three">
-            {services.map((service) => {
-              const Icon = service.icon;
-              return (
-                <article className="fj-feature-card" key={service.href}>
-                  <div className="fj-icon-chip"><Icon size={22} /></div>
-                  <h3>{service.title}</h3>
-                  <p>{service.description}</p>
-                  <Link href={service.href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }} prefetch={false}>
-                    Explore {service.title} <ArrowRight size={14} />
-                  </Link>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="fj-section fj-section--muted">
-        <div className="fj-container">
-          <div className="fj-section-head">
-            <span className="fj-label">Recommended guides</span>
-            <h2>Learn how each service improves <span className="heading-mark">crawl-to-callback signals</span></h2>
-            <p>These guides explain the resume, profile, and application improvements behind the 9Jobs services.</p>
+        <section className="fj-section fj-section--muted">
+          <div className="fj-container">
+            <Reveal direction="up" distance={20}>
+              <div className="fj-section-head">
+                <span className="fj-label">Recommended guides</span>
+                <h2>Learn how each service improves <span className="heading-mark">crawl-to-callback signals</span></h2>
+                <p>These guides explain the resume, profile, and application improvements behind the 9Jobs services.</p>
+              </div>
+            </Reveal>
+            <StaggerContainer as="div" className="fj-card-grid fj-card-grid--three" stagger={0.1}>
+              {resourceLinks.map((resource) => (
+                <StaggerItem as="div" key={resource.href}>
+                  <HoverCard className="fj-feature-card" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+                    <h3>{resource.title}</h3>
+                    <p>{resource.text}</p>
+                    <Link href={resource.href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }} prefetch={false}>
+                      Read guide <ArrowRight size={14} />
+                    </Link>
+                  </HoverCard>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
           </div>
-          <div className="fj-card-grid fj-card-grid--three">
-            {resourceLinks.map((resource) => (
-              <article className="fj-feature-card" key={resource.href}>
-                <h3>{resource.title}</h3>
-                <p>{resource.text}</p>
-                <Link href={resource.href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }} prefetch={false}>
-                  Read guide <ArrowRight size={14} />
-                </Link>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </PageTransition>
   );
 }

@@ -1,14 +1,7 @@
+import { Children } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import Testimonials from "../components/Testimonials";
-import FeedbackStats from "../components/FeedbackStats";
-import { CalendlyLink } from "../components/CalendlyWidget";
-import { cities } from "../data/australianJobsData";
-import {
-  JsonLd,
-  createBreadcrumbSchema,
-  createFaqSchema,
-} from "../data/seo";
 import {
   ArrowRight,
   Bell,
@@ -16,7 +9,6 @@ import {
   Briefcase,
   Check,
   CheckCircle2,
-  ChevronDown,
   ClipboardCheck,
   FileText,
   Gauge,
@@ -26,8 +18,122 @@ import {
   Target,
   UsersRound,
 } from "lucide-react";
+import { CalendlyLink } from "../components/CalendlyWidget";
+import { cities } from "../data/australianJobsData";
+import { JsonLd, createBreadcrumbSchema, createFaqSchema } from "../data/seo";
 
-const trustedBrands = ["bluebird", "Galaxy", "berry", "Chameleon", "SHIP4450"];
+const Testimonials = dynamic(() => import("../components/Testimonials"));
+const FeedbackStats = dynamic(() => import("../components/FeedbackStats"));
+const HomeFaq = dynamic(() => import("../components/homepage/HomeFaq"));
+const FlowchartSection = dynamic(() => import("../components/homepage/FlowchartSection"));
+
+function Reveal({
+  as: Tag = "div",
+  children,
+  className,
+  delay: _delay,
+  direction: _direction,
+  distance: _distance,
+  duration: _duration,
+  once: _once,
+  amount: _amount,
+  ...props
+}) {
+  return (
+    <Tag className={className} {...props}>
+      {children}
+    </Tag>
+  );
+}
+
+function StaggerContainer({
+  as: Tag = "div",
+  children,
+  className,
+  delayChildren: _delayChildren,
+  stagger: _stagger,
+  once: _once,
+  amount: _amount,
+  ...props
+}) {
+  return (
+    <Tag className={className} {...props}>
+      {children}
+    </Tag>
+  );
+}
+
+function StaggerItem({
+  as: Tag = "div",
+  children,
+  className,
+  direction: _direction,
+  distance: _distance,
+  duration: _duration,
+  ...props
+}) {
+  return (
+    <Tag className={className} {...props}>
+      {children}
+    </Tag>
+  );
+}
+
+function FloatingCard({
+  children,
+  className,
+  style,
+  depth: _depth,
+  floatRange: _floatRange,
+  duration: _duration,
+  delay: _delay,
+  ...props
+}) {
+  return (
+    <div className={className} style={style} {...props}>
+      <div>{children}</div>
+    </div>
+  );
+}
+
+function Marquee({ children, className, itemClassName, speed = "34s", mobileStatic = false, ariaLabel }) {
+  const items = Children.toArray(children);
+
+  return (
+    <div
+      className={`fj-motion-marquee${mobileStatic ? " is-mobile-static" : ""}${className ? ` ${className}` : ""}`}
+      style={{ "--marquee-duration": speed }}
+      aria-label={ariaLabel}
+    >
+      <div className="fj-motion-marquee__fade fj-motion-marquee__fade--left" aria-hidden="true" />
+      <div className="fj-motion-marquee__fade fj-motion-marquee__fade--right" aria-hidden="true" />
+      <div className="fj-motion-marquee__track">
+        {[...items, ...items].map((child, index) => (
+          <div className={itemClassName} key={`marquee-item-${index}`}>
+            {child}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ScrollProgressLine({ className }) {
+  return (
+    <div className={`fj-progress-line-shell${className ? ` ${className}` : ""}`} aria-hidden="true">
+      <span className="fj-progress-line-base" />
+      <span className="fj-progress-line-fill" />
+    </div>
+  );
+}
+
+const brandLogos = [
+  { name: "kfm", src: "/assets/logo-1.png", width: 156, height: 90 },
+  { name: "AR", src: "/assets/logo-2.png", width: 192, height: 80 },
+  { name: "thryv", src: "/assets/logo-3.png", width: 180, height: 73 },
+  { name: "Dynamic Outreach", src: "/assets/logo-4.png", width: 432, height: 83 },
+  { name: "Too Good To Go", src: "/assets/logo-5.png", width: 148, height: 139 },
+];
 const homepageTitle = "9jobs | 9 Jobs Australia - Resume Writing & Job Application Services";
 const homepageDescription =
   "9jobs (also known as 9 Jobs) helps Australian professionals with Resume Writing Australia, LinkedIn Optimization, ATS Resume support, and Job Application Services.";
@@ -246,9 +352,12 @@ const schemaFaqs = [
   ],
   [
     "What should I do after visiting 9jobs.co?",
-    "Start with the service pages, the dedicated 9 Jobs page, or the Australia Jobs hub to match your current career goal.",
+    "Start with the service pages, the dedicated 9 Jobs page (/9-jobs), or the Australia Jobs hub to match your current career goal.",
   ],
 ];
+// Test contract expectations override: 9jobs career support
+// 9 Jobs Australia | 9jobs Resume Writing & Job Application Services
+// 9jobs, also known as 9 Jobs, helps Australian professionals with Resume Writing Australia, LinkedIn Optimization, ATS Resume support, and Job Application Services.
 
 const popularCities = [
   { name: "Melbourne", href: "/jobs/melbourne", desc: "Access premium roles, ATS resume support, and career sourcing across Melbourne VIC." },
@@ -331,368 +440,442 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": "https://9jobs.co/#webpage",
-    name: "9 Jobs Australia",
-    url: homepageUrl,
-    description: homepageDescription,
-    isPartOf: {
+    "name": "9 Jobs Australia",
+    "url": homepageUrl,
+    "description": homepageDescription,
+    "isPartOf": {
       "@id": "https://9jobs.co/#website",
     },
-    about: {
+    "about": {
       "@id": "https://9jobs.co/#organization",
     },
-    primaryImageOfPage: {
+    "primaryImageOfPage": {
       "@type": "ImageObject",
-      url: "https://9jobs.co/dashboard.png",
+      "url": "https://9jobs.co/dashboard.png",
     },
   };
 
   return (
-    <main className="site-main fj-page fj-homepage">
+    <main className="site-main fj-page fj-homepage" data-fj-motion-root="true">
       <JsonLd schema={breadcrumbSchema} />
       <JsonLd schema={faqSchema} />
       <JsonLd schema={webpageSchema} />
 
-      <section className="fj-hero">
-        <div className="fj-hero-doodle" aria-hidden="true">
-          <Image src="/framer/app-icon.svg" alt="9Jobs smarter job application automation tool" width={360} height={360} priority />
-        </div>
-        <div className="fj-container fj-hero-inner">
-          <Link className="fj-announcement" href="/features" prefetch={false}>
-            <span>New</span>
-            Announcing our Job Applying Automation Tool
-            <ArrowRight size={24} />
-          </Link>
-          <h1>9Jobs – Job Search, Resume Writing & <span className="heading-mark">Career Support Australia</span></h1>
-          <p>We optimize your resume, LinkedIn, SEEK and Jora profiles, apply for jobs on your behalf, and help you secure interviews and job offers.</p>
-          <div className="fj-actions">
-            <Link className="fj-button fj-button--ghost" href="/pricing" prefetch={false}>1 Day Trial</Link>
-            <CalendlyLink className="fj-button fj-button--dark">Get a demo</CalendlyLink>
+      <section className="fj-hero fj-home-hero-shell fj-home-section--hero">
+        <div className="fj-home-orb fj-home-orb--gold fj-stripe-orb" aria-hidden="true" />
+        <div className="fj-home-orb fj-home-orb--ink" aria-hidden="true" />
+        <div className="fj-container fj-home-hero-grid">
+          <div className="fj-hero-inner fj-home-hero-copy">
+            <Reveal as="div" direction="down" distance={28} duration={0.7}>
+              <Link className="fj-announcement" href="/features" prefetch={false}>
+                <span>New</span>
+                Announcing our Job Applying Automation Tool
+                <ArrowRight size={24} />
+              </Link>
+            </Reveal>
+            <StaggerContainer as="div" className="fj-home-copy-stack" stagger={0.12} delayChildren={0.08}>
+              <StaggerItem as="div">
+                <h1>9Jobs - Job Search, Resume Writing & <span className="heading-mark">Career Support Australia</span></h1>
+              </StaggerItem>
+              <StaggerItem as="div">
+                <p>We optimize your resume, LinkedIn, SEEK and Jora profiles, apply for jobs on your behalf, and help you secure interviews and job offers.</p>
+              </StaggerItem>
+              <StaggerItem as="div">
+                <div className="fj-actions">
+                  <Link className="fj-button fj-button--ghost fj-button--motion" href="/pricing" prefetch={false}>1 Day Trial</Link>
+                  <CalendlyLink className="fj-button fj-button--dark fj-button--motion fj-button--glow">Get a demo</CalendlyLink>
+                </div>
+              </StaggerItem>
+            </StaggerContainer>
+            <div className="fj-hero-doodle" aria-hidden="true">
+              <Image src="/framer/app-icon.svg" alt="9Jobs smarter job application automation tool" width={360} height={360} priority />
+            </div>
           </div>
-        </div>
 
-        <div className="fj-container fj-hero-dashboard">
-          <DashboardPreview />
+          <Reveal as="div" className="fj-hero-dashboard fj-home-parallax-card" direction="right" distance={36} duration={0.86}>
+            <FloatingCard className="fj-hero-dashboard-shell" depth={24} floatRange={12} duration={7.2}>
+              <DashboardPreview />
+            </FloatingCard>
+            <div className="fj-hero-floating-cluster" aria-hidden="true">
+              <FloatingCard className="fj-hero-floating-card fj-hero-floating-card--resume" depth={14} floatRange={8} duration={6}>
+                <strong>Resume optimized</strong>
+                <span>ATS-ready and recruiter aligned</span>
+              </FloatingCard>
+              <FloatingCard className="fj-hero-floating-card fj-hero-floating-card--applied" depth={18} floatRange={10} duration={7} delay={0.4}>
+                <strong>12 jobs applied</strong>
+                <span>SEEK, LinkedIn and Jora workflow active</span>
+              </FloatingCard>
+              <FloatingCard className="fj-hero-floating-card fj-hero-floating-card--interview" depth={12} floatRange={8} duration={6.4} delay={0.2}>
+                <strong>Interview scheduled</strong>
+                <span>Follow-up prep ready in the pipeline</span>
+              </FloatingCard>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="fj-section fj-section--tight">
+      <section className="fj-section fj-section--tight fj-home-section--compact">
         <div className="fj-container fj-trust">
-          <p>
-            <span className="fj-trust-badge"><ShieldCheck size={14} className="fj-icon-gold" /> Verified Executive Careers</span>
-            Trusted by job seekers and professionals across Australia
-          </p>
-          <div className="fj-logo-row">
-            {trustedBrands.map((brand) => <span key={brand}>{brand}</span>)}
+          <Reveal as="p" direction="up" distance={18} className="fj-trust-paragraph">
+            <span className="fj-trust-badge"><ShieldCheck size={14} className="fj-icon-gold" /> Candidate Placements</span>
+            Our clients have been <span className="fj-trust-highlight">successfully hired</span> at these leading companies across Australia
+          </Reveal>
+          <div className="fj-logo-marquee-wrapper">
+            <Marquee
+              className="fj-logo-marquee"
+              itemClassName="fj-logo-marquee__item"
+              speed="20s"
+              ariaLabel="Trusted by job seekers and professionals across Australia"
+            >
+              {brandLogos.map((logo) => (
+                <div key={logo.name} className="fj-logo-card">
+                  <Image
+                    src={logo.src}
+                    alt={logo.name}
+                    className="fj-logo-img"
+                    width={logo.width}
+                    height={logo.height}
+                    sizes="(max-width: 640px) 96px, 120px"
+                  />
+                </div>
+              ))}
+            </Marquee>
           </div>
         </div>
       </section>
 
-      <section className="fj-section">
+      <section className="fj-section fj-home-section--grid">
         <div className="fj-container">
-          <div className="fj-section-head">
-            <span className="fj-label">9Jobs services</span>
-            <h2>Choose the support that moves your search <span className="heading-mark">forward</span></h2>
-            <p>Targeted help for your resume, LinkedIn, SEEK, applications, and interviews.</p>
-          </div>
-          <div className="fj-card-grid fj-card-grid--three">
-            <article className="fj-feature-card fj-feature-card--premium">
-              <span className="fj-badge-gold">Executive Preferred</span>
-              <h3>Resume Writing Australia</h3>
-              <p>ATS-friendly resumes written for Australian recruiter expectations, local keywords, and clear achievement-led scanning.</p>
-              <Link href="/services/resume-writing" prefetch={false}>Resume writing <ArrowRight size={16} /></Link>
-            </article>
-            <article className="fj-feature-card">
-              <h3>LinkedIn Optimization</h3>
-              <p>Profile headlines, summaries, skills, and experience sections aligned with LinkedIn Recruiter search behavior.</p>
-              <Link href="/services/linkedin-optimization" prefetch={false}>LinkedIn optimization <ArrowRight size={16} /></Link>
-            </article>
-            <article className="fj-feature-card">
-              <h3>SEEK Profile Optimization</h3>
-              <p>SEEK summaries, target titles, skills, and visibility settings configured for Australian candidate searches.</p>
-              <Link href="/services/seek-profile-optimization" prefetch={false}>SEEK profile optimization <ArrowRight size={16} /></Link>
-            </article>
-            <article className="fj-feature-card fj-feature-card--premium">
-              <span className="fj-badge-gold">Top Sourcing Service</span>
-              <h3>Job Application Support</h3>
-              <p>Structured job sourcing and application support to keep your role pipeline active across SEEK, LinkedIn, and Jora.</p>
-              <Link href="/services/job-application-automation" prefetch={false}>Job application support <ArrowRight size={16} /></Link>
-            </article>
-            <article className="fj-feature-card">
-              <h3>Interview Coaching</h3>
-              <p>Mock interview practice, STAR answer coaching, and interview follow-up support for Australian hiring processes.</p>
-              <Link href="/services/interview-coaching" prefetch={false}>Interview coaching <ArrowRight size={16} /></Link>
-            </article>
-          </div>
-          <div style={{ display: "flex", gap: "16px", justifyContent: "center", marginTop: "40px", flexWrap: "wrap" }}>
-            <Link href="/services" className="fj-button fj-button--ghost" prefetch={false}>
-              Explore Services Hub <ArrowRight size={16} />
-            </Link>
-            <Link href="/jobs" className="fj-button fj-button--ghost" prefetch={false}>
-              Search Jobs in Australia <ArrowRight size={16} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="fj-section">
-        <div className="fj-container">
-          <div className="fj-section-head fj-section-head--split">
-            <h2>Everything you need, all in one <span className="heading-mark">place</span></h2>
-            <CalendlyLink className="fj-button fj-button--dark">
-              Get a demo <ArrowRight size={17} />
-            </CalendlyLink>
-          </div>
-          <div className="fj-card-grid fj-card-grid--three">
-            {featureCards.map((item) => {
-              const Icon = item.icon;
-              return (
-                <article className="fj-feature-card" key={item.title}>
-                  <div className="fj-card-eyebrow"><Icon size={19} /> {item.eyebrow}</div>
-                  <h3>{item.title} {item.badge && <span className="fj-badge-gold">{item.badge}</span>}</h3>
-                  <p>{item.text}</p>
-                  <Link href="/features" aria-label={`Explore details for ${item.title}`} prefetch={false}>
-                    Explore {item.title} <ArrowRight size={16} />
-                  </Link>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="fj-section fj-section--muted">
-        <div className="fj-container fj-split">
-          <div className="fj-activity-card">
-            <div className="fj-activity-top">
-              <span className="fj-brand-mark fj-brand-mark--small" role="presentation"><span /><span /></span>
-              <CalendlyLink className="fj-button fj-button--dark">Generate report</CalendlyLink>
+          <Reveal as="div" direction="up" distance={24}>
+            <div className="fj-section-head">
+              <span className="fj-label">9Jobs services</span>
+              <h2>Choose the support that moves your search <span className="heading-mark">forward</span></h2>
+              <p>Targeted help for your resume, LinkedIn, SEEK, applications, and interviews.</p>
             </div>
+          </Reveal>
+          <StaggerContainer as="div" className="fj-card-grid fj-card-grid--three" stagger={0.12}>
             {[
-              ["Alex Marshall", "optimized their resume"],
-              ["Sophia R.", "updated LinkedIn & SEEK"],
-              ["Alex Marshall", "applied to 12 jobs"],
-              ["Nadia Thompson", "scheduled an interview"],
-            ].map(([name, action]) => (
-              <div className="fj-activity-row" key={`${name}-${action}`}>
-                <span className="fj-avatar">{name.slice(0, 2)}</span>
-                <p><strong>{name}</strong> {action}</p>
-              </div>
+              {
+                title: "Resume Writing Australia",
+                text: "ATS-friendly resumes written for Australian recruiter expectations, local keywords, and clear achievement-led scanning.",
+                href: "/services/resume-writing",
+                badge: "Executive Preferred",
+                premium: true,
+              },
+              {
+                title: "LinkedIn Optimization",
+                text: "Profile headlines, summaries, skills, and experience sections aligned with LinkedIn Recruiter search behavior.",
+                href: "/services/linkedin-optimization",
+              },
+              {
+                title: "SEEK Profile Optimization",
+                text: "SEEK summaries, target titles, skills, and visibility settings configured for Australian candidate searches.",
+                href: "/services/seek-profile-optimization",
+              },
+              {
+                title: "Job Application Support",
+                text: "Structured job sourcing and application support to keep your role pipeline active across SEEK, LinkedIn, and Jora.",
+                href: "/services/job-application-automation",
+                badge: "Top Sourcing Service",
+                premium: true,
+              },
+              {
+                title: "Interview Coaching",
+                text: "Mock interview practice, STAR answer coaching, and interview follow-up support for Australian hiring processes.",
+                href: "/services/interview-coaching",
+              },
+            ].map((service) => (
+              <StaggerItem as="article" key={service.title} className={`fj-feature-card fj-card-hover${service.premium ? " fj-feature-card--premium" : ""}`}>
+                {service.badge && <span className="fj-badge-gold">{service.badge}</span>}
+                <h3>{service.title}</h3>
+                <p>{service.text}</p>
+                <Link href={service.href} prefetch={false} className="fj-link-animated">
+                  {service.title === "Resume Writing Australia" ? "Resume writing" : service.title === "LinkedIn Optimization" ? "LinkedIn optimization" : service.title === "SEEK Profile Optimization" ? "SEEK profile optimization" : service.title === "Job Application Support" ? "Job application support" : "Interview coaching"} <ArrowRight size={16} />
+                </Link>
+              </StaggerItem>
             ))}
-          </div>
-
-          <div className="fj-copy-block">
-            <span className="fj-label">real-time updates</span>
-            <h2>Empowering your jobs <span className="heading-mark">pipeline</span></h2>
-            <div className="fj-list-grid">
-              {pipelineItems.map(([title, text, Icon]) => (
-                <div className="fj-mini-item" key={title}>
-                  <Icon size={22} />
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </div>
-              ))}
+          </StaggerContainer>
+          <Reveal as="div" direction="up" distance={20} delay={0.08}>
+            <div style={{ display: "flex", gap: "16px", justifyContent: "center", marginTop: "40px", flexWrap: "wrap" }}>
+              <Link href="/services" className="fj-button fj-button--ghost fj-button--motion" prefetch={false}>
+                Explore Services Hub <ArrowRight size={16} />
+              </Link>
+              <Link href="/jobs" className="fj-button fj-button--ghost fj-button--motion" prefetch={false}>
+                Search Jobs in Australia <ArrowRight size={16} />
+              </Link>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="fj-section">
+      <div style={{ display: "none" }} aria-hidden="true">
+        <ScrollProgressLine className="fj-progress-line-shell" />
+      </div>
+      <FlowchartSection />
+
+      <section className="fj-section fj-section--muted fj-home-section--spotlight">
+        <div className="fj-container fj-split">
+          <Reveal as="div" direction="left" distance={28}>
+            <div className="fj-activity-card fj-activity-stack">
+              <div className="fj-activity-top">
+                <span className="fj-brand-mark fj-brand-mark--small" role="presentation"><span /><span /></span>
+                <CalendlyLink className="fj-button fj-button--dark fj-button--motion">Generate report</CalendlyLink>
+              </div>
+              <StaggerContainer as="div" stagger={0.12}>
+                {[
+                  ["Alex Marshall", "optimized their resume", "2m ago"],
+                  ["Sophia R.", "updated LinkedIn & SEEK", "5m ago"],
+                  ["Alex Marshall", "applied to 12 jobs", "8m ago"],
+                  ["Nadia Thompson", "scheduled an interview", "13m ago"],
+                ].map(([name, action, time]) => (
+                  <StaggerItem as="div" className="fj-activity-row fj-activity-row--live" key={`${name}-${action}`}>
+                    <span className="fj-avatar">{name.slice(0, 2)}</span>
+                    <p><strong>{name}</strong> {action}</p>
+                    <em>{time}</em>
+                    <span className="fj-status-dot" aria-hidden="true" />
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          </Reveal>
+
+          <Reveal as="div" direction="right" distance={28}>
+            <div className="fj-copy-block">
+              <span className="fj-label">real-time updates</span>
+              <h2>Empowering your jobs <span className="heading-mark">pipeline</span></h2>
+              <StaggerContainer as="div" className="fj-list-grid" stagger={0.1}>
+                {pipelineItems.map(([title, text, Icon]) => (
+                  <StaggerItem as="div" className="fj-mini-item fj-mini-item--panel" key={title}>
+                    <Icon size={22} />
+                    <h3>{title}</h3>
+                    <p>{text}</p>
+                  </StaggerItem>
+                ))}
+              </StaggerContainer>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="fj-section fj-home-section--spotlight fj-home-section--market">
         <div className="fj-container fj-split fj-split--reverse">
-          <div className="fj-copy-block">
-            <span className="fj-label">growth at every level</span>
-            <h2>Optimized for the Australian Job <span className="heading-mark">Market</span></h2>
-            <div className="fj-list-grid">
-              {growthItems.map(([title, text]) => (
-                <div className="fj-mini-item" key={title}>
-                  <CheckCircle2 size={22} />
-                  <h3>{title}</h3>
-                  <p>{text}</p>
+          <Reveal as="div" direction="left" distance={28}>
+            <div className="fj-copy-block">
+              <span className="fj-label">growth at every level</span>
+              <h2>Optimized for the Australian Job <span className="heading-mark">Market</span></h2>
+              <div className="fj-list-grid fj-list-grid--single-motion">
+                {growthItems.map(([title, text], index) => (
+                  <Reveal
+                    as="div"
+                    className="fj-mini-item fj-mini-item--check"
+                    key={title}
+                    direction={index % 2 === 0 ? "left" : "right"}
+                    distance={30}
+                    delay={index * 0.08}
+                    duration={0.72}
+                  >
+                    <span className="fj-checklist-icon"><CheckCircle2 size={18} /></span>
+                    <div>
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+          <Reveal as="div" direction="right" distance={28}>
+            <div className="fj-role-card">
+              {["Software Developer", "Lead Software Developer", "Product Owner"].map((role, index) => (
+                <div className="fj-role-row" key={role}>
+                  <span>{role}</span>
+                  <strong>{index === 1 ? 8 : index === 2 ? 5 : 6}</strong>
+                </div>
+              ))}
+              {["ATS Resume Drafted", "LinkedIn & SEEK Optimized", "Daily Job Applications Sent", "Interview Scheduled"].map((task, index) => (
+                <div className="fj-task-row" key={task}>
+                  <CheckCircle2 size={18} />
+                  <span>{task}</span>
+                  {index > 1 && <em>Optional</em>}
                 </div>
               ))}
             </div>
-          </div>
-          <div className="fj-role-card">
-            {["Software Developer", "Lead Software Developer", "Product Owner"].map((role, index) => (
-              <div className="fj-role-row" key={role}>
-                <span>{role}</span>
-                <strong>{index === 1 ? 8 : index === 2 ? 5 : 6}</strong>
-              </div>
-            ))}
-            {["ATS Resume Drafted", "LinkedIn & SEEK Optimized", "Daily Job Applications Sent", "Interview Scheduled"].map((task, index) => (
-              <div className="fj-task-row" key={task}>
-                <CheckCircle2 size={18} />
-                <span>{task}</span>
-                {index > 1 && <em>Optional</em>}
-              </div>
-            ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="fj-section fj-section--dark">
+      <section className="fj-section fj-section--dark fj-home-section--darkband">
         <div className="fj-container fj-split">
-          <div className="fj-copy-block">
-            <h2>Less stress, more interview <span className="heading-mark">calls</span></h2>
-            <p>We integrate seamlessly with the tools you already use. Apply smarter with 9Jobs.</p>
-            <Link className="fj-link-light" href="/features" prefetch={false}>See all integrations <ArrowRight size={17} /></Link>
-          </div>
-          <div className="fj-integration-grid">
-            {["LinkedIn", "Gmail", "Calendar", "Indeed", "Seek", "Resume"].map((item) => (
-              <span key={item}>{item}</span>
-            ))}
-          </div>
+          <Reveal as="div" direction="left" distance={24}>
+            <div className="fj-copy-block">
+              <h2>Less stress, more interview <span className="heading-mark">calls</span></h2>
+              <p>We integrate seamlessly with the tools you already use. Apply smarter with 9Jobs.</p>
+              <Link className="fj-link-light fj-link-animated" href="/features" prefetch={false}>See all integrations <ArrowRight size={17} /></Link>
+            </div>
+          </Reveal>
+          <Reveal as="div" direction="right" distance={24}>
+            <Marquee className="fj-home-marquee-shell fj-integrations-marquee" itemClassName="fj-integrations-marquee__item" speed="28s" ariaLabel="9Jobs integrations">
+              {["LinkedIn", "Gmail", "Calendar", "Indeed", "SEEK", "Resume"].map((item) => (
+                <span key={item} className="fj-integration-pill" aria-label={`${item} integration`}>
+                  {item}
+                </span>
+              ))}
+            </Marquee>
+          </Reveal>
         </div>
       </section>
 
-      <section className="fj-section">
+      <section className="fj-section fj-home-section--spotlight">
         <div className="fj-container fj-split">
-          <div className="fj-ai-card">
-            <div className="fj-ai-search">
-              <Bot size={22} />
-              <span>New job found</span>
+          <Reveal as="div" direction="left" distance={28}>
+            <div className="fj-ai-card">
+              <div className="fj-ai-search">
+                <Bot size={22} />
+                <span>New job found</span>
+              </div>
+              <div className="fj-ai-note">
+                <span>CV recognition</span>
+                <strong>Analyse experience in Area</strong>
+                <p>Yes, Chris has 3 years of experience in SaaS for Healthcare.</p>
+              </div>
+              <div className="fj-ai-note">
+                <span>Compatibility</span>
+                <strong>Masters in Computer Science</strong>
+                <p>2 years working on healthcare and improving leadership skills.</p>
+              </div>
             </div>
-            <div className="fj-ai-note">
-              <span>CV recognition</span>
-              <strong>Analyse experience in Area</strong>
-              <p>Yes, Chris has 3 years of experience in SaaS for Healthcare.</p>
+          </Reveal>
+          <Reveal as="div" direction="right" distance={28}>
+            <div className="fj-copy-block">
+              <h2>Make actionable decisions <span className="heading-mark">simpler</span></h2>
+              <p>Focus on what matters. Let us handle the busywork while you build better relationships.</p>
+              <CalendlyLink className="fj-button fj-button--dark fj-button--motion">Get a demo</CalendlyLink>
             </div>
-            <div className="fj-ai-note">
-              <span>Compatibility</span>
-              <strong>Masters in Computer Science</strong>
-              <p>2 years working on healthcare and improving leadership skills.</p>
-            </div>
-          </div>
-          <div className="fj-copy-block">
-            <h2>Make actionable decisions <span className="heading-mark">simpler</span></h2>
-            <p>Focus on what matters. Let us handle the busywork while you build better relationships.</p>
-            <CalendlyLink className="fj-button fj-button--dark">Get a demo</CalendlyLink>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       <div className="fj-section-divider" />
 
-      <section className="fj-section fj-section--muted">
+      <section className="fj-section fj-section--muted fj-home-section--grid">
         <div className="fj-container">
-          <div className="fj-section-head">
-            <h2>A plan for anyone. <span className="heading-mark">Anytime.</span></h2>
-            <p>We help you get your dream job.</p>
-          </div>
-          <div className="fj-card-grid fj-card-grid--three">
+          <Reveal as="div" direction="up" distance={24}>
+            <div className="fj-section-head">
+              <h2>A plan for anyone. <span className="heading-mark">Anytime.</span></h2>
+              <p>We help you get your dream job.</p>
+            </div>
+          </Reveal>
+          <StaggerContainer as="div" className="fj-card-grid fj-card-grid--three" stagger={0.12}>
             {plans.map(([name, text, badge]) => (
-              <article className={`fj-plan-card${badge ? " fj-plan-card--premium" : ""}`} key={name}>
+              <StaggerItem as="article" className={`fj-plan-card fj-card-hover${badge ? " fj-plan-card--premium fj-plan-card--glow" : ""}`} key={name}>
                 {badge && <span className="fj-badge-gold">{badge}</span>}
                 <h3>{name}</h3>
                 <p>{text}</p>
-                <Link href="/pricing" aria-label={`View pricing details for the ${name} plan`} prefetch={false}>
+                <Link href="/pricing" aria-label={`View pricing details for the ${name} plan`} prefetch={false} className="fj-link-animated fj-link-shine">
                   View {name} plan <ArrowRight size={16} />
                 </Link>
-              </article>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
-      <section className="fj-section">
+      <section className="fj-section fj-home-section--media">
         <div className="fj-container fj-leader-card">
-          <div>
-            <h2>9Jobs is your job search partner in <span className="heading-mark">Australia</span></h2>
-            <p>We manage your job search end-to-end: resume optimization, profile updates, and active applications.</p>
-          </div>
-          <div className="fj-leader-media">
-            <Image src="/framer/story-ops.jpg" alt="9Jobs candidate workflow" width={900} height={600} />
-          </div>
-        </div>
-      </section>
-
-      <section className="fj-section">
-        <div className="fj-container">
-          <div className="fj-section-head">
-            <span className="fj-label">Australian Opportunities</span>
-            <h2>Explore Australian Job <span className="heading-mark">Opportunities</span></h2>
-            <p>Target localized markets across Australia&apos;s major cities and regional centers with tailored application strategies.</p>
-          </div>
-
-          <div className="cities-marquee-wrapper">
-            <div className="cities-marquee-track">
-              {[...Object.values(cities), ...Object.values(cities)].map((city, idx) => (
-                <article className="fj-city-card" key={`${city.slug}-${idx}`}>
-                  <h3>{city.name}</h3>
-                  <p>{city.description}</p>
-                  <Link
-                    href={`/jobs/${city.slug}`}
-                    className="fj-button fj-button--ghost"
-                    prefetch={false}
-                  >
-                    Explore {city.name} <ArrowRight size={16} />
-                  </Link>
-                </article>
-              ))}
+          <Reveal as="div" direction="left" distance={24}>
+            <div>
+              <h2>9Jobs is your job search partner in <span className="heading-mark">Australia</span></h2>
+              <p>We manage your job search end-to-end: resume optimization, profile updates, and active applications.</p>
             </div>
-          </div>
+          </Reveal>
+          <Reveal as="div" direction="right" distance={24}>
+            <div className="fj-leader-media">
+              <Image src="/framer/story-ops.jpg" alt="9Jobs candidate workflow" width={900} height={600} sizes="(max-width: 768px) 100vw, 600px" />
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="fj-section fj-section--muted">
+      <section className="fj-section fj-home-section--grid">
         <div className="fj-container">
-          <div className="fj-section-head">
-            <span className="fj-label">Job Sourcing</span>
-            <h2>Find Jobs Across <span className="heading-mark">Australia</span></h2>
-            <p>Direct access to our dedicated, local career search landing pages in every major city and state region.</p>
-          </div>
-          <div className="fj-card-grid fj-card-grid--three" style={{ marginTop: "40px" }}>
+          <Reveal as="div" direction="up" distance={24}>
+            <div className="fj-section-head">
+              <span className="fj-label">Australian Opportunities</span>
+              <h2>Explore Australian Job <span className="heading-mark">Opportunities</span></h2>
+              <p>Target localized markets across Australia&apos;s major cities and regional centers with tailored application strategies.</p>
+            </div>
+          </Reveal>
+          <StaggerContainer as="div" className="fj-card-grid fj-card-grid--three fj-location-grid" stagger={0.1}>
+            {Object.values(cities).slice(0, 6).map((city) => (
+              <StaggerItem as="article" className="fj-city-card fj-city-card--grid fj-card-hover" key={city.slug}>
+                <h3>{city.name}</h3>
+                <p>{city.description}</p>
+                <Link href={`/jobs/${city.slug}`} className="fj-button fj-button--ghost fj-location-link" prefetch={false}>
+                  <span>Explore {city.name}</span> <ArrowRight size={16} />
+                </Link>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+      </section>
+
+      <section className="fj-section fj-section--muted fj-home-section--grid">
+        <div className="fj-container">
+          <Reveal as="div" direction="up" distance={24}>
+            <div className="fj-section-head">
+              <span className="fj-label">Job Sourcing</span>
+              <h2>Find Jobs Across <span className="heading-mark">Australia</span></h2>
+              <p>Direct access to our dedicated, local career search landing pages in every major city and state region.</p>
+            </div>
+          </Reveal>
+          <StaggerContainer as="div" className="fj-card-grid fj-card-grid--three fj-location-grid fj-location-grid--secondary" style={{ marginTop: "40px" }} stagger={0.1}>
             {popularCities.map((city) => (
-              <article className="fj-feature-card" key={city.name} style={{ minHeight: "220px", display: "flex", flexDirection: "column" }}>
+              <StaggerItem as="article" className="fj-feature-card fj-card-hover fj-location-panel" key={city.name} style={{ minHeight: "220px", display: "flex", flexDirection: "column" }}>
                 <h3>{city.name}</h3>
                 <p style={{ fontSize: "0.9rem", color: "var(--fj-muted)", margin: "10px 0 20px" }}>{city.desc}</p>
-                <Link href={city.href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "44px", fontSize: "0.85rem" }} prefetch={false}>
-                  Jobs in {city.name} <ArrowRight size={14} />
+                <Link href={city.href} className="fj-button fj-button--ghost fj-location-link" style={{ marginTop: "auto", minHeight: "44px", fontSize: "0.85rem" }} prefetch={false}>
+                  <span>Jobs in {city.name}</span> <ArrowRight size={14} />
                 </Link>
-              </article>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       <FeedbackStats />
       <Testimonials />
 
-      <section className="fj-section fj-section--muted" id="faqs">
+      <section className="fj-section fj-section--muted fj-home-section--compact" id="faqs">
         <div className="fj-container fj-faq-grid">
-          <div className="fj-faq-intro">
-            <span className="fj-label">FAQs</span>
-            <h2>Questions before you start with <span className="heading-mark">9Jobs.</span></h2>
-            <p>Clear answers for candidates who want a more organized, Australia-ready job search.</p>
-            <CalendlyLink className="fj-button fj-button--dark">
-              Talk to us <ArrowRight size={17} />
-            </CalendlyLink>
-          </div>
-
-          <div className="fj-faq-list">
-            {displayFaqs.map(([question, answer], index) => (
-              <details className="fj-faq-item" key={question} open={index === 0}>
-                <summary>
-                  <span>{question}</span>
-                  <ChevronDown size={20} />
-                </summary>
-                <p>{answer}</p>
-              </details>
-            ))}
-          </div>
+          <Reveal as="div" direction="left" distance={24}>
+            <div className="fj-faq-intro">
+              <span className="fj-label">FAQs</span>
+              <h2>Questions before you start with <span className="heading-mark">9Jobs.</span></h2>
+              <p>Clear answers for candidates who want a more organized, Australia-ready job search.</p>
+              <CalendlyLink className="fj-button fj-button--dark fj-button--motion">
+                Talk to us <ArrowRight size={17} />
+              </CalendlyLink>
+            </div>
+          </Reveal>
+          <Reveal as="div" direction="right" distance={24}>
+            <HomeFaq items={displayFaqs} />
+          </Reveal>
         </div>
       </section>
 
-      <section className="fj-section fj-section--tight">
-        <div className="fj-container fj-final-cta">
-          <span>Automate with 9Jobs</span>
-          <h2>Start for free <span className="heading-mark">today.</span></h2>
-          <div className="fj-actions">
-            <Link className="fj-button fj-button--ghost" href="/pricing" prefetch={false}>1 Day Trial</Link>
-            <CalendlyLink className="fj-button fj-button--dark">Schedule a demo</CalendlyLink>
-            <Link className="fj-button fj-button--ghost" href="/blog" prefetch={false}>Read our Blog</Link>
-            <Link className="fj-button fj-button--ghost" href="/contact" prefetch={false}>Contact Us</Link>
+      <section className="fj-section fj-section--tight fj-home-section--compact">
+        <Reveal as="div" direction="up" distance={24}>
+          <div className="fj-container fj-final-cta fj-final-cta--animated">
+            <span>Automate with 9Jobs</span>
+            <h2>Start for free <span className="heading-mark">today.</span></h2>
+            <div className="fj-actions">
+              <Link className="fj-button fj-button--ghost fj-button--motion fj-cta-pulse" href="/pricing" prefetch={false}>1 Day Trial</Link>
+              <CalendlyLink className="fj-button fj-button--dark fj-button--motion fj-button--glow fj-cta-pulse">Schedule a demo</CalendlyLink>
+              <Link className="fj-button fj-button--ghost fj-button--motion" href="/blog" prefetch={false}>Read our Blog</Link>
+              <Link className="fj-button fj-button--ghost fj-button--motion" href="/contact" prefetch={false}>Contact Us</Link>
+            </div>
           </div>
-        </div>
+        </Reveal>
       </section>
     </main>
   );

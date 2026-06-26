@@ -9,12 +9,17 @@ const revealRules = [
   [".fj-hero p, .fj-page-hero p", "fade-up", 140],
   [".fj-actions", "fade-up", 210],
   [".fj-hero-dashboard, .fj-dashboard", "slide-from-bottom", 120],
+  [".fj-home-hero-shell .fj-home-orb", "fade-in", 0],
   [".fj-trust, .fj-quote-panel, .fj-final-cta", "zoom-in", 0],
   [".fj-section-head > *, .fj-copy-block > *", "fade-up", 0],
   [".fj-image-card, .fj-card-media, .fj-leader-media", "fade-in", 0],
   [".fj-contact-panel", "fade-left", 0],
   [".fj-contact-form-slot", "fade-right", 90],
   [".fj-footer", "fade-up", 0],
+  [".fj-social-back-link", "fade-left", 0],
+  [".fj-social-detail", "fade-up", 90],
+  [".site-main h1, .site-main h2, .site-main h3", "fade-up", 0],
+  [".site-main p, .site-main li, .site-main label, .site-main input, .site-main textarea, .site-main select", "fade-up", 70],
 ];
 
 const cardSelector = [
@@ -49,6 +54,7 @@ function toArray(selector, root = document) {
 
 function markElement(element, type, delay = 0) {
   if (!element || element.dataset.fjRevealBound === "true") return;
+  if (element.closest("[data-fj-motion-root='true']")) return;
   element.dataset.fjReveal = type;
   element.dataset.fjRevealBound = "true";
   element.style.setProperty("--reveal-delay", `${Math.min(delay, 520)}ms`);
@@ -67,42 +73,6 @@ export default function ScrollAnimations() {
     let cleanupSetup = () => {};
 
     function setup() {
-      revealRules.forEach(([selector, type, delay]) => {
-        markList(toArray(selector), type, delay, 55);
-      });
-
-      toArray(".fj-section").forEach((section) => {
-        markElement(section, "smooth-section", 0);
-        markList(toArray(cardSelector, section), "zoom-in", 60, 80);
-        markList(toArray(rowSelector, section), "fade-up", 70, 50);
-      });
-
-      toArray(".fj-split").forEach((split) => {
-        Array.from(split.children).forEach((child, index) => {
-          markElement(child, index % 2 === 0 ? "slide-from-left" : "slide-from-right", index * 90);
-        });
-      });
-
-      toArray(".fj-card-grid, .fj-list-grid, .fj-integration-grid, .fj-logo-row, .fj-footer-grid").forEach((group) => {
-        group.dataset.fjStagger = "true";
-        Array.from(group.children).forEach((child, index) => {
-          if (!child.dataset.fjRevealBound) {
-            markElement(child, index % 2 === 0 ? "fade-up" : "fade-in", index * 65);
-          }
-        });
-      });
-
-      toArray(".fj-hero-doodle, .fj-dashboard, .fj-image-card, .fj-leader-media, .fj-ai-card").forEach((element, index) => {
-        element.dataset.fjParallax = index % 2 === 0 ? "18" : "-14";
-      });
-
-      const revealElements = toArray("[data-fj-reveal]");
-
-      if (reduceMotion) {
-        revealElements.forEach((element) => element.classList.add("is-visible"));
-        return () => {};
-      }
-
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -115,16 +85,72 @@ export default function ScrollAnimations() {
         { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
       );
 
-      revealElements.forEach((element) => {
-        const rect = element.getBoundingClientRect();
-        const startsInView = rect.top < window.innerHeight * 0.94 && rect.bottom > -40;
+      function runSetup() {
+        revealRules.forEach(([selector, type, delay]) => {
+          markList(toArray(selector), type, delay, 55);
+        });
 
-        if (startsInView) {
-          element.classList.add("is-visible");
+        toArray(".fj-section").forEach((section) => {
+          markElement(section, "smooth-section", 0);
+          markList(toArray(cardSelector, section), "zoom-in", 60, 80);
+          markList(toArray(rowSelector, section), "fade-up", 70, 50);
+        });
+
+        toArray(".fj-split").forEach((split) => {
+          Array.from(split.children).forEach((child, index) => {
+            markElement(child, index % 2 === 0 ? "slide-from-left" : "slide-from-right", index * 90);
+          });
+        });
+
+        toArray(".fj-card-grid, .fj-list-grid, .fj-integration-grid, .fj-logo-row, .fj-footer-grid").forEach((group) => {
+          group.dataset.fjStagger = "true";
+          Array.from(group.children).forEach((child, index) => {
+            if (!child.dataset.fjRevealBound) {
+              markElement(child, index % 2 === 0 ? "fade-up" : "fade-in", index * 65);
+            }
+          });
+        });
+
+        toArray(".fj-hero-doodle, .fj-dashboard, .fj-image-card, .fj-leader-media, .fj-ai-card, .fj-home-parallax-card, .fj-home-orb").forEach((element, index) => {
+          element.dataset.fjParallax = index % 2 === 0 ? "18" : "-14";
+        });
+
+        const revealElements = toArray("[data-fj-reveal]");
+
+        if (reduceMotion) {
+          revealElements.forEach((element) => element.classList.add("is-visible"));
         } else {
-          observer.observe(element);
+          revealElements.forEach((element) => {
+            const rect = element.getBoundingClientRect();
+            const startsInView = rect.top < window.innerHeight * 0.94 && rect.bottom > -40;
+
+            if (startsInView) {
+              element.classList.add("is-visible");
+            } else {
+              observer.observe(element);
+            }
+          });
+        }
+      }
+
+      runSetup();
+
+      let setupTimer = null;
+      const mutationObserver = new MutationObserver((mutations) => {
+        let added = false;
+        for (const mutation of mutations) {
+          if (mutation.addedNodes.length > 0) {
+            added = true;
+            break;
+          }
+        }
+        if (added) {
+          if (setupTimer) clearTimeout(setupTimer);
+          setupTimer = setTimeout(runSetup, 60);
         }
       });
+      mutationObserver.observe(document.body, { childList: true, subtree: true });
+
       let frame = 0;
       const parallaxElements = toArray("[data-fj-parallax]");
 
@@ -152,6 +178,8 @@ export default function ScrollAnimations() {
 
       return () => {
         observer.disconnect();
+        mutationObserver.disconnect();
+        if (setupTimer) clearTimeout(setupTimer);
         window.removeEventListener("scroll", requestParallax);
         window.removeEventListener("resize", requestParallax);
         if (frame) window.cancelAnimationFrame(frame);

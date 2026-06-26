@@ -20,6 +20,7 @@ const indexableRoutes = [
   "/",
   "/9-jobs",
   "/about",
+  "/success-stories",
   "/pricing",
   "/contact",
   "/services",
@@ -76,6 +77,7 @@ describe("site-wide SEO route coverage", () => {
   test("important pages emit canonical metadata plus Open Graph and Twitter cards", () => {
     const pageFiles = [
       "frontend/app/about/page.js",
+      "frontend/app/success-stories/page.js",
       "frontend/app/pricing/page.js",
       "frontend/app/contact/page.js",
       "frontend/app/services/page.js",
