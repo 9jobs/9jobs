@@ -131,6 +131,7 @@ export default function ScrollAnimations() {
             }
           });
         }
+        measureParallax();
       }
 
       runSetup();
@@ -152,19 +153,35 @@ export default function ScrollAnimations() {
       mutationObserver.observe(document.body, { childList: true, subtree: true });
 
       let frame = 0;
-      const parallaxElements = toArray("[data-fj-parallax]");
+      let cachedParallax = [];
+
+      function measureParallax() {
+        const scrollTop = window.scrollY || window.pageYOffset || 0;
+        cachedParallax = toArray("[data-fj-parallax]").map((element) => {
+          const rect = element.getBoundingClientRect();
+          return {
+            element,
+            offsetTop: rect.top + scrollTop,
+            height: rect.height,
+            strength: Number(element.dataset.fjParallax || 16),
+          };
+        });
+      }
 
       function updateParallax() {
         frame = 0;
         const viewportHeight = window.innerHeight || 1;
+        const scrollTop = window.scrollY || window.pageYOffset || 0;
 
-        parallaxElements.forEach((element) => {
-          const rect = element.getBoundingClientRect();
-          if (rect.bottom < -120 || rect.top > viewportHeight + 120) return;
+        cachedParallax.forEach((item) => {
+          const currentTop = item.offsetTop - scrollTop;
+          const currentBottom = currentTop + item.height;
 
-          const strength = Number(element.dataset.fjParallax || 16);
-          const progress = (viewportHeight / 2 - (rect.top + rect.height / 2)) / viewportHeight;
-          element.style.setProperty("--parallax-y", `${(progress * strength).toFixed(2)}px`);
+          if (currentBottom < -120 || currentTop > viewportHeight + 120) return;
+
+          const centerY = currentTop + item.height / 2;
+          const progress = (viewportHeight / 2 - centerY) / viewportHeight;
+          item.element.style.setProperty("--parallax-y", `${(progress * item.strength).toFixed(2)}px`);
         });
       }
 
@@ -172,16 +189,22 @@ export default function ScrollAnimations() {
         if (!frame) frame = window.requestAnimationFrame(updateParallax);
       }
 
+      function handleResize() {
+        measureParallax();
+        requestParallax();
+      }
+
+      measureParallax();
       requestParallax();
       window.addEventListener("scroll", requestParallax, { passive: true });
-      window.addEventListener("resize", requestParallax);
+      window.addEventListener("resize", handleResize);
 
       return () => {
         observer.disconnect();
         mutationObserver.disconnect();
         if (setupTimer) clearTimeout(setupTimer);
         window.removeEventListener("scroll", requestParallax);
-        window.removeEventListener("resize", requestParallax);
+        window.removeEventListener("resize", handleResize);
         if (frame) window.cancelAnimationFrame(frame);
       };
     }

@@ -1,4 +1,4 @@
-﻿import path from "node:path";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const appDir = path.dirname(fileURLToPath(import.meta.url));
@@ -10,6 +10,12 @@ const nextConfig = {
   poweredByHeader: false,
   turbopack: {
     root: rootDir,
+  },
+  webpack: (config, { dev, isServer }) => {
+    if (!dev && !isServer) {
+      config.resolve.alias['next/dist/client/polyfills'] = false;
+    }
+    return config;
   },
   async headers() {
     const contentSecurityPolicy = [
