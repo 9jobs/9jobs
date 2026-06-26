@@ -3131,6 +3131,18 @@ section.hero.hero-split,
   font-weight: 800;
 }
 
+.fj-feature-card .fj-button,
+.fj-plan-card .fj-button,
+.fj-blog-card .fj-button {
+  width: 100%;
+  white-space: normal;
+  text-align: center;
+  padding: 0 16px;
+  line-height: 1.3;
+  margin-inline: 0;
+  align-self: stretch;
+}
+
 .fj-link-light {
   color: #fff;
 }
