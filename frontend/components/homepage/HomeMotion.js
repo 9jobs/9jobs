@@ -46,6 +46,7 @@ export function Reveal({
   duration = 0.72,
   once = true,
   amount = 0.04,
+  style,
   ...props
 }) {
   const reduceMotion = useReducedMotion();
@@ -59,6 +60,7 @@ export function Reveal({
       whileInView: { opacity: 1, x: 0, y: 0 },
       viewport: { once, amount },
       transition: reduceMotion ? { duration: 0 } : { duration, delay, ease: EASE },
+      style: { willChange: "transform, opacity", ...style },
       ...props,
     },
     children
@@ -105,6 +107,7 @@ export function StaggerItem({
   direction = "up",
   distance = 40,
   duration = 0.72,
+  style,
   ...props
 }) {
   const reduceMotion = useReducedMotion();
@@ -119,6 +122,7 @@ export function StaggerItem({
         visible: { opacity: 1, x: 0, y: 0 },
       },
       transition: reduceMotion ? { duration: 0 } : { duration, ease: EASE },
+      style: { willChange: "transform, opacity", ...style },
       ...props,
     },
     children
@@ -149,8 +153,14 @@ export function FloatingCard({
   });
 
   return (
-    <motion.div ref={ref} className={className} style={{ y: reduceMotion ? 0 : parallaxSpring, ...style }} {...props}>
+    <motion.div
+      ref={ref}
+      className={className}
+      style={{ y: reduceMotion ? 0 : parallaxSpring, willChange: "transform", ...style }}
+      {...props}
+    >
       <motion.div
+        style={{ willChange: "transform" }}
         animate={
           reduceMotion
             ? undefined
@@ -276,13 +286,14 @@ export function ScrollProgressLine({ className }) {
   );
 }
 
-export function HoverCard({ children, className, ...props }) {
+export function HoverCard({ children, className, style, ...props }) {
   const reduceMotion = useReducedMotion();
   return (
     <motion.div
       className={className}
       whileHover={reduceMotion ? undefined : { y: -8, scale: 1.015 }}
       transition={{ duration: 0.4, ease: EASE }}
+      style={{ willChange: "transform", ...style }}
       {...props}
     >
       {children}
@@ -329,20 +340,21 @@ export function AnimatedAccordion({ question, answer, isOpen, onToggle }) {
   );
 }
 
-export function PageTransition({ children }) {
+export function PageTransition({ children, style }) {
   const reduceMotion = useReducedMotion();
   return (
     <motion.div
       initial={reduceMotion ? false : { opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.48, ease: EASE }}
+      style={{ willChange: "transform, opacity", ...style }}
     >
       {children}
     </motion.div>
   );
 }
 
-export function GradientBlob({ className, ...props }) {
+export function GradientBlob({ className, style, ...props }) {
   const reduceMotion = useReducedMotion();
   return (
     <motion.div
@@ -364,6 +376,7 @@ export function GradientBlob({ className, ...props }) {
               ease: "easeInOut",
             }
       }
+      style={{ willChange: "transform", ...style }}
       {...props}
     />
   );

@@ -14,6 +14,8 @@ const nextConfig = {
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
       config.resolve.alias['next/dist/client/polyfills'] = false;
+      config.resolve.alias['next/dist/build/polyfills/polyfill-module'] = false;
+      config.resolve.alias['next/dist/build/polyfills/polyfill-nomodule'] = false;
     }
     return config;
   },

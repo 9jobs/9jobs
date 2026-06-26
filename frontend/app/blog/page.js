@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, BookOpen, BookUser, Briefcase, FileText, Play, Search } from "lucide-react";
 import connectMongoDB from "@/lib/mongodb";
 import SocialBlog from "@/models/SocialBlog";
@@ -220,7 +221,7 @@ export default async function BlogPage() {
             <SyncFeedButton />
           </div>
           <div className="fj-card-grid fj-card-grid--three">
-            {socialPosts.map((post) => {
+            {socialPosts.map((post, index) => {
               const cardImage = getSocialCardImage(post);
               const isVideo = post.mediaType === "video";
               const usesGeneratedPoster = shouldUseGeneratedPoster(post);
@@ -236,12 +237,15 @@ export default async function BlogPage() {
                     prefetch={false}
                   >
                     {cardImage ? (
-                      <img 
+                      <Image 
                         className={`fj-social-blog-image ${isVideo ? 'fj-social-blog-image--reel' : ''}`} 
                         src={cardImage} 
-                        alt="" 
-                        loading="lazy" 
-                        decoding="async" 
+                        alt={post.title || "Social Post Image"} 
+                        width={400}
+                        height={500}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                        priority={index < 3}
+                        style={{ objectFit: "cover" }}
                       />
                     ) : usesGeneratedPoster ? (
                       <SocialMediaPoster post={post} compact />
@@ -263,7 +267,7 @@ export default async function BlogPage() {
                   </div>
                   <h2>{post.title}</h2>
                   <p>{createExcerpt(post.content)}</p>
-                  <Link href={`/blog/${post.slug}`}>Open {isVideo ? "Reel" : "Post"} <ArrowRight size={16} /></Link>
+                  <Link href={`/blog/${post.slug}`} aria-label={isVideo ? `Open Reel about ${post.title}` : `Open Post about ${post.title}`}>Open {isVideo ? "Reel" : "Post"} <ArrowRight size={16} /></Link>
                 </article>
               );
             })}
@@ -273,7 +277,7 @@ export default async function BlogPage() {
               <span className="fj-badge">{tag}</span>
               <h2>{title}</h2>
               <p>{text}</p>
-              <Link href={href}>Read Article <ArrowRight size={16} /></Link>
+              <Link href={href} aria-label={`Read Article: ${title}`}>Read Article <ArrowRight size={16} /></Link>
             </article>
           ))}
           </div>
@@ -307,7 +311,7 @@ export default async function BlogPage() {
                     }
                     style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}
                   >
-                    See more <ArrowRight size={16} />
+                    See {city.name} jobs <ArrowRight size={16} />
                   </Link>
                 </article>
               ))}
@@ -328,9 +332,7 @@ export default async function BlogPage() {
               <article className="fj-feature-card" key={href}>
                 <h3>{title}</h3>
                 <p>{text}</p>
-                <Link href={href} className="fj-button fj-button--ghost" style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>
-                  Explore <ArrowRight size={14} />
-                </Link>
+                <Link href={href} className="fj-button fj-button--ghost" aria-label={`Explore ${title} services`} style={{ marginTop: "auto", minHeight: "40px", fontSize: "0.82rem" }}>Explore <ArrowRight size={14} /></Link>
               </article>
             ))}
           </div>

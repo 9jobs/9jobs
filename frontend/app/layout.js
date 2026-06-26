@@ -70,6 +70,7 @@ export default function RootLayout({ children }) {
     "@id": "https://9jobs.co/#website",
     "name": "9 Jobs (9jobs)",
     "url": siteUrl,
+    "description": "9 Jobs (9jobs) provides resume writing, LinkedIn optimization, SEEK profile updates, and job application services in Australia.",
     "alternateName": [
       "9 Jobs",
       "9jobs",

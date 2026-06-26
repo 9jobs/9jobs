@@ -226,7 +226,7 @@ export default function WhyNoInterviewsPage() {
                     }
                     style={{ marginTop: "auto", display: "inline-flex", alignItems: "center", gap: "6px", fontWeight: 700 }}
                   >
-                    See more <ArrowRight size={16} />
+                    See {city.name} jobs <ArrowRight size={16} />
                   </Link>
                 </article>
               ))}

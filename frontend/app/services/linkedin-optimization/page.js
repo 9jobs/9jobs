@@ -1,10 +1,12 @@
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { ArrowRight, CheckCircle2, ChevronDown, Search, UserCheck, ShieldCheck, Sparkles, Target, Star } from "lucide-react";
 import { CalendlyLink } from "../../../components/CalendlyWidget";
-import { ServiceRelatedGuides } from "../../../components/RelatedSeoLinks";
 import { createSeoMetadata, getRouteSeo } from "../../../data/seo";
 import { Reveal, StaggerContainer, StaggerItem, HoverCard, PageTransition, FloatingCard } from "../../../components/homepage/HomeMotion";
-import HomeFaq from "../../../components/homepage/HomeFaq";
+
+const HomeFaq = dynamic(() => import("../../../components/homepage/HomeFaq"));
+const ServiceRelatedGuides = dynamic(() => import("../../../components/RelatedSeoLinks").then((mod) => mod.ServiceRelatedGuides));
 
 const routeSeo = getRouteSeo("/services/linkedin-optimization");
 
