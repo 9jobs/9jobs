@@ -68,7 +68,7 @@ export default function ScrollAnimations() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMotion = false;
     const cleanupTimers = [];
     let cleanupSetup = () => {};
 

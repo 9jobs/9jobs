@@ -602,13 +602,7 @@ p {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero-person-layer,
-  .hero-visual::before,
-  .hero-visual::after {
-    animation: none;
-  }
-}
+
 
 .dashboard-shell {
   position: relative;
@@ -4776,27 +4770,7 @@ section.hero.hero-split,
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 0.001ms !important;
-  }
-
-  [data-fj-reveal],
-  [data-fj-parallax] {
-    opacity: 1 !important;
-    filter: none !important;
-    transform: none !important;
-  }
-}
 
 /* Navigation Dropdown Styles */
 .nav-dropdown-wrapper {
@@ -6003,22 +5977,7 @@ section.hero.hero-split,
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .fj-homepage .fj-home-hero-shell::before,
-  .fj-homepage .fj-home-orb,
-  .fj-homepage .fj-hero-dashboard .fj-dashboard::after,
-  .fj-homepage .fj-home-marquee-shell .cities-marquee-track {
-    animation: none !important;
-  }
 
-  .fj-homepage .fj-feature-card:hover,
-  .fj-homepage .fj-plan-card:hover,
-  .fj-homepage .fj-city-card:hover,
-  .fj-homepage .fj-faq-item:hover,
-  .fj-homepage .fj-logo-row span:hover {
-    transform: none;
-  }
-}
 
 /* ==========================================
    HOMEPAGE 2026 MOTION REFINEMENT
@@ -6926,25 +6885,7 @@ section.hero.hero-split,
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .fj-button--motion:hover,
-  .fj-card-hover:hover,
-  .fj-link-animated:hover svg,
-  .fj-location-link:hover svg,
-  .fj-location-link:hover span,
-  .fj-button--shine::after,
-  .fj-link-shine::after {
-    transform: none;
-  }
 
-  .fj-status-dot,
-  .fj-motion-marquee__track,
-  .fj-final-cta--animated::before,
-  .fj-cta-pulse,
-  .fj-home-section--market::after {
-    animation: none !important;
-  }
-}
 
 /* ==========================================================================
    Flowchart Process Section

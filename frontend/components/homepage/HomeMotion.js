@@ -1,9 +1,10 @@
 "use client";
 
 import { Children, useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useInView, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useInView, useScroll, useSpring, useTransform } from "framer-motion";
 
 const EASE = [0.22, 1, 0.36, 1];
+const useReducedMotion = () => false;
 function renderMotionTag(as, props, children) {
   switch (as) {
     case "article":
