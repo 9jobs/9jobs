@@ -31,10 +31,10 @@
   --lh-h3: 1.26;
   --lh-body: 1.68;
   
-  --fw-h1: 700;
-  --fw-h2: 600;
-  --fw-h3: 600;
-  --fw-body: 450;
+  --fw-h1: 600;
+  --fw-h2: 500;
+  --fw-h3: 500;
+  --fw-body: 400;
 }
 
 * {
@@ -201,7 +201,7 @@ p {
   margin: 0 auto;
   font-family: var(--font-heading);
   font-size: 3.25rem;
-  font-weight: 700;
+  font-weight: var(--fw-h1);
   letter-spacing: 0;
   line-height: 0.98;
   word-wrap: break-word;
@@ -212,7 +212,7 @@ p {
   max-width: 1120px;
   font-family: var(--font-heading);
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: var(--fw-h2);
   letter-spacing: 0;
   line-height: 1.02;
   word-wrap: break-word;
@@ -224,7 +224,7 @@ p {
   margin: 0 auto;
   font-family: var(--font-heading);
   font-size: 2.95rem;
-  font-weight: 700;
+  font-weight: var(--fw-h1);
   letter-spacing: 0;
   line-height: 1.02;
   text-align: center;
@@ -286,7 +286,7 @@ p {
   border-radius: 999px;
   font-family: var(--font-heading);
   font-size: 0.96rem;
-  font-weight: 900;
+  font-weight: 600;
   letter-spacing: 0;
   line-height: 1;
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
@@ -403,7 +403,7 @@ p {
   align-items: center;
   gap: 10px;
   font-size: 1.35rem;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .brand-mark {
@@ -416,7 +416,7 @@ p {
   background: var(--ink);
   color: #fff;
   font-size: 0.88rem;
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .nav-links,
@@ -431,7 +431,7 @@ p {
   color: var(--ink);
   font-family: var(--font-heading);
   font-size: 0.94rem;
-  font-weight: 900;
+  font-weight: 500;
   letter-spacing: 0;
 }
 
@@ -1622,7 +1622,7 @@ p {
     border-radius: 14px;
     color: var(--ink);
     font-family: var(--font-heading);
-    font-weight: 900;
+    font-weight: 500;
     letter-spacing: 0;
   }
 
@@ -1994,7 +1994,7 @@ p {
   margin-bottom: 16px;
 }
 
-.dash-greeting { font-weight: 800; font-size: 0.95rem; color: var(--ink); }
+.dash-greeting { font-weight: 600; font-size: 0.95rem; color: var(--ink); }
 .dash-sub { font-size: 0.73rem; color: var(--muted); margin-top: 2px; }
 
 .dash-tab {
@@ -2019,7 +2019,7 @@ p {
   background: var(--surface);
   color: var(--muted);
   font-size: 0.69rem;
-  font-weight: 800;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   border-bottom: 1px solid var(--line);
@@ -2605,7 +2605,7 @@ section.hero.hero-split,
   margin: 58px auto 0;
   color: var(--fj-ink);
   font-size: clamp(2rem, 6.3vw, 6.8rem);
-  font-weight: 800;
+  font-weight: var(--fw-h1);
   line-height: 0.95;
 }
 
@@ -2794,7 +2794,7 @@ section.hero.hero-split,
   padding: 20px 22px;
   color: var(--fj-muted);
   font-size: 0.82rem;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -2924,7 +2924,7 @@ section.hero.hero-split,
   gap: clamp(28px, 6vw, 78px);
   color: rgba(31, 34, 35, 0.42);
   font-size: clamp(1.25rem, 2vw, 1.9rem);
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .fj-section-head {
@@ -2950,7 +2950,7 @@ section.hero.hero-split,
   margin: 0;
   color: inherit;
   font-size: clamp(1rem, 4vw, 4.5rem);
-  font-weight: 800;
+  font-weight: var(--fw-h2);
   line-height: 0.98;
 }
 
@@ -3079,7 +3079,7 @@ section.hero.hero-split,
   margin: 30px 0 12px;
   color: var(--fj-ink);
   font-size: clamp(1.35rem, 2.2vw, 2.15rem);
-  font-weight: 800;
+  font-weight: var(--fw-h3);
   line-height: 1.08;
 }
 
@@ -3776,7 +3776,7 @@ section.hero.hero-split,
   margin: 0;
   color: var(--fj-ink);
   font-size: clamp(2.4rem, 4.7vw, 5rem);
-  font-weight: 800;
+  font-weight: var(--fw-h2);
   line-height: 0.98;
 }
 
@@ -4568,7 +4568,7 @@ section.hero.hero-split,
 
 .fj-resume-section .fj-section-head h2 {
   font-size: clamp(2.3rem, 4.8vw, 4rem);
-  font-weight: 700;
+  font-weight: var(--fw-h2);
   color: var(--fj-ink);
   line-height: 1.02;
   margin-bottom: 20px;
@@ -6981,7 +6981,7 @@ section.hero.hero-split,
 
 .flowchart-title {
   font-size: clamp(2rem, 3.5vw, 3rem);
-  font-weight: 700;
+  font-weight: var(--fw-h2);
   color: #050505;
   line-height: 1.1;
   margin-bottom: 16px;
@@ -7198,7 +7198,7 @@ section.hero.hero-split,
 
 .stats-number {
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: var(--fw-h2);
   color: #111827;
   line-height: 1.1;
 }
