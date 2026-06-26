@@ -243,7 +243,7 @@ export default async function BlogPage() {
                         alt={post.title || "Social Post Image"} 
                         width={400}
                         height={500}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 400px"
+                        sizes="(max-width: 768px) 50vw, 33vw"
                         priority={index < 3}
                         style={{ objectFit: "cover" }}
                       />

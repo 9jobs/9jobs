@@ -10,12 +10,17 @@ const nextConfig = {
   poweredByHeader: false,
   turbopack: {
     root: rootDir,
+    resolveAlias: {
+      "next/dist/client/polyfills": "./empty-polyfill.js",
+      "next/dist/build/polyfills/polyfill-module": "./empty-polyfill.js",
+      "next/dist/build/polyfills/polyfill-nomodule": "./empty-polyfill.js",
+    },
   },
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
-      config.resolve.alias['next/dist/client/polyfills'] = false;
-      config.resolve.alias['next/dist/build/polyfills/polyfill-module'] = false;
-      config.resolve.alias['next/dist/build/polyfills/polyfill-nomodule'] = false;
+      config.resolve.alias["next/dist/client/polyfills"] = path.resolve(appDir, "empty-polyfill.js");
+      config.resolve.alias["next/dist/build/polyfills/polyfill-module"] = path.resolve(appDir, "empty-polyfill.js");
+      config.resolve.alias["next/dist/build/polyfills/polyfill-nomodule"] = path.resolve(appDir, "empty-polyfill.js");
     }
     return config;
   },
