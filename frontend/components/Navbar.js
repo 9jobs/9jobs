@@ -7,7 +7,6 @@ import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { CalendlyLink } from "./CalendlyWidget";
 
 const links = [
-  { href: "/9-jobs", label: "9 Jobs" },
   { href: "/about", label: "About" },
   { href: "/features", label: "Features" },
   { href: "/pricing", label: "Pricing" },
