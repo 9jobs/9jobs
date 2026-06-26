@@ -7013,7 +7013,7 @@ section.hero.hero-split,
 }
 
 .flowchart-card {
-  background: #ffffff;
+  background: var(--accent-light, #ffffff);
   border: 1px solid var(--accent-border, #f3f4f6);
   border-radius: 20px;
   padding: 36px 28px;
@@ -7059,7 +7059,9 @@ section.hero.hero-split,
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--accent-light);
+  background-color: #ffffff;
+  border: 1px solid var(--accent-border, #f3f4f6);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
   color: var(--accent-color);
   margin-bottom: 24px;
   transition: transform 0.3s ease;
@@ -7093,7 +7095,8 @@ section.hero.hero-split,
   font-weight: 800;
   padding: 6px 12px;
   border-radius: 99px;
-  background-color: var(--accent-light);
+  background-color: #ffffff;
+  border: 1px solid var(--accent-border, #f3f4f6);
   color: var(--accent-color);
   text-transform: uppercase;
   letter-spacing: 0.03em;
