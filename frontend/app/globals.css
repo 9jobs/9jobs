@@ -79,7 +79,7 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
-  font-weight: 900;
+  font-weight: 800;
   letter-spacing: 0;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -4527,7 +4527,7 @@ section.hero.hero-split,
 
 .fj-resume-section .fj-section-head h2 {
   font-size: clamp(2.3rem, 4.8vw, 4rem);
-  font-weight: 900;
+  font-weight: 800;
   color: var(--fj-ink);
   line-height: 1.02;
   margin-bottom: 20px;
@@ -6925,7 +6925,7 @@ section.hero.hero-split,
 
 .flowchart-title {
   font-size: clamp(2rem, 3.5vw, 3rem);
-  font-weight: 900;
+  font-weight: 800;
   color: #050505;
   line-height: 1.1;
   margin-bottom: 16px;
@@ -7142,7 +7142,7 @@ section.hero.hero-split,
 
 .stats-number {
   font-size: 1.5rem;
-  font-weight: 900;
+  font-weight: 800;
   color: #111827;
   line-height: 1.1;
 }
