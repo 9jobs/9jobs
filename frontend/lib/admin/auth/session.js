@@ -39,12 +39,14 @@ function sign(value) {
     .replace(/=+$/g, '');
 }
 
-export async function createAdminSessionToken({ email }) {
+export async function createAdminSessionToken({ id = '', email, name = '' }) {
   const now = Math.floor(Date.now() / 1000);
   const header = encodeBase64Url(JSON.stringify({ alg: SESSION_ALGORITHM, typ: 'JWT' }));
   const payload = encodeBase64Url(
     JSON.stringify({
+      sub: id,
       email,
+      name,
       role: SESSION_ROLE,
       iat: now,
       exp: now + SESSION_TTL_SECONDS,

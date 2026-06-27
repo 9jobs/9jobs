@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { getAdminSessionCookieOptions } from '@/lib/admin/auth/cookies';
-import { verifyAdminCredentials } from '@/lib/admin/auth/credentials';
+import { authenticateAdminUser } from '@/lib/admin/auth/admin-user-service';
 import { ADMIN_SESSION_COOKIE_NAME } from '@/lib/admin/auth/constants';
 import { adminLoginSchema } from '@/lib/admin/auth/login-schema';
 import { enforceLoginRateLimit } from '@/lib/admin/auth/rate-limit';
@@ -35,9 +35,9 @@ export async function POST(request) {
 
     const body = await request.json();
     const credentials = adminLoginSchema.parse(body);
-    const isValid = await verifyAdminCredentials(credentials);
+    const adminUser = await authenticateAdminUser(credentials);
 
-    if (!isValid) {
+    if (!adminUser) {
       return NextResponse.json(
         {
           error: 'Invalid admin credentials.',
@@ -48,9 +48,7 @@ export async function POST(request) {
       );
     }
 
-    const token = await createAdminSessionToken({
-      email: credentials.email.trim().toLowerCase(),
-    });
+    const token = await createAdminSessionToken(adminUser);
 
     const response = NextResponse.json({
       success: true,

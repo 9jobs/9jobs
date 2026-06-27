@@ -22,7 +22,7 @@ async function hasValidAdminSession(request) {
 export async function proxy(request) {
   const { pathname } = request.nextUrl;
 
-  if (pathname === '/admin/login') {
+  if (pathname === '/admin/login' || pathname === '/admin/reset-password') {
     return NextResponse.next();
   }
 
