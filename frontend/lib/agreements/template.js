@@ -4,10 +4,11 @@ const FIXED_PROVIDER = {
   phone: '+61 422 279 428',
 };
 
-function createSection(heading, paragraphs) {
+function createSection(heading, paragraphs, intro = null) {
   return {
     heading,
     paragraphs,
+    intro,
   };
 }
 
@@ -15,60 +16,73 @@ export function buildAgreementTemplate(input) {
   const notes = input.notes?.trim();
 
   const sections = [
-    createSection('Scope of Services', [
-      'Creating a dedicated email address solely for the purpose of applying for jobs.',
-      `Submitting job applications on behalf of ${input.clientName} using approved profile information and application materials.`,
+    createSection(
+      '1. Scope of Services',
+      [
+        `Job Applications: Creation of a dedicated email address and access to the Customer’s LinkedIn and SEEK accounts to apply for a minimum of ${input.weeklyJobTarget || '70'} jobs per week.`,
+        'Recruiter Follow-Up: Follow up with recruiters regarding submitted applications as required.',
+        'LinkedIn Networking Support: Assist the Customer in reaching out to their LinkedIn connections to notify them of the Customer’s job search.',
+      ],
+      'The Service Provider agrees to perform the following services on behalf of the Customer:'
+    ),
+    createSection('2. Payment Terms', [
+      `The Customer agrees to pay the Service Provider a fee of ${input.servicePrice || '$150 (AUD)'} in advance for the services.`,
+      `If the Customer wishes to continue receiving services after the initial ${input.initialTerm || '1 week'}, the fee will be ${input.servicePrice || '$150 (AUD)'} per week, payable in advance.`,
+      'Payments must be made using the agreed payment method between the Customer and the Service Provider. Payments are due every Monday before services commence for that week. Services will not be provided unless payment is received in advance.',
     ]),
-    createSection('Payment Terms', [
-      `The customer agrees to pay ${input.servicePrice} for the ${input.packageName} package for the initial term of ${input.initialTerm}.`,
-      'Any continuing services beyond the initial term will require renewed approval and payment in advance.',
+    createSection('3. Payment Schedule, Cost Structure and Service Oversight', [
+      'The services include management of the job application process, delivered by two team members and personally reviewed by the Service Provider to ensure quality.',
     ]),
-    createSection('Payment Schedule, Cost Structure and Service Oversight', [
-      `The agreed package is ${input.packageName} at ${input.servicePrice}.`,
-      `9 Jobs will target approximately ${input.weeklyJobTarget} job applications per week, subject to role availability and profile fit.`,
+    createSection('4. Access and Information', [
+      'The Customer will provide the necessary credentials for LinkedIn and SEEK accounts and access to any application materials required for service execution.',
+      'The Service Provider will maintain confidentiality of all information and ensure that the Customer’s personal details are not disclosed without consent.',
     ]),
-    createSection('Access and Information', [
-      'Where necessary, the customer will provide accurate access details for relevant job platforms and related application channels.',
-      'Access details are used strictly for job-application purposes and are not modified or reused for unrelated activities.',
+    createSection('5. Use of CV and Other Application Materials', [
+      'All application materials, including CVs and cover letters, provided or created by the Service Provider will be used exclusively for job applications under this Agreement.',
+      'Additional materials (cover letters, LinkedIn updates, etc.) may be prepared at an additional cost if requested by the Customer.',
     ]),
-    createSection('Use of CV and Other Application Materials', [
-      'The resume/CV, cover letter, and related application materials will be mutually agreed before submission.',
-      'Once an application is submitted, those materials cannot be retroactively changed for that application.',
+    createSection('6. Job Application Targets', [
+      `The Service Provider agrees to apply for a minimum of ${input.weeklyJobTarget || '70'} jobs per week as directed by the Customer.`,
+      'No refunds will be provided if external factors (job availability, market conditions) affect outcomes.',
     ]),
-    createSection('Job Application Targets', [
-      `9 Jobs will endeavour to submit a minimum weekly target of ${input.weeklyJobTarget} applications.`,
-      'Applications may include roles identified by the customer as well as similar opportunities aligned to the agreed package.',
+    createSection('7. Customer’s Responsibilities', [
+      'The Customer is responsible for responding to direct recruiter communications, managing interviews, and completing follow-up actions beyond the scope of this Agreement.',
     ]),
-    createSection('Customer Responsibilities', [
-      `${input.clientName} must ensure all supplied information is accurate, current, and suitable for use in job applications.`,
-      'The customer is responsible for promptly responding to recruiters or employers and for interview preparation and performance.',
+    createSection('8. Availability', [
+      'The Service Provider will be available during regular business hours, Monday to Friday, and unavailable on weekends.',
     ]),
-    createSection('Availability', [
-      'The service provider is generally available during standard business hours, Monday to Friday.',
-      'Messages received outside those hours will be handled on the next business day.',
+    createSection('9. Privacy, Confidentiality, and Marketing', [
+      'All personal and account details will be kept confidential and used only for job application purposes.',
+      'With the Customer’s consent, the Service Provider may use the Customer’s name, photograph, and professional details for marketing purposes. The Customer may request removal at any time.',
+      'The Client authorize 9Jobs Application Services to access LinkedIn, SEEK and Email accounts for job application, profile updates and communication with employers.',
+      '9Jobs may login, apply for jobs, update profiles, upload resumes, and communicate with recruiters professionally.',
+      'The Client confirms they own the accounts and voluntarily provide access for job application purposes.',
+      '9Jobs agrees to keep all information confidential and use it only for job job application services.',
+      '9Jobs is not responsible for job outcomes, employer decisions or account restrictions.',
     ]),
-    createSection('Privacy, Confidentiality, and Marketing', [
-      'Client information is treated as confidential and used only for the agreed services.',
-      'Information is shared only with employers or job platforms as part of the application process. Testimonials or marketing references require explicit client consent.',
+    createSection('10. Denial of Services', [
+      'Capacity: The Service Provider may deny services at the start if at capacity.',
+      'Customer Conduct: Misbehavior, abuse, or unprofessional communication from the Customer may result in immediate termination.',
+      'The Service Provider is not liable for any indirect, incidental, or consequential damages arising from the use of the services.',
+      'Total liability shall not exceed the total amount of fees paid by the Customer.',
     ]),
-    createSection('Denial of Services', [
-      'The service provider may refuse or pause services where required information is not supplied, where supplied information appears inaccurate, or where requested actions fall outside the agreed service scope.',
+    createSection('10. Dispute Resolution', [
+      'Disputes will be addressed through mediation or arbitration prior to legal action, with both parties acting in good faith.',
     ]),
-    createSection('Dispute Resolution', [
-      'In the event of any disagreement, both parties agree to first attempt to resolve the matter in good faith through direct discussion, mediation, or arbitration.',
+    createSection('11. Governing Law', [
+      'This Agreement is governed by the laws of Australia. Both parties submit to the jurisdiction of Australian courts.',
     ]),
-    createSection('Governing Law', [
-      'This agreement is governed by the laws of Australia.',
+    createSection('12. Termination and Refunds', [
+      'The Service Provider may terminate services with 5 days’ written notice.',
+      'Any unused portion of advance payments will be refunded on a pro-rata basis.',
+      'Client may cancel access anytime with written notice.',
+      'If the client fails to make the payment within 5 days, 9Jobs reserves the right to suspend or stop the services without further notice.',
     ]),
-    createSection('Termination and Refunds', [
-      'Either party may terminate this agreement by providing written notice.',
-      'Unless otherwise required by law, fees for services already delivered, commenced, or reserved are non-refundable.',
+    createSection('13. Entire Agreement', [
+      'This Agreement supersedes all prior agreements or understandings and constitutes the entire understanding between the parties.',
     ]),
-    createSection('Entire Agreement', [
-      'This document records the complete agreement between the customer and the service provider in relation to the services described above.',
-    ]),
-    createSection('Amendments', [
-      'Any amendment to this agreement must be confirmed in writing by both parties.',
+    createSection('14. Amendments', [
+      'Any changes must be in writing and signed by both parties.',
     ]),
   ];
 
@@ -80,31 +94,17 @@ export function buildAgreementTemplate(input) {
     );
   }
 
-  const summaryText = [
-    `Agreement date: ${input.agreementDate}.`,
-    `Customer: ${input.clientName} (${input.clientEmail}, ${input.clientPhone}).`,
-    `Service provider contact: ${input.providerName || FIXED_PROVIDER.legalName} (${input.providerEmail}, ${input.providerPhone}).`,
-    `Package: ${input.packageName}.`,
-    `Price: ${input.servicePrice}.`,
-    `Weekly job target: ${input.weeklyJobTarget}.`,
-    `Initial term: ${input.initialTerm}.`,
-    notes ? `Notes: ${notes}` : null,
-  ]
-    .filter(Boolean)
-    .join(' ');
-
   return {
     title: '9 Jobs Service Contract',
     provider: FIXED_PROVIDER,
     agreementDate: input.agreementDate,
-    summaryText,
     sections,
     signatureBlocks: {
       provider: {
         label: 'Service Provider',
-        name: input.providerSignatureName,
-        email: input.providerEmail,
-        phone: input.providerPhone,
+        name: input.providerSignatureName || 'Aditya Singh',
+        email: input.providerEmail || FIXED_PROVIDER.phone, // fallback values
+        phone: input.providerPhone || FIXED_PROVIDER.phone,
       },
       customer: {
         label: 'Customer',
