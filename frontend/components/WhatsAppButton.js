@@ -12,7 +12,7 @@ export default function WhatsAppButton() {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className={styles.whatsappFloat}
+      className={`${styles.whatsappFloat} admin-whatsapp-button`}
       aria-label="Chat on WhatsApp"
     >
       <svg

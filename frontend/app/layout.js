@@ -1,10 +1,7 @@
 import "./globals.css";
 import { Onest } from "next/font/google";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import ScrollAnimations from "../components/ScrollAnimations";
-import WhatsAppButton from "../components/WhatsAppButton";
 import DeferredAnalytics from "../components/DeferredAnalytics";
+import AppChrome from "../components/AppChrome";
 
 const siteUrl = "https://9jobs.co/";
 const onest = Onest({
@@ -104,11 +101,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={onest.variable}>
-        <Navbar />
-        {children}
-        <Footer />
-        <ScrollAnimations />
-        <WhatsAppButton />
+        <AppChrome>{children}</AppChrome>
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <DeferredAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
         )}
