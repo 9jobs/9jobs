@@ -137,7 +137,7 @@ function drawHeaderAndFooter(renderer, logoImage) {
       const logoWidth = 60;
       const logoHeight = 60;
       page.drawImage(logoImage, {
-        x: PAGE_MARGIN_LEFT_RIGHT,
+        x: PAGE_WIDTH - PAGE_MARGIN_LEFT_RIGHT - logoWidth,
         y: PAGE_HEIGHT - 66,
         width: logoWidth,
         height: logoHeight,
@@ -252,10 +252,13 @@ export async function generateAgreementPdfBuffer(agreement) {
       });
     });
 
-    renderer.cursorY -= 4;
   });
 
-  renderer.addPage();
+  // Ensure the entire signature section fits on the current page, otherwise break page
+  const requiredSigHeight = 200;
+  if (renderer.cursorY - requiredSigHeight < PAGE_MARGIN_BOTTOM) {
+    renderer.addPage();
+  }
   renderer.drawWrappedText(
     'In witness where of, the parties have executed this Agreement as of the date first written above.',
     {
