@@ -137,7 +137,7 @@ function drawHeaderAndFooter(renderer, logoImage) {
       const logoWidth = 60;
       const logoHeight = 60;
       page.drawImage(logoImage, {
-        x: PAGE_WIDTH - PAGE_MARGIN_LEFT_RIGHT - logoWidth,
+        x: PAGE_MARGIN_LEFT_RIGHT,
         y: PAGE_HEIGHT - 66,
         width: logoWidth,
         height: logoHeight,
