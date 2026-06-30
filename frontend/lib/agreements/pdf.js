@@ -134,11 +134,11 @@ function createRenderer(pdfDoc, fonts) {
 function drawHeaderAndFooter(renderer, logoImage) {
   renderer.pages.forEach((page, index) => {
     if (logoImage) {
-      const logoWidth = 48;
-      const logoHeight = 48;
+      const logoWidth = 60;
+      const logoHeight = 60;
       page.drawImage(logoImage, {
-        x: PAGE_MARGIN_LEFT_RIGHT,
-        y: PAGE_HEIGHT - 60,
+        x: PAGE_WIDTH - PAGE_MARGIN_LEFT_RIGHT - logoWidth,
+        y: PAGE_HEIGHT - 66,
         width: logoWidth,
         height: logoHeight,
       });
