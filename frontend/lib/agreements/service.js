@@ -3,12 +3,38 @@ import Agreement from '@/models/Agreement';
 import { generateAgreementPdfBuffer } from '@/lib/agreements/pdf';
 import { serializeAgreement } from '@/lib/agreements/serialize';
 import { uploadPrivatePdf, fetchBlobBuffer } from '@/lib/storage/blob';
-import { downloadCompletedEnvelopePdf } from '@/lib/docusign/client';
+import {
+  downloadCompletedEnvelopePdf,
+  getDocuSignEnvelopeStatus,
+  hasDocuSignRuntimeConfig,
+} from '@/lib/docusign/client';
+import { mapDocuSignEnvelopeStatus } from '@/lib/docusign/status';
+
+const ACTIVE_DOCUSIGN_STATUSES = ['sent', 'delivered', 'viewed'];
+const TERMINAL_DOCUSIGN_STATUSES = ['completed', 'declined', 'voided'];
+
+function shouldSyncAgreementStatus(agreementDocument) {
+  return Boolean(
+    agreementDocument?.docuSignEnvelopeId &&
+      !TERMINAL_DOCUSIGN_STATUSES.includes(agreementDocument.status)
+  );
+}
+
+function shouldAppendEnvelopeEvent(agreementDocument, rawStatus) {
+  const latestEvent = agreementDocument.envelopeEvents?.[agreementDocument.envelopeEvents.length - 1];
+  return latestEvent?.status !== rawStatus;
+}
 
 export async function listAgreements() {
   await connectDB();
   const agreements = await Agreement.find({}).sort({ createdAt: -1 });
   return agreements.map(serializeAgreement);
+}
+
+export async function deleteAllAgreements() {
+  await connectDB();
+  const result = await Agreement.deleteMany({});
+  return result.deletedCount || 0;
 }
 
 export async function getAgreementById(id) {
@@ -20,6 +46,65 @@ export async function getAgreementById(id) {
 export async function getAgreementDocumentById(id) {
   await connectDB();
   return Agreement.findById(id);
+}
+
+export async function syncAgreementDocumentStatusFromDocuSign(agreementDocument) {
+  if (!shouldSyncAgreementStatus(agreementDocument) || !hasDocuSignRuntimeConfig()) {
+    return agreementDocument ? serializeAgreement(agreementDocument) : null;
+  }
+
+  const envelope = await getDocuSignEnvelopeStatus(agreementDocument.docuSignEnvelopeId);
+  const rawStatus = String(envelope?.status || '').toLowerCase();
+
+  if (!rawStatus) {
+    return serializeAgreement(agreementDocument);
+  }
+
+  const mappedStatus = mapDocuSignEnvelopeStatus(rawStatus);
+
+  if (shouldAppendEnvelopeEvent(agreementDocument, rawStatus)) {
+    agreementDocument.envelopeEvents.push({
+      status: rawStatus,
+      payload: envelope,
+    });
+  }
+
+  agreementDocument.status = mappedStatus;
+
+  if (mappedStatus === 'completed') {
+    agreementDocument.signedAt = agreementDocument.signedAt || new Date();
+    await agreementDocument.save();
+
+    if (!agreementDocument.signedPdfUrl) {
+      await attachSignedAgreementPdf(agreementDocument);
+    }
+  } else {
+    await agreementDocument.save();
+  }
+
+  return serializeAgreement(agreementDocument);
+}
+
+export async function syncPendingAgreementStatuses() {
+  if (!hasDocuSignRuntimeConfig()) {
+    return 0;
+  }
+
+  await connectDB();
+  const agreements = await Agreement.find({
+    docuSignEnvelopeId: { $nin: ['', null] },
+    status: { $in: ACTIVE_DOCUSIGN_STATUSES },
+  });
+
+  for (const agreementDocument of agreements) {
+    try {
+      await syncAgreementDocumentStatusFromDocuSign(agreementDocument);
+    } catch (error) {
+      console.error(`DocuSign status sync failed for agreement ${agreementDocument._id}:`, error);
+    }
+  }
+
+  return agreements.length;
 }
 
 export async function createAgreement(payload) {

@@ -10,9 +10,9 @@ const initialState = {
   clientName: '',
   clientEmail: '',
   clientPhone: '',
-  providerName: '9 Jobs Pty Ltd',
+  providerName: '',
   providerEmail: '',
-  providerPhone: '+61 422 279 428',
+  providerPhone: '',
   providerSignatureName: '',
   agreementDate: new Date().toISOString().slice(0, 10),
   packageName: '',
@@ -119,6 +119,20 @@ export default function AgreementForm() {
 
   return (
     <form className="admin-form" onSubmit={handleSubmit}>
+      <section className="admin-panel admin-panel--hero">
+        <div className="admin-panel__header admin-panel__header--stack">
+          <div>
+            <h2>Agreement Workspace</h2>
+            <p>Fill the details once. We generate the same PDF for preview and DocuSign delivery.</p>
+          </div>
+        </div>
+        <div className="admin-chip-row">
+          <span className="admin-chip">Blank form</span>
+          <span className="admin-chip">Instant PDF preview</span>
+          <span className="admin-chip">DocuSign ready</span>
+        </div>
+      </section>
+
       {sections.map((section) => (
         <section className="admin-panel" key={section.title}>
           <h2>{section.title}</h2>

@@ -2,7 +2,6 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import AdminLoginForm from '@/components/admin/AdminLoginForm';
-import { hasRegisteredAdmins } from '@/lib/admin/auth/admin-user-service';
 import { getAdminSessionFromCookieStore } from '@/lib/admin/auth/require-admin';
 
 export const metadata = {
@@ -16,14 +15,6 @@ export default async function AdminLoginPage({ searchParams }) {
     redirect('/admin/dashboard');
   }
 
-  let canSelfRegister = false;
-
-  try {
-    canSelfRegister = !(await hasRegisteredAdmins());
-  } catch {
-    canSelfRegister = false;
-  }
-
   const resolvedSearchParams = await searchParams;
   const requestedNextPath =
     typeof resolvedSearchParams?.next === 'string' ? resolvedSearchParams.next : '/admin/dashboard';
@@ -35,10 +26,10 @@ export default async function AdminLoginPage({ searchParams }) {
         <p className="admin-auth-shell__label">9Jobs Agreement Console</p>
         <h1>Secure contract creation, preview, and DocuSign delivery.</h1>
         <p className="admin-auth-shell__text">
-          Generate the 9 Jobs Service Contract, preview the PDF, send it for signatures, and track completion from one private admin space.
+          Sign in to one private admin workspace, generate the 9 Jobs Service Contract, review the exact PDF, and send the same file to clients through DocuSign.
         </p>
       </div>
-      <AdminLoginForm canSelfRegister={canSelfRegister} nextPath={nextPath} />
+      <AdminLoginForm nextPath={nextPath} />
     </main>
   );
 }

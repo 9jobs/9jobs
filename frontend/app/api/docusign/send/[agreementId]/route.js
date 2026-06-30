@@ -31,22 +31,32 @@ export async function POST(request, { params }) {
 
   const agreement = await getAgreementById(agreementId);
   const pdfBuffer = await getAgreementPdfBuffer(agreement, 'generated');
-  const envelope = await createDocuSignEnvelope({
-    agreement,
-    pdfBuffer,
-  });
+  try {
+    const envelope = await createDocuSignEnvelope({
+      agreement,
+      pdfBuffer,
+    });
 
-  agreementDocument.docuSignEnvelopeId = envelope.envelopeId;
-  agreementDocument.status = 'sent';
-  agreementDocument.sentAt = new Date();
-  agreementDocument.envelopeEvents.push({
-    status: 'sent',
-    payload: envelope,
-  });
-  await agreementDocument.save();
+    agreementDocument.docuSignEnvelopeId = envelope.envelopeId;
+    agreementDocument.status = 'sent';
+    agreementDocument.sentAt = new Date();
+    agreementDocument.envelopeEvents.push({
+      status: 'sent',
+      payload: envelope,
+    });
+    await agreementDocument.save();
 
-  return NextResponse.json({
-    success: true,
-    envelopeId: envelope.envelopeId,
-  });
+    return NextResponse.json({
+      success: true,
+      envelopeId: envelope.envelopeId,
+    });
+  } catch (error) {
+    console.error('Unable to send agreement via DocuSign:', error);
+    return NextResponse.json(
+      {
+        error: error instanceof Error ? error.message : 'Unable to send agreement via DocuSign.',
+      },
+      { status: 500 }
+    );
+  }
 }

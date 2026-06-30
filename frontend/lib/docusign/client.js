@@ -2,6 +2,17 @@ import crypto from 'node:crypto';
 
 const DOCUSIGN_TOKEN_AUDIENCE = 'account-d.docusign.com';
 
+export function hasDocuSignRuntimeConfig() {
+  return Boolean(
+    process.env.DOCUSIGN_INTEGRATION_KEY &&
+      process.env.DOCUSIGN_USER_ID &&
+      process.env.DOCUSIGN_ACCOUNT_ID &&
+      process.env.DOCUSIGN_BASE_PATH &&
+      process.env.DOCUSIGN_PRIVATE_KEY &&
+      process.env.NEXT_PUBLIC_APP_URL
+  );
+}
+
 function base64UrlEncode(value) {
   return Buffer.from(value)
     .toString('base64')
@@ -163,31 +174,17 @@ export async function createDocuSignEnvelope({ agreement, pdfBuffer }) {
             ],
           },
         },
-        {
-          email: agreement.providerEmail,
-          name: agreement.providerSignatureName,
-          recipientId: '2',
-          routingOrder: '2',
-          tabs: {
-            signHereTabs: [
-              {
-                anchorString: '[[DS_PROVIDER_SIGN_HERE]]',
-                anchorUnits: 'pixels',
-                anchorXOffset: '0',
-                anchorYOffset: '0',
-              },
-            ],
-            dateSignedTabs: [
-              {
-                anchorString: '[[DS_PROVIDER_DATE_HERE]]',
-                anchorUnits: 'pixels',
-                anchorXOffset: '0',
-                anchorYOffset: '0',
-              },
-            ],
-          },
-        },
       ],
+      carbonCopies: agreement.providerEmail
+        ? [
+            {
+              email: agreement.providerEmail,
+              name: agreement.providerSignatureName || agreement.providerName || '9Jobs Admin',
+              recipientId: '2',
+              routingOrder: '1',
+            },
+          ]
+        : [],
     },
     eventNotification,
   };
@@ -195,6 +192,14 @@ export async function createDocuSignEnvelope({ agreement, pdfBuffer }) {
   const response = await docusignRequest('/envelopes', {
     method: 'POST',
     body: JSON.stringify(payload),
+  });
+
+  return response.json();
+}
+
+export async function getDocuSignEnvelopeStatus(envelopeId) {
+  const response = await docusignRequest(`/envelopes/${envelopeId}`, {
+    method: 'GET',
   });
 
   return response.json();

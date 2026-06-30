@@ -5,7 +5,12 @@ import AdminShell from '@/components/admin/AdminShell';
 import AgreementActions from '@/components/admin/AgreementActions';
 import StatusBadge from '@/components/admin/StatusBadge';
 import { requireAdminPageSession } from '@/lib/admin/auth/require-admin';
-import { getAgreementById } from '@/lib/agreements/service';
+import {
+  generateAndStoreAgreementPdf,
+  getAgreementById,
+  getAgreementDocumentById,
+  syncAgreementDocumentStatusFromDocuSign,
+} from '@/lib/agreements/service';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,10 +25,27 @@ function DetailRow({ label, value }) {
 
 export default async function AgreementDetailPage({ params }) {
   await requireAdminPageSession();
-  const agreement = await getAgreementById((await params).id);
+  const { id } = await params;
+  let agreementDocument = await getAgreementDocumentById(id);
+
+  if (agreementDocument?.docuSignEnvelopeId) {
+    await syncAgreementDocumentStatusFromDocuSign(agreementDocument);
+    agreementDocument = await getAgreementDocumentById(id);
+  }
+
+  let agreement = agreementDocument ? await getAgreementById(id) : null;
 
   if (!agreement) {
     notFound();
+  }
+
+  if (!agreement.generatedPdfUrl) {
+    const agreementDocument = await getAgreementDocumentById(id);
+
+    if (agreementDocument) {
+      const result = await generateAndStoreAgreementPdf(agreementDocument);
+      agreement = result.agreement;
+    }
   }
 
   return (

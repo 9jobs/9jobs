@@ -95,10 +95,19 @@ export async function createInitialAdminUser({ name, email, password }) {
 
 export async function authenticateAdminUser({ email, password }) {
   await connectMongoDB();
+  const normalizedEmail = normalizeEmail(email);
 
-  const adminUser = await AdminUser.findOne({
-    email: normalizeEmail(email),
+  let adminUser = await AdminUser.findOne({
+    email: normalizedEmail,
   });
+
+  if (!adminUser && normalizedEmail === ADMIN_MAILBOX) {
+    const existingCount = await AdminUser.countDocuments({});
+
+    if (existingCount === 1) {
+      adminUser = await AdminUser.findOne({});
+    }
+  }
 
   if (!adminUser) {
     return null;

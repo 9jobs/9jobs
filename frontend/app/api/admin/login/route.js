@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 
-import { getAdminSessionCookieOptions } from '@/lib/admin/auth/cookies';
 import { authenticateAdminUser } from '@/lib/admin/auth/admin-user-service';
+import { getAdminSessionCookieOptions } from '@/lib/admin/auth/cookies';
 import { ADMIN_SESSION_COOKIE_NAME } from '@/lib/admin/auth/constants';
+import { verifyAdminCredentials } from '@/lib/admin/auth/credentials';
 import { adminLoginSchema } from '@/lib/admin/auth/login-schema';
 import { enforceLoginRateLimit } from '@/lib/admin/auth/rate-limit';
 import { createAdminSessionToken } from '@/lib/admin/auth/session';
@@ -35,9 +36,26 @@ export async function POST(request) {
 
     const body = await request.json();
     const credentials = adminLoginSchema.parse(body);
-    const adminUser = await authenticateAdminUser(credentials);
+    let adminSessionPayload = null;
 
-    if (!adminUser) {
+    try {
+      const isValidAdmin = await verifyAdminCredentials(credentials);
+
+      if (isValidAdmin) {
+        adminSessionPayload = {
+          email: credentials.email.trim().toLowerCase(),
+          name: '9Jobs Admin',
+        };
+      }
+    } catch (error) {
+      if (!(error instanceof Error) || error.message !== 'Admin credentials are not configured.') {
+        throw error;
+      }
+
+      adminSessionPayload = await authenticateAdminUser(credentials);
+    }
+
+    if (!adminSessionPayload) {
       return NextResponse.json(
         {
           error: 'Invalid admin credentials.',
@@ -48,7 +66,7 @@ export async function POST(request) {
       );
     }
 
-    const token = await createAdminSessionToken(adminUser);
+    const token = await createAdminSessionToken(adminSessionPayload);
 
     const response = NextResponse.json({
       success: true,

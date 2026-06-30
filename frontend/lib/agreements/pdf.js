@@ -1,192 +1,303 @@
-import fs from 'node:fs';
-import path from 'node:path';
-
-import PDFDocument from 'pdfkit';
+import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 import { buildAgreementTemplate } from '@/lib/agreements/template';
 
-const LOGO_PATH = path.join(process.cwd(), 'public', 'agreement', '9jobs-logo.png');
+const PAGE_WIDTH = 595.28;
+const PAGE_HEIGHT = 841.89;
 const PAGE_MARGIN_LEFT_RIGHT = 54;
-const PAGE_MARGIN_TOP = 90; // Large top margin to make room for top-right logo on every page
+const PAGE_MARGIN_TOP = 72;
 const PAGE_MARGIN_BOTTOM = 60;
+const CONTENT_WIDTH = PAGE_WIDTH - PAGE_MARGIN_LEFT_RIGHT * 2;
+const COLOR_INK = rgb(0.06, 0.09, 0.16);
+const COLOR_BODY = rgb(0.22, 0.25, 0.32);
+const COLOR_MUTED = rgb(0.42, 0.45, 0.5);
+const COLOR_WHITE = rgb(1, 1, 1);
 
-/**
- * Draws the logo on the top right and page number on the bottom of every page.
- */
-function drawHeaderAndFooter(doc, logoPath) {
-  const range = doc.bufferedPageRange();
+function wrapText(text, font, fontSize, maxWidth) {
+  const words = String(text || '').replace(/\s+/g, ' ').trim().split(' ');
 
-  for (let index = range.start; index < range.start + range.count; index += 1) {
-    doc.switchToPage(index);
-
-    // Draw top-right logo
-    if (fs.existsSync(logoPath)) {
-      doc.image(logoPath, doc.page.width - PAGE_MARGIN_LEFT_RIGHT - 120, 30, {
-        fit: [120, 45],
-        align: 'right',
-      });
-    }
-
-    // Draw footer (page numbers)
-    const bottom = doc.page.height - PAGE_MARGIN_BOTTOM + 20;
-    doc
-      .font('Helvetica')
-      .fontSize(9)
-      .fillColor('#6b7280')
-      .text(`Page ${index + 1} of ${range.count}`, PAGE_MARGIN_LEFT_RIGHT, bottom, {
-        align: 'center',
-        width: doc.page.width - PAGE_MARGIN_LEFT_RIGHT * 2,
-      });
+  if (!words[0]) {
+    return [''];
   }
+
+  const lines = [];
+  let currentLine = words[0];
+
+  for (const word of words.slice(1)) {
+    const nextLine = `${currentLine} ${word}`;
+
+    if (font.widthOfTextAtSize(nextLine, fontSize) <= maxWidth) {
+      currentLine = nextLine;
+    } else {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+  }
+
+  lines.push(currentLine);
+  return lines;
 }
 
-/**
- * Writes a single section, parsing list items and formatting key phrases (before a colon) in bold.
- */
-function writeSection(doc, section) {
-  // Heading
-  doc.font('Helvetica-Bold').fontSize(13).fillColor('#0f172a').text(section.heading, {
-    paragraphGap: 6,
-  });
+function createRenderer(pdfDoc, fonts) {
+  const pages = [];
+  let page = null;
+  let cursorY = 0;
 
-  // Intro text (if exists)
-  if (section.intro) {
-    doc.font('Helvetica').fontSize(10.5).fillColor('#374151').text(section.intro, {
-      paragraphGap: 6,
-      lineGap: 3,
+  function addPage() {
+    page = pdfDoc.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+    pages.push(page);
+    cursorY = PAGE_HEIGHT - PAGE_MARGIN_TOP;
+    return page;
+  }
+
+  function ensureSpace(requiredHeight) {
+    if (!page || cursorY - requiredHeight < PAGE_MARGIN_BOTTOM) {
+      addPage();
+    }
+  }
+
+  function drawWrappedText(text, options = {}) {
+    const {
+      x = PAGE_MARGIN_LEFT_RIGHT,
+      font = fonts.regular,
+      fontSize = 10.5,
+      color = COLOR_BODY,
+      lineHeight = fontSize * 1.45,
+      paragraphGap = 8,
+      maxWidth = CONTENT_WIDTH,
+    } = options;
+
+    const lines = wrapText(text, font, fontSize, maxWidth);
+    ensureSpace(lines.length * lineHeight + paragraphGap);
+
+    for (const line of lines) {
+      page.drawText(line, {
+        x,
+        y: cursorY - fontSize,
+        font,
+        size: fontSize,
+        color,
+      });
+      cursorY -= lineHeight;
+    }
+
+    cursorY -= paragraphGap;
+  }
+
+  function drawCenteredText(text, options = {}) {
+    const { font = fonts.bold, fontSize = 20, color = COLOR_INK, paragraphGap = 12 } = options;
+    const textWidth = font.widthOfTextAtSize(text, fontSize);
+
+    ensureSpace(fontSize + paragraphGap);
+    page.drawText(text, {
+      x: (PAGE_WIDTH - textWidth) / 2,
+      y: cursorY - fontSize,
+      font,
+      size: fontSize,
+      color,
+    });
+    cursorY -= fontSize * 1.35 + paragraphGap;
+  }
+
+  function drawSignatureLine(label, value, options = {}) {
+    const { gapAfter = 8 } = options;
+    drawWrappedText(`${label} ${value}`, {
+      font: fonts.regular,
+      fontSize: 11,
+      color: COLOR_INK,
+      paragraphGap: gapAfter,
     });
   }
 
-  // Paragraphs as alphabetical list (a., b., c., etc.)
-  section.paragraphs.forEach((item, index) => {
-    const letter = String.fromCharCode(97 + index); // a, b, c...
-    
-    // Check if the item contains a bold prefix (e.g. "Job Applications:", "Recruiter Follow-Up:")
-    const colonIndex = item.indexOf(':');
-    if (colonIndex > 0 && colonIndex < 30) {
-      const prefix = item.substring(0, colonIndex + 1);
-      const rest = item.substring(colonIndex + 1);
-      
-      doc
-        .font('Helvetica')
-        .fontSize(10.5)
-        .fillColor('#374151')
-        .text(`${letter}.  `, { continued: true, indent: 14 })
-        .font('Helvetica-Bold')
-        .text(prefix, { continued: true })
-        .font('Helvetica')
-        .text(rest, {
-          paragraphGap: 6,
-          lineGap: 3,
-        });
-    } else {
-      doc
-        .font('Helvetica')
-        .fontSize(10.5)
-        .fillColor('#374151')
-        .text(`${letter}.  `, { continued: true, indent: 14 })
-        .font('Helvetica')
-        .text(item, {
-          paragraphGap: 6,
-          lineGap: 3,
-        });
-    }
-  });
+  addPage();
 
-  doc.moveDown(0.8);
+  return {
+    addPage,
+    pages,
+    fonts,
+    drawCenteredText,
+    drawWrappedText,
+    drawSignatureLine,
+    get page() {
+      return page;
+    },
+    set cursorY(value) {
+      cursorY = value;
+    },
+    get cursorY() {
+      return cursorY;
+    },
+  };
 }
 
-/**
- * Main function to generate the contract PDF as a buffer.
- */
+function drawHeaderAndFooter(renderer) {
+  renderer.pages.forEach((page, index) => {
+    page.drawText('9 Jobs Service Contract', {
+      x: PAGE_MARGIN_LEFT_RIGHT,
+      y: PAGE_HEIGHT - 34,
+      font: renderer.fonts.bold,
+      size: 9,
+      color: COLOR_MUTED,
+    });
+
+    page.drawText(`Page ${index + 1} of ${renderer.pages.length}`, {
+      x: PAGE_MARGIN_LEFT_RIGHT,
+      y: 28,
+      font: renderer.fonts.regular,
+      size: 9,
+      color: COLOR_MUTED,
+    });
+  });
+}
+
 export async function generateAgreementPdfBuffer(agreement) {
   const document = buildAgreementTemplate(agreement);
+  const pdfDoc = await PDFDocument.create();
+  const fonts = {
+    regular: await pdfDoc.embedFont(StandardFonts.Helvetica),
+    bold: await pdfDoc.embedFont(StandardFonts.HelveticaBold),
+  };
+  const renderer = createRenderer(pdfDoc, fonts);
 
-  if (!fs.existsSync(LOGO_PATH)) {
-    throw new Error(`Agreement logo not found at ${LOGO_PATH}.`);
-  }
-
-  const doc = new PDFDocument({
-    size: 'A4',
-    margins: {
-      top: PAGE_MARGIN_TOP,
-      bottom: PAGE_MARGIN_BOTTOM,
-      left: PAGE_MARGIN_LEFT_RIGHT,
-      right: PAGE_MARGIN_LEFT_RIGHT,
-    },
-    bufferPages: true,
+  renderer.drawCenteredText('9 Jobs Service Contract', {
+    font: fonts.bold,
+    fontSize: 20,
+    color: COLOR_INK,
+    paragraphGap: 10,
   });
 
-  const chunks = [];
-  doc.on('data', (chunk) => chunks.push(chunk));
-
-  // --- PAGE 1: TITLE & DETAILS ---
-  doc.font('Helvetica-Bold').fontSize(20).fillColor('#0f172a').text('9 Jobs Service Contract', {
-    align: 'center',
-    paragraphGap: 12,
-  });
-
-  doc.font('Helvetica').fontSize(11).fillColor('#374151').text(
+  renderer.drawWrappedText(
     `This Service Agreement is made and entered into as of ${document.agreementDate || '29 June 2026'}, by and between:`,
     {
-      paragraphGap: 18,
-      lineGap: 3,
+      font: fonts.regular,
+      fontSize: 11,
+      color: COLOR_BODY,
+      lineHeight: 16,
+      paragraphGap: 16,
     }
   );
 
-  // Service Provider block
-  doc.font('Helvetica-Bold').fontSize(11).fillColor('#111827').text('9 Jobs Pty Ltd ABN:', { paragraphGap: 4 });
-  doc.font('Helvetica').text('83679842972', { paragraphGap: 4 });
-  doc.font('Helvetica-Bold').text('Phone: ', { continued: true }).font('Helvetica').text('+61 422 279 428', { paragraphGap: 18 });
+  renderer.drawWrappedText('9 Jobs Pty Ltd ABN:', {
+    font: fonts.bold,
+    fontSize: 11,
+    color: COLOR_INK,
+    paragraphGap: 4,
+  });
+  renderer.drawWrappedText(document.provider.abn, {
+    font: fonts.regular,
+    fontSize: 11,
+    color: COLOR_INK,
+    paragraphGap: 4,
+  });
+  renderer.drawSignatureLine('Phone:', document.provider.phone, { gapAfter: 18 });
 
-  // Separator
-  doc.font('Helvetica').fillColor('#4b5563').text('And', { paragraphGap: 18 });
-
-  // Customer block
-  doc.font('Helvetica-Bold').fillColor('#111827').text(document.signatureBlocks.customer.name, { paragraphGap: 4 });
-  doc.font('Helvetica-Bold').text('Email: ', { continued: true }).font('Helvetica').text(document.signatureBlocks.customer.email, { paragraphGap: 4 });
-  doc.font('Helvetica-Bold').text('Phone: ', { continued: true }).font('Helvetica').text(document.signatureBlocks.customer.phone, { paragraphGap: 24 });
-
-  // --- SECTIONS (Pages 1 to 4 flow) ---
-  document.sections.forEach((section) => {
-    writeSection(doc, section);
+  renderer.drawWrappedText('And', {
+    font: fonts.regular,
+    fontSize: 11,
+    color: COLOR_MUTED,
+    paragraphGap: 18,
   });
 
-  // --- SIGNATURE SECTION (Page 5) ---
-  doc.addPage();
-  
-  doc.font('Helvetica').fontSize(11).fillColor('#374151').text(
-    'In witness where off, the parties have executed this Agreement as of the date first written above.',
-    { paragraphGap: 24 }
+  renderer.drawWrappedText(document.signatureBlocks.customer.name, {
+    font: fonts.bold,
+    fontSize: 11,
+    color: COLOR_INK,
+    paragraphGap: 4,
+  });
+  renderer.drawSignatureLine('Email:', document.signatureBlocks.customer.email, { gapAfter: 4 });
+  renderer.drawSignatureLine('Phone:', document.signatureBlocks.customer.phone, { gapAfter: 20 });
+
+  document.sections.forEach((section) => {
+    renderer.drawWrappedText(section.heading, {
+      font: fonts.bold,
+      fontSize: 13,
+      color: COLOR_INK,
+      lineHeight: 18,
+      paragraphGap: 6,
+    });
+
+    if (section.intro) {
+      renderer.drawWrappedText(section.intro, {
+        font: fonts.regular,
+        fontSize: 10.5,
+        color: COLOR_BODY,
+        lineHeight: 15,
+        paragraphGap: 6,
+      });
+    }
+
+    section.paragraphs.forEach((paragraph, index) => {
+      const letter = String.fromCharCode(97 + index);
+      renderer.drawWrappedText(`${letter}. ${paragraph}`, {
+        x: PAGE_MARGIN_LEFT_RIGHT + 14,
+        maxWidth: CONTENT_WIDTH - 14,
+        font: fonts.regular,
+        fontSize: 10.5,
+        color: COLOR_BODY,
+        lineHeight: 15,
+        paragraphGap: 6,
+      });
+    });
+
+    renderer.cursorY -= 4;
+  });
+
+  renderer.addPage();
+  renderer.drawWrappedText(
+    'In witness where of, the parties have executed this Agreement as of the date first written above.',
+    {
+      font: fonts.regular,
+      fontSize: 11,
+      color: COLOR_BODY,
+      lineHeight: 16,
+      paragraphGap: 22,
+    }
   );
 
-  // Service Provider signature block
-  doc.font('Helvetica-Bold').fontSize(12).fillColor('#111827').text('Service Provider:', { paragraphGap: 6 });
-  doc.font('Helvetica').fontSize(11).text('Name: 9 Jobs Pty Ltd ABN:', { paragraphGap: 4 });
-  doc.font('Helvetica').text('83679842972', { paragraphGap: 6 });
-  doc.font('Helvetica').text('Signature: Aditya Singh ', { continued: true });
-  // Write DocuSign provider signature anchor invisibly in white text
-  doc.fillColor('#ffffff').text('[[DS_PROVIDER_SIGN_HERE]]', { continued: true });
-  doc.fillColor('#111827').text('___________________', { paragraphGap: 24 });
-
-  // Customer signature block
-  doc.font('Helvetica-Bold').fontSize(12).fillColor('#111827').text('Customer:', { paragraphGap: 6 });
-  doc.font('Helvetica').fontSize(11).text(`Name: ${document.signatureBlocks.customer.name}`, { paragraphGap: 6 });
-  doc.font('Helvetica').text('Signature: ', { continued: true });
-  // Write DocuSign customer signature anchor invisibly in white text
-  doc.fillColor('#ffffff').text('[[DS_CUSTOMER_SIGN_HERE]]', { continued: true });
-  doc.fillColor('#111827').text('___________________', { paragraphGap: 24 });
-
-  // Write date anchors invisibly at the bottom of the page in white text
-  doc.fillColor('#ffffff').text('[[DS_PROVIDER_DATE_HERE]] [[DS_CUSTOMER_DATE_HERE]]');
-
-  // --- DRAW HEADERS AND FOOTERS ---
-  drawHeaderAndFooter(doc, LOGO_PATH);
-
-  doc.end();
-
-  return await new Promise((resolve, reject) => {
-    doc.on('end', () => resolve(Buffer.concat(chunks)));
-    doc.on('error', reject);
+  renderer.drawWrappedText('Service Provider:', {
+    font: fonts.bold,
+    fontSize: 12,
+    color: COLOR_INK,
+    paragraphGap: 6,
   });
+  renderer.drawSignatureLine('Name:', `${document.provider.legalName} ABN: ${document.provider.abn}`, { gapAfter: 4 });
+  renderer.drawSignatureLine('Signature:', `${document.signatureBlocks.provider.name} ___________________`, {
+    gapAfter: 20,
+  });
+  renderer.page.drawText('[[DS_PROVIDER_SIGN_HERE]]', {
+    x: PAGE_MARGIN_LEFT_RIGHT + 88,
+    y: renderer.cursorY + 25,
+    font: fonts.regular,
+    size: 11,
+    color: COLOR_WHITE,
+  });
+
+  renderer.drawWrappedText('Customer:', {
+    font: fonts.bold,
+    fontSize: 12,
+    color: COLOR_INK,
+    paragraphGap: 6,
+  });
+  renderer.drawSignatureLine('Name:', document.signatureBlocks.customer.name, { gapAfter: 4 });
+  renderer.drawSignatureLine('Signature:', '___________________', { gapAfter: 20 });
+  renderer.page.drawText('[[DS_CUSTOMER_SIGN_HERE]]', {
+    x: PAGE_MARGIN_LEFT_RIGHT + 60,
+    y: renderer.cursorY + 25,
+    font: fonts.regular,
+    size: 11,
+    color: COLOR_WHITE,
+  });
+
+  renderer.page.drawText('[[DS_PROVIDER_DATE_HERE]] [[DS_CUSTOMER_DATE_HERE]]', {
+    x: PAGE_MARGIN_LEFT_RIGHT,
+    y: PAGE_MARGIN_BOTTOM,
+    font: fonts.regular,
+    size: 10,
+    color: COLOR_WHITE,
+  });
+
+  drawHeaderAndFooter(renderer);
+
+  const bytes = await pdfDoc.save();
+  return Buffer.from(bytes);
 }

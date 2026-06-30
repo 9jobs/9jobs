@@ -8,7 +8,7 @@ export default async function NewAgreementPage() {
   await requireAdminPageSession();
 
   return (
-    <AdminShell eyebrow="Create an agreement draft" title="New Agreement">
+    <AdminShell eyebrow="Create a fresh agreement and open the exact PDF preview instantly." title="New Agreement">
       <AgreementForm />
     </AdminShell>
   );
