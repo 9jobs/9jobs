@@ -180,7 +180,7 @@ export async function createDocuSignEnvelope({ agreement, pdfBuffer }) {
                 email: agreement.providerEmail,
                 name: agreement.providerSignatureName || agreement.providerName || '9Jobs Admin',
                 recipientId: '2',
-                routingOrder: '2',
+                routingOrder: '1',
                 tabs: {
                   signHereTabs: [
                     {
