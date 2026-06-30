@@ -6,7 +6,7 @@ import { LOGO_BASE64 } from './logo-base64';
 const PAGE_WIDTH = 595.28;
 const PAGE_HEIGHT = 841.89;
 const PAGE_MARGIN_LEFT_RIGHT = 54;
-const PAGE_MARGIN_TOP = 72;
+const PAGE_MARGIN_TOP = 92;
 const PAGE_MARGIN_BOTTOM = 60;
 const CONTENT_WIDTH = PAGE_WIDTH - PAGE_MARGIN_LEFT_RIGHT * 2;
 const COLOR_INK = rgb(0.06, 0.09, 0.16);
@@ -134,11 +134,11 @@ function createRenderer(pdfDoc, fonts) {
 function drawHeaderAndFooter(renderer, logoImage) {
   renderer.pages.forEach((page, index) => {
     if (logoImage) {
-      const logoWidth = 70;
-      const logoHeight = 70;
+      const logoWidth = 85;
+      const logoHeight = 85;
       page.drawImage(logoImage, {
         x: PAGE_WIDTH - PAGE_MARGIN_LEFT_RIGHT - logoWidth,
-        y: PAGE_HEIGHT - 72,
+        y: PAGE_HEIGHT - 88,
         width: logoWidth,
         height: logoHeight,
       });
