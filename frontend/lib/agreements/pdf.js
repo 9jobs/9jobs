@@ -292,11 +292,11 @@ export async function generateAgreementPdfBuffer(agreement) {
     paragraphGap: 6,
   });
   renderer.drawSignatureLine('Name:', `${document.provider.legalName} ABN: ${document.provider.abn}`, { gapAfter: 4 });
-  renderer.drawSignatureLine('Signature:', `${document.signatureBlocks.provider.name} ___________________`, {
+  renderer.drawSignatureLine('Signature:', '___________________', {
     gapAfter: 20,
   });
   renderer.page.drawText('[[DS_PROVIDER_SIGN_HERE]]', {
-    x: PAGE_MARGIN_LEFT_RIGHT + 88,
+    x: PAGE_MARGIN_LEFT_RIGHT + 60,
     y: renderer.cursorY + 25,
     font: fonts.regular,
     size: 11,

@@ -174,17 +174,36 @@ export async function createDocuSignEnvelope({ agreement, pdfBuffer }) {
             ],
           },
         },
+        ...(agreement.providerEmail
+          ? [
+              {
+                email: agreement.providerEmail,
+                name: agreement.providerSignatureName || agreement.providerName || '9Jobs Admin',
+                recipientId: '2',
+                routingOrder: '2',
+                tabs: {
+                  signHereTabs: [
+                    {
+                      anchorString: '[[DS_PROVIDER_SIGN_HERE]]',
+                      anchorUnits: 'pixels',
+                      anchorXOffset: '0',
+                      anchorYOffset: '0',
+                    },
+                  ],
+                  dateSignedTabs: [
+                    {
+                      anchorString: '[[DS_PROVIDER_DATE_HERE]]',
+                      anchorUnits: 'pixels',
+                      anchorXOffset: '0',
+                      anchorYOffset: '0',
+                    },
+                  ],
+                },
+              },
+            ]
+          : []),
       ],
-      carbonCopies: agreement.providerEmail
-        ? [
-            {
-              email: agreement.providerEmail,
-              name: agreement.providerSignatureName || agreement.providerName || '9Jobs Admin',
-              recipientId: '2',
-              routingOrder: '1',
-            },
-          ]
-        : [],
+      carbonCopies: [],
     },
     eventNotification,
   };
