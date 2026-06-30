@@ -14,11 +14,13 @@ const initialState = {
   providerEmail: '',
   providerPhone: '',
   providerSignatureName: '',
+  providerAbn: '83679842972',
   agreementDate: new Date().toISOString().slice(0, 10),
   packageName: '',
   servicePrice: '',
   weeklyJobTarget: '',
   initialTerm: '',
+  paymentDay: 'Monday',
   notes: '',
 };
 
@@ -29,11 +31,11 @@ const sections = [
   },
   {
     title: 'Service Provider Details',
-    fields: ['providerName', 'providerEmail', 'providerPhone', 'providerSignatureName'],
+    fields: ['providerName', 'providerEmail', 'providerPhone', 'providerSignatureName', 'providerAbn'],
   },
   {
     title: 'Agreement Details',
-    fields: ['agreementDate', 'packageName', 'servicePrice', 'weeklyJobTarget', 'initialTerm', 'notes'],
+    fields: ['agreementDate', 'packageName', 'servicePrice', 'weeklyJobTarget', 'initialTerm', 'paymentDay', 'notes'],
   },
 ];
 
@@ -45,11 +47,13 @@ const labels = {
   providerEmail: 'Provider Email',
   providerPhone: 'Provider Phone',
   providerSignatureName: 'Provider Signature Name',
+  providerAbn: 'Provider ABN',
   agreementDate: 'Agreement Date',
   packageName: 'Package Name',
   servicePrice: 'Service Price',
   weeklyJobTarget: 'Weekly Job Target',
   initialTerm: 'Initial Term',
+  paymentDay: 'Payment Due Day (e.g. Monday)',
   notes: 'Notes',
 };
 

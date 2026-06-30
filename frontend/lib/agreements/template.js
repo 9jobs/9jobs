@@ -14,6 +14,11 @@ function createSection(heading, paragraphs, intro = null) {
 
 export function buildAgreementTemplate(input) {
   const notes = input.notes?.trim();
+  const provider = {
+    legalName: input.providerName || FIXED_PROVIDER.legalName,
+    abn: input.providerAbn || FIXED_PROVIDER.abn,
+    phone: input.providerPhone || FIXED_PROVIDER.phone,
+  };
 
   const sections = [
     createSection(
@@ -28,7 +33,7 @@ export function buildAgreementTemplate(input) {
     createSection('2. Payment Terms', [
       `The Customer agrees to pay the Service Provider a fee of ${input.servicePrice || '$150 (AUD)'} in advance for the services.`,
       `If the Customer wishes to continue receiving services after the initial ${input.initialTerm || '1 week'}, the fee will be ${input.servicePrice || '$150 (AUD)'} per week, payable in advance.`,
-      'Payments must be made using the agreed payment method between the Customer and the Service Provider. Payments are due every Monday before services commence for that week. Services will not be provided unless payment is received in advance.',
+      `Payments must be made using the agreed payment method between the Customer and the Service Provider. Payments are due every ${input.paymentDay || 'Monday'} before services commence for that week. Services will not be provided unless payment is received in advance.`,
     ]),
     createSection('3. Payment Schedule, Cost Structure and Service Oversight', [
       'The services include management of the job application process, delivered by two team members and personally reviewed by the Service Provider to ensure quality.',
@@ -96,7 +101,7 @@ export function buildAgreementTemplate(input) {
 
   return {
     title: '9Jobs Service Contract',
-    provider: FIXED_PROVIDER,
+    provider,
     agreementDate: input.agreementDate,
     sections,
     signatureBlocks: {
@@ -104,7 +109,7 @@ export function buildAgreementTemplate(input) {
         label: 'Service Provider',
         name: input.providerSignatureName || 'Aditya Singh',
         email: input.providerEmail || FIXED_PROVIDER.phone, // fallback values
-        phone: input.providerPhone || FIXED_PROVIDER.phone,
+        phone: provider.phone,
       },
       customer: {
         label: 'Customer',

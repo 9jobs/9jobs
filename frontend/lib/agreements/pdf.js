@@ -101,9 +101,9 @@ function createRenderer(pdfDoc, fonts) {
   }
 
   function drawSignatureLine(label, value, options = {}) {
-    const { gapAfter = 8 } = options;
+    const { gapAfter = 8, font = fonts.regular } = options;
     drawWrappedText(`${label} ${value}`, {
-      font: fonts.regular,
+      font,
       fontSize: 11,
       color: COLOR_INK,
       paragraphGap: gapAfter,
@@ -134,11 +134,11 @@ function createRenderer(pdfDoc, fonts) {
 function drawHeaderAndFooter(renderer, logoImage) {
   renderer.pages.forEach((page, index) => {
     if (logoImage) {
-      const logoWidth = 60;
-      const logoHeight = 60;
+      const logoWidth = 70;
+      const logoHeight = 70;
       page.drawImage(logoImage, {
         x: PAGE_WIDTH - PAGE_MARGIN_LEFT_RIGHT - logoWidth,
-        y: PAGE_HEIGHT - 66,
+        y: PAGE_HEIGHT - 72,
         width: logoWidth,
         height: logoHeight,
       });
@@ -190,7 +190,7 @@ export async function generateAgreementPdfBuffer(agreement) {
     }
   );
 
-  renderer.drawWrappedText('9 Jobs Pty Ltd ABN:', {
+  renderer.drawWrappedText(`${document.provider.legalName} ABN:`, {
     font: fonts.bold,
     fontSize: 11,
     color: COLOR_INK,
@@ -202,7 +202,12 @@ export async function generateAgreementPdfBuffer(agreement) {
     color: COLOR_INK,
     paragraphGap: 4,
   });
-  renderer.drawSignatureLine('Phone:', document.provider.phone, { gapAfter: 18 });
+  renderer.drawWrappedText(`Phone: ${document.provider.phone}`, {
+    font: fonts.regular,
+    fontSize: 11,
+    color: COLOR_INK,
+    paragraphGap: 18,
+  });
 
   renderer.drawWrappedText('And', {
     font: fonts.regular,
@@ -278,6 +283,7 @@ export async function generateAgreementPdfBuffer(agreement) {
   });
   renderer.drawSignatureLine('Name:', `${document.provider.legalName} ABN: ${document.provider.abn}`, { gapAfter: 4 });
   renderer.drawSignatureLine('Signature:', '___________________', {
+    font: fonts.bold,
     gapAfter: 20,
   });
   renderer.page.drawText('[[DS_PROVIDER_SIGN_HERE]]', {
@@ -295,7 +301,10 @@ export async function generateAgreementPdfBuffer(agreement) {
     paragraphGap: 6,
   });
   renderer.drawSignatureLine('Name:', document.signatureBlocks.customer.name, { gapAfter: 4 });
-  renderer.drawSignatureLine('Signature:', '___________________', { gapAfter: 20 });
+  renderer.drawSignatureLine('Signature:', '___________________', {
+    font: fonts.bold,
+    gapAfter: 20,
+  });
   renderer.page.drawText('[[DS_CUSTOMER_SIGN_HERE]]', {
     x: PAGE_MARGIN_LEFT_RIGHT + 60,
     y: renderer.cursorY + 25,

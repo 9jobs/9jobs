@@ -23,11 +23,13 @@ export const agreementInputSchema = z.object({
   providerEmail: z.string().trim().email(),
   providerPhone: phoneSchema,
   providerSignatureName: requiredTextSchema,
+  providerAbn: z.string().trim().min(5).max(30).optional().or(z.literal('')),
   agreementDate: z.string().trim().regex(/^\d{4}-\d{2}-\d{2}$/),
   packageName: requiredTextSchema,
   servicePrice: z.string().trim().min(1).max(50),
   weeklyJobTarget: z.string().trim().min(1).max(20),
   initialTerm: requiredTextSchema,
+  paymentDay: z.string().trim().min(1).max(20).optional().or(z.literal('')),
   notes: optionalNotesSchema,
 });
 
