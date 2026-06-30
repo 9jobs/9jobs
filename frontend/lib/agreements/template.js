@@ -95,7 +95,7 @@ export function buildAgreementTemplate(input) {
   }
 
   return {
-    title: '9 Jobs Service Contract',
+    title: '9Jobs Service Contract',
     provider: FIXED_PROVIDER,
     agreementDate: input.agreementDate,
     sections,

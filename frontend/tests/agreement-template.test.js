@@ -20,7 +20,7 @@ describe('agreement template', () => {
       notes: 'Priority applications for Melbourne operations roles.',
     });
 
-    expect(document.title).toBe('9 Jobs Service Contract');
+    expect(document.title).toBe('9Jobs Service Contract');
     expect(document.sections.some((section) => section.heading === '1. Scope of Services')).toBe(true);
     expect(document.signatureBlocks.customer.name).toBe('Jane Client');
     

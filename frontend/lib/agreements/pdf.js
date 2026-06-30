@@ -1,4 +1,6 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import fs from 'fs';
+import path from 'path';
 
 import { buildAgreementTemplate } from '@/lib/agreements/template';
 
@@ -130,10 +132,24 @@ function createRenderer(pdfDoc, fonts) {
   };
 }
 
-function drawHeaderAndFooter(renderer) {
+function drawHeaderAndFooter(renderer, logoImage) {
   renderer.pages.forEach((page, index) => {
-    page.drawText('9 Jobs Service Contract', {
-      x: PAGE_MARGIN_LEFT_RIGHT,
+    let headerTextX = PAGE_MARGIN_LEFT_RIGHT;
+
+    if (logoImage) {
+      const logoWidth = 14;
+      const logoHeight = 14;
+      page.drawImage(logoImage, {
+        x: PAGE_MARGIN_LEFT_RIGHT,
+        y: PAGE_HEIGHT - 38,
+        width: logoWidth,
+        height: logoHeight,
+      });
+      headerTextX += logoWidth + 6;
+    }
+
+    page.drawText('9Jobs Service Contract', {
+      x: headerTextX,
       y: PAGE_HEIGHT - 34,
       font: renderer.fonts.bold,
       size: 9,
@@ -157,9 +173,24 @@ export async function generateAgreementPdfBuffer(agreement) {
     regular: await pdfDoc.embedFont(StandardFonts.Helvetica),
     bold: await pdfDoc.embedFont(StandardFonts.HelveticaBold),
   };
+
+  let logoImage = null;
+  try {
+    let logoPath = path.join(process.cwd(), 'public', 'agreement', '9jobs-logo.png');
+    if (!fs.existsSync(logoPath)) {
+      logoPath = path.join(process.cwd(), 'frontend', 'public', 'agreement', '9jobs-logo.png');
+    }
+    if (fs.existsSync(logoPath)) {
+      const logoBuffer = fs.readFileSync(logoPath);
+      logoImage = await pdfDoc.embedPng(logoBuffer);
+    }
+  } catch (err) {
+    console.error('Error embedding logo png:', err);
+  }
+
   const renderer = createRenderer(pdfDoc, fonts);
 
-  renderer.drawCenteredText('9 Jobs Service Contract', {
+  renderer.drawCenteredText('9Jobs Service Contract', {
     font: fonts.bold,
     fontSize: 20,
     color: COLOR_INK,
@@ -296,7 +327,7 @@ export async function generateAgreementPdfBuffer(agreement) {
     color: COLOR_WHITE,
   });
 
-  drawHeaderAndFooter(renderer);
+  drawHeaderAndFooter(renderer, logoImage);
 
   const bytes = await pdfDoc.save();
   return Buffer.from(bytes);
