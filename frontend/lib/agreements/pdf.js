@@ -1,8 +1,7 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
-import fs from 'fs';
-import path from 'path';
 
 import { buildAgreementTemplate } from '@/lib/agreements/template';
+import { LOGO_BASE64 } from './logo-base64';
 
 const PAGE_WIDTH = 595.28;
 const PAGE_HEIGHT = 841.89;
@@ -134,27 +133,16 @@ function createRenderer(pdfDoc, fonts) {
 
 function drawHeaderAndFooter(renderer, logoImage) {
   renderer.pages.forEach((page, index) => {
-    let headerTextX = PAGE_MARGIN_LEFT_RIGHT;
-
     if (logoImage) {
-      const logoWidth = 14;
-      const logoHeight = 14;
+      const logoWidth = 48;
+      const logoHeight = 48;
       page.drawImage(logoImage, {
         x: PAGE_MARGIN_LEFT_RIGHT,
-        y: PAGE_HEIGHT - 38,
+        y: PAGE_HEIGHT - 60,
         width: logoWidth,
         height: logoHeight,
       });
-      headerTextX += logoWidth + 6;
     }
-
-    page.drawText('9Jobs Service Contract', {
-      x: headerTextX,
-      y: PAGE_HEIGHT - 34,
-      font: renderer.fonts.bold,
-      size: 9,
-      color: COLOR_MUTED,
-    });
 
     page.drawText(`Page ${index + 1} of ${renderer.pages.length}`, {
       x: PAGE_MARGIN_LEFT_RIGHT,
@@ -176,14 +164,8 @@ export async function generateAgreementPdfBuffer(agreement) {
 
   let logoImage = null;
   try {
-    let logoPath = path.join(process.cwd(), 'public', 'agreement', '9jobs-logo.png');
-    if (!fs.existsSync(logoPath)) {
-      logoPath = path.join(process.cwd(), 'frontend', 'public', 'agreement', '9jobs-logo.png');
-    }
-    if (fs.existsSync(logoPath)) {
-      const logoBuffer = fs.readFileSync(logoPath);
-      logoImage = await pdfDoc.embedPng(logoBuffer);
-    }
+    const logoBuffer = Buffer.from(LOGO_BASE64, 'base64');
+    logoImage = await pdfDoc.embedPng(logoBuffer);
   } catch (err) {
     console.error('Error embedding logo png:', err);
   }
