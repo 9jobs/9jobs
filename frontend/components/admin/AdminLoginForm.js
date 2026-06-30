@@ -10,6 +10,7 @@ export default function AdminLoginForm({ nextPath = '/admin/dashboard' }) {
   const { pushToast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isPending, setIsPending] = useState(false);
 
@@ -76,13 +77,36 @@ export default function AdminLoginForm({ nextPath = '/admin/dashboard' }) {
 
       <label className="admin-field">
         <span>Password</span>
-        <input
-          autoComplete="current-password"
-          onChange={(event) => setPassword(event.target.value)}
-          required
-          type="password"
-          value={password}
-        />
+        <div style={{ position: 'relative', width: '100%' }}>
+          <input
+            autoComplete="current-password"
+            onChange={(event) => setPassword(event.target.value)}
+            required
+            type={showPassword ? 'text' : 'password'}
+            value={password}
+            style={{ width: '100%', paddingRight: '55px' }}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: 'absolute',
+              right: '16px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              color: 'var(--muted)',
+              fontSize: '0.88rem',
+              fontWeight: '600',
+              padding: '4px',
+              userSelect: 'none',
+            }}
+          >
+            {showPassword ? 'Hide' : 'Show'}
+          </button>
+        </div>
       </label>
 
       {error ? <p className="admin-error-text">{error}</p> : null}
