@@ -132,7 +132,7 @@ export default async function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: jsonLd(websiteSchema) }}
         />
       </head>
-      <body className={onest.variable}>
+      <body className={`${onest.variable} ${onest.className}`}>
         {isAdminRoute ? children : <AppChrome>{children}</AppChrome>}
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <DeferredAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />

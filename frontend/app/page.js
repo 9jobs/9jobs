@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
+  ArrowUpRight,
   Bell,
   Bot,
   Briefcase,
@@ -12,6 +13,7 @@ import {
   ClipboardCheck,
   FileText,
   Gauge,
+  MapPin,
   SearchCheck,
   ShieldCheck,
   Sparkles,
@@ -26,6 +28,7 @@ const Testimonials = dynamic(() => import("../components/Testimonials"));
 const FeedbackStats = dynamic(() => import("../components/FeedbackStats"));
 const HomeFaq = dynamic(() => import("../components/homepage/HomeFaq"));
 const FlowchartSection = dynamic(() => import("../components/homepage/FlowchartSection"));
+const AustraliaJobMap = dynamic(() => import("../components/homepage/AustraliaJobMap"));
 
 function Reveal({
   as: Tag = "div",
@@ -368,6 +371,45 @@ const popularCities = [
   { name: "Geelong", href: "/jobs/geelong", desc: "Find regional government, NDIS, and insurance roles in Geelong VIC." },
   { name: "Victoria", href: "/jobs/vic", desc: "Expand your career search across regional Victoria and agricultural hubs." },
 ];
+
+const cityGeoData = {
+  melbourne: {
+    coords: "37.8136° S · 144.9631° E",
+    region: "Greater Melbourne & Port Phillip Commercial Tech Hub",
+    keySuburbs: ["Richmond", "Docklands", "South Yarra", "Fitzroy"],
+    keyIndustries: ["Tech & IT", "Creative & Design", "Healthcare", "Finance"],
+  },
+  sydney: {
+    coords: "33.8688° S · 151.2093° E",
+    region: "Sydney Basin & National Financial / Corporate Capital",
+    keySuburbs: ["Surry Hills", "Parramatta", "North Sydney", "Pyrmont"],
+    keyIndustries: ["Banking & Finance", "Enterprise Software", "Professional Services"],
+  },
+  brisbane: {
+    coords: "27.4698° S · 153.0251° E",
+    region: "SE Queensland Growth & Public Sector Corridor",
+    keySuburbs: ["Fortitude Valley", "South Brisbane", "Milton", "Newstead"],
+    keyIndustries: ["Government", "Mining & Resources", "Tourism & Startups"],
+  },
+  perth: {
+    coords: "31.9505° S · 115.8605° E",
+    region: "Western Australia Resources, Energy & Maritime Gateway",
+    keySuburbs: ["West Perth", "Fremantle", "Subiaco", "East Perth"],
+    keyIndustries: ["Mining & Energy", "Engineering", "Maritime Logistics"],
+  },
+  adelaide: {
+    coords: "34.9285° S · 138.6007° E",
+    region: "South Australia Defense, Space & Innovation Precinct",
+    keySuburbs: ["Norwood", "North Adelaide", "Mawson Lakes", "CBD"],
+    keyIndustries: ["Defense Systems", "Space Tech", "AgTech & Biotech"],
+  },
+  geelong: {
+    coords: "38.1499° S · 144.3617° E",
+    region: "Regional Victoria Commercial & Public Sector Hub",
+    keySuburbs: ["Newtown", "Belmont", "Waurn Ponds", "Geelong West"],
+    keyIndustries: ["NDIS & Insurance", "Regional Govt", "Advanced Industry"],
+  },
+};
 
 function DashboardPreview() {
   return (
@@ -796,7 +838,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="fj-section fj-home-section--grid">
+      <section className="fj-section fj-home-section--grid fj-locations-showcase-section" id="explore-australia">
         <div className="fj-container">
           <Reveal as="div" direction="up" distance={24}>
             <div className="fj-section-head">
@@ -805,17 +847,8 @@ export default function Home() {
               <p>Target localized markets across Australia&apos;s major cities and regional centers with tailored application strategies.</p>
             </div>
           </Reveal>
-          <StaggerContainer as="div" className="fj-card-grid fj-card-grid--three fj-location-grid" stagger={0.1}>
-            {Object.values(cities).slice(0, 6).map((city) => (
-              <StaggerItem as="article" className="fj-city-card fj-city-card--grid fj-card-hover" key={city.slug}>
-                <h3>{city.name}</h3>
-                <p>{city.description}</p>
-                <Link href={`/jobs/${city.slug}`} className="fj-button fj-button--ghost fj-location-link" prefetch={false}>
-                  <span>Explore {city.name}</span> <ArrowRight size={16} />
-                </Link>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+
+          <AustraliaJobMap />
         </div>
       </section>
 

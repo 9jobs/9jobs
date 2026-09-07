@@ -1,5 +1,6 @@
 node_modules/
-.env
+.env*
+!.env.example
 *.log
 .DS_Store
 npm-debug.log*
@@ -7,3 +8,22 @@ yarn-debug.log*
 yarn-error.log*
 
 .vercel
+
+# Archives & Backups
+*.zip
+*.tar.gz
+backups/
+frontend-admin-copy/
+frontend-admin-copy.zip
+
+# Temporary screenshots & scratch
+scratch/
+frontend/scratch/
+frontend/.tmp*
+.tmp*
+outputs/*.png
+outputs/*.zip
+outputs/*.tar.gz
+outputs/backup-*/
+outputs/source-backup-*/
+outputs/tmp-*
